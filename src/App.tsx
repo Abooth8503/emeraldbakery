@@ -3,6 +3,7 @@ import { Router, Switch, Route, Link } from 'react-router-dom';
 import { EmeraldProvider } from './Interfaces/EmeraldTypes';
 import Dashboard from './Common/Dashboard';
 import history from './Common/History';
+import './css/bootstrap.min.css';
 
 // Used when a user hits a route not defined below
 const FourOhFour = (): JSX.Element => (
