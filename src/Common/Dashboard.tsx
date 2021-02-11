@@ -1,17 +1,22 @@
-import React from 'react';
-import { Container, Row, Col, Button } from 'react-bootstrap';
+import * as React from 'react';
+import { Container, Row, Col, Button, Jumbotron } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 function Dashboard() {
   return (
     <Container fluid>
-      <Row className='justify-content-md-center'>
+      <Row className='justify-content-center' style={{ marginTop: '5px' }}>
         <Col>
-          <h1>Welcome Ariel!</h1>
+          <Jumbotron>
+            <h2 className='text-center'>Welcome Ariel!</h2>
+          </Jumbotron>
         </Col>
       </Row>
-      <Row>
+      <Row className='justify-content-center'>
         <Col>
-          <Button variant='primary'>Orders</Button>
+          <Link to='/orders'>
+            <Button variant='primary'>Orders</Button>
+          </Link>
         </Col>
         <Col>
           <Button variant='primary'>Calendar</Button>
@@ -28,11 +33,13 @@ function Dashboard() {
       <hr></hr>
       <Row>
         <Col>
-          <h2>Admin</h2>
+          <Jumbotron>
+            <h3 className='text-center'>Admin</h3>
+          </Jumbotron>
         </Col>
       </Row>
       <br></br>
-      <Row>
+      <Row className='justify-content-md-center'>
         <Col>
           <Button variant='primary'>Order Types</Button>
         </Col>

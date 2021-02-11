@@ -1,9 +1,9 @@
-import React from 'react';
+import * as React from 'react';
 import { Router, Switch, Route, Link } from 'react-router-dom';
 import { EmeraldProvider } from './Interfaces/EmeraldTypes';
 import Dashboard from './Common/Dashboard';
 import history from './Common/History';
-import './css/bootstrap.min.css';
+import Orders from './Orders';
 
 // Used when a user hits a route not defined below
 const FourOhFour = (): JSX.Element => (
@@ -21,7 +21,7 @@ function App() {
       <Router history={history}>
         <Switch>
           <Route exact path='/' render={() => <Dashboard />} />
-
+          <Route exact path='/orders' render={() => <Orders />} />
           <Route component={FourOhFour} />
         </Switch>
       </Router>
