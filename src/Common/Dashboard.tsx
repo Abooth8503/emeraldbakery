@@ -1,13 +1,18 @@
 import * as React from 'react';
 import { Container, Row, Col, Button, Jumbotron } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import background from '../congruent_pentagon.png';
+
+const sectionStyle = {
+  backgroundImage: `url(${background})`,
+};
 
 function Dashboard() {
   return (
-    <Container fluid>
-      <Row className='justify-content-center' style={{ marginTop: '5px' }}>
+    <Container fluid style={sectionStyle}>
+      <Row className='justify-content-center h-100' style={{ marginTop: '5px' }}>
         <Col>
-          <Jumbotron>
+          <Jumbotron style={{ backgroundColor: 'lightgreen' }}>
             <h2 className='text-center'>Welcome Ariel!</h2>
           </Jumbotron>
         </Col>
@@ -15,17 +20,17 @@ function Dashboard() {
       <Row className='justify-content-center'>
         <Col>
           <Link to='/orders'>
-            <Button variant='primary'>Orders</Button>
+            <Button variant='outline-primary'>Orders</Button>
           </Link>
         </Col>
         <Col>
-          <Button variant='primary'>Calendar</Button>
+          <Button variant='outline-primary'>Calendar</Button>
         </Col>
       </Row>
       <br></br>
       <Row>
         <Col>
-          <Button>Create</Button>
+          <Button variant='outline-primary'>Create</Button>
         </Col>
       </Row>
       <br></br>
@@ -33,7 +38,7 @@ function Dashboard() {
       <hr></hr>
       <Row>
         <Col>
-          <Jumbotron>
+          <Jumbotron style={{ backgroundColor: 'lightgreen' }}>
             <h3 className='text-center'>Admin</h3>
           </Jumbotron>
         </Col>
@@ -41,7 +46,7 @@ function Dashboard() {
       <br></br>
       <Row className='justify-content-md-center'>
         <Col>
-          <Button variant='primary'>Order Types</Button>
+          <Button variant='outline-primary'>Order Types</Button>
         </Col>
       </Row>
     </Container>

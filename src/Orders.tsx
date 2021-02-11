@@ -1,10 +1,15 @@
 import * as React from 'react';
 import { useEffect } from 'react';
-import { ListGroup, Image, Row, Col, Badge } from 'react-bootstrap';
+import { Container, ListGroup, Image, Row, Col, Badge, Card } from 'react-bootstrap';
 import { Order } from './Interfaces/EmeraldTypes';
 import cat from './cat.jpg';
+import background from './congruent_pentagon.png';
 // import { Container, Row, Col, Button, Jumbotron } from 'react-bootstrap';
 // import { Link } from 'react-router-dom';
+
+const sectionStyle = {
+  backgroundImage: `url(${background})`,
+};
 
 function Orders() {
   const [orders, ordersSet] = React.useState<Order[]>([]);
@@ -23,7 +28,7 @@ function Orders() {
 
   console.log(orders[0].name, orders.length);
   return (
-    <React.Fragment>
+    <Container fluid style={sectionStyle}>
       <Row>
         <Col className='text-center'>
           <h1>
@@ -31,17 +36,28 @@ function Orders() {
           </h1>
         </Col>
       </Row>
-      <ListGroup>
-        {orders.map((order: Order) => {
-          return (
-            <ListGroup.Item action key={order.id}>
-              <Image src={cat} thumbnail />
-              {order.name}
-            </ListGroup.Item>
-          );
-        })}
-      </ListGroup>
-    </React.Fragment>
+      {/* <ListGroup> */}
+      {orders.map((order: Order) => {
+        return (
+          // <ListGroup.Item action key={order.id}>
+          <Card key={order.id}>
+            <Row>
+              <Col style={{ maxWidth: '108px' }}>
+                <Image src={cat} rounded />
+              </Col>
+              <Col>
+                <Card.Title>{order.name}</Card.Title>
+                <Card.Text>
+                  {order.quantity} {order.description}
+                </Card.Text>
+              </Col>
+            </Row>
+          </Card>
+          // </ListGroup.Item>
+        );
+      })}
+      {/* </ListGroup> */}
+    </Container>
   );
 }
 
