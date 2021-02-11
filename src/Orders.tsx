@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { useEffect } from 'react';
-import { ListGroup } from 'react-bootstrap';
+import { ListGroup, Image, Row, Col, Badge } from 'react-bootstrap';
 import { Order } from './Interfaces/EmeraldTypes';
+import cat from './cat.jpg';
 // import { Container, Row, Col, Button, Jumbotron } from 'react-bootstrap';
 // import { Link } from 'react-router-dom';
 
@@ -23,12 +24,18 @@ function Orders() {
   console.log(orders[0].name, orders.length);
   return (
     <React.Fragment>
-      <div>Orders here {orders.length}</div>
+      <Row>
+        <Col className='text-center'>
+          <h1>
+            Orders<Badge variant='success'>{orders.length}</Badge>
+          </h1>
+        </Col>
+      </Row>
       <ListGroup>
-        <ListGroup.Item action>Select Order</ListGroup.Item>
         {orders.map((order: Order) => {
           return (
             <ListGroup.Item action key={order.id}>
+              <Image src={cat} thumbnail />
               {order.name}
             </ListGroup.Item>
           );
