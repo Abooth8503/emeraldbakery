@@ -30,7 +30,9 @@ function Dashboard() {
       <br></br>
       <Row>
         <Col className='text-center'>
-          <Button variant='light'>Create</Button>
+          <Link to='/create'>
+            <Button variant='light'>Create</Button>
+          </Link>
         </Col>
         <Col className='text-center'></Col>
       </Row>

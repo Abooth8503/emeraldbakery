@@ -4,6 +4,7 @@ import { EmeraldProvider } from './Interfaces/EmeraldTypes';
 import Dashboard from './Common/Dashboard';
 import history from './Common/History';
 import Orders from './Orders';
+import CreateOrder from './Forms/CreateOrder';
 
 // Used when a user hits a route not defined below
 const FourOhFour = (): JSX.Element => (
@@ -22,6 +23,8 @@ function App() {
         <Switch>
           <Route exact path='/' render={() => <Dashboard />} />
           <Route exact path='/orders' render={() => <Orders />} />
+          <Route exact path='/create' render={() => <CreateOrder />} />
+
           <Route component={FourOhFour} />
         </Switch>
       </Router>
