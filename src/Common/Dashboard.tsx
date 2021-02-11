@@ -18,20 +18,21 @@ function Dashboard() {
         </Col>
       </Row>
       <Row className='justify-content-center'>
-        <Col>
+        <Col className='text-center'>
           <Link to='/orders'>
-            <Button variant='outline-primary'>Orders</Button>
+            <Button variant='light'>Orders</Button>
           </Link>
         </Col>
         <Col>
-          <Button variant='outline-primary'>Calendar</Button>
+          <Button variant='light'>Calendar</Button>
         </Col>
       </Row>
       <br></br>
       <Row>
-        <Col>
-          <Button variant='outline-primary'>Create</Button>
+        <Col className='text-center'>
+          <Button variant='light'>Create</Button>
         </Col>
+        <Col className='text-center'></Col>
       </Row>
       <br></br>
       <br></br>
@@ -45,8 +46,8 @@ function Dashboard() {
       </Row>
       <br></br>
       <Row className='justify-content-md-center'>
-        <Col>
-          <Button variant='outline-primary'>Order Types</Button>
+        <Col className='text-center'>
+          <Button variant='light'>Order Types</Button>
         </Col>
       </Row>
     </Container>

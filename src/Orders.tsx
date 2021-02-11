@@ -40,7 +40,7 @@ function Orders() {
       {orders.map((order: Order) => {
         return (
           // <ListGroup.Item action key={order.id}>
-          <Card key={order.id}>
+          <Card key={order.id} style={{ marginBottom: '3px' }}>
             <Row>
               <Col style={{ maxWidth: '108px' }}>
                 <Image src={cat} rounded />
