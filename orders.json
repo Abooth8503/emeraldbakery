@@ -2,6 +2,7 @@
   {
     "id": 1,
     "name": "Lorraine's order",
+    "area": "Windcrest",
     "address": "5506 Castle Pond Dr",
     "city": "San Antonio",
     "state": "TX",
@@ -16,6 +17,7 @@
   {
     "id": 2,
     "name": "Samantha's order",
+    "area": "Hwy 90",
     "address": "7503 Dream Valley St",
     "city": "San Antonio",
     "state": "TX",
@@ -30,6 +32,7 @@
   {
     "id": 3,
     "name": "Suzy's order",
+    "area": "Stone Oak",
     "address": "22026 US-281 Suite 102",
     "city": "San Antonio",
     "state": "Texas",
