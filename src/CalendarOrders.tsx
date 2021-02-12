@@ -4,7 +4,7 @@ import Calendar from 'react-calendar';
 import moment from 'moment';
 import 'react-calendar/dist/Calendar.css';
 import './css/reactCalendar.css';
-import { Container } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
 
 const mark = ['02/04/2021', '02/05/2021', '02/03/2021'];
 
@@ -50,6 +50,11 @@ function CalendarOrders(): JSX.Element {
         tileClassName={tileClassName}
         onClickDay={onClickDayDate}
       />
+      <Row>
+        <Col>
+          <p className='text-left'>Upcoming</p>
+        </Col>
+      </Row>
     </Container>
   );
 }
