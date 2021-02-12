@@ -24,7 +24,9 @@ function Dashboard() {
           </Link>
         </Col>
         <Col>
-          <Button variant='light'>Calendar</Button>
+          <Link to='/calendar'>
+            <Button variant='light'>Calendar</Button>
+          </Link>
         </Col>
       </Row>
       <br></br>

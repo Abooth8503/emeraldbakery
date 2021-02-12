@@ -5,6 +5,7 @@ import Dashboard from './Common/Dashboard';
 import history from './Common/History';
 import Orders from './Orders';
 import CreateOrder from './Forms/CreateOrder';
+import CalendarOrders from './CalendarOrders';
 
 // Used when a user hits a route not defined below
 const FourOhFour = (): JSX.Element => (
@@ -24,7 +25,7 @@ function App() {
           <Route exact path='/' render={() => <Dashboard />} />
           <Route exact path='/orders' render={() => <Orders />} />
           <Route exact path='/create' render={() => <CreateOrder />} />
-
+          <Route exact path='/calendar' render={() => <CalendarOrders />} />
           <Route component={FourOhFour} />
         </Switch>
       </Router>

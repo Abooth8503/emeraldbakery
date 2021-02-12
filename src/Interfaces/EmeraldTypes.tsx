@@ -30,3 +30,5 @@ export function EmeraldProvider({ children }: { children: React.ReactNode }) {
     <EmeraldContext.Provider value={useOrders([])}>{children}</EmeraldContext.Provider>
   );
 }
+
+export type OnChangeDateCallback = (date: Date | Date[]) => void;
