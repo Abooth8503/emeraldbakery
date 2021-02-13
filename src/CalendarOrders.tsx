@@ -55,7 +55,7 @@ function CalendarOrders(): JSX.Element {
   // console.log('value is ', value, ' type of: ', typeof value);
 
   return (
-    <Container className='text-center'>
+    <Container className='text-center' style={{ marginTop: '5px' }}>
       <Jumbotron style={{ backgroundColor: 'white' }}>
         <h2>Calendar</h2>
       </Jumbotron>
@@ -64,10 +64,13 @@ function CalendarOrders(): JSX.Element {
         value={value}
         tileClassName={tileClassName}
         onClickDay={onClickDayDate}
+        className='centercalendar'
       />
       <Row>
         <Col>
-          <p className='text-left'>Upcoming</p>
+          <p className='text-left'>
+            <u>Upcoming</u>
+          </p>
         </Col>
       </Row>
       {orders.map((order: Order) => {
