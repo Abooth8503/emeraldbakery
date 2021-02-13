@@ -12,6 +12,7 @@ import { FcHome } from 'react-icons/fc';
 import { BiCookie } from 'react-icons/bi';
 import { AiOutlineForm } from 'react-icons/ai';
 import { FcCalendar } from 'react-icons/fc';
+import { FaMap } from 'react-icons/fa';
 
 // Used when a user hits a route not defined below
 const FourOhFour = (): JSX.Element => (
@@ -31,20 +32,24 @@ function App() {
     <EmeraldProvider>
       <Menu>
         <a id='home' className='menu-item' href='/'>
-          <FcHome style={{ marginRight: '3px', verticalAlign: 'middle' }} />
+          <FcHome style={{ marginRight: '5px', verticalAlign: 'middle' }} />
           Home
         </a>
-        <a id='orders' className='menu-item' href='/orders'>
-          <BiCookie style={{ marginRight: '3px' }} />
-          Orders
+        <a id='calendar' className='menu-item' href='/calendar'>
+          <FcCalendar style={{ marginRight: '5px' }} />
+          Calendar
         </a>
         <a id='create' className='menu-item' href='/create'>
-          <AiOutlineForm style={{ marginRight: '3px' }} />
+          <AiOutlineForm style={{ marginRight: '5px' }} />
           Create Order
         </a>
-        <a id='calendar' className='menu-item' href='/calendar'>
-          <FcCalendar style={{ marginRight: '3px' }} />
-          Calendar
+        <a id='orders' className='menu-item' href='/orders'>
+          <BiCookie style={{ marginRight: '5px' }} />
+          Orders
+        </a>
+        <a id='orders' className='menu-item' href='/map'>
+          <FaMap style={{ marginRight: '5px' }} />
+          Map
         </a>
         <hr />
         {/* <a onClick={showSettings} className='menu-item--small' href=''>

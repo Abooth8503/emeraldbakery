@@ -1,15 +1,7 @@
 import * as React from 'react';
 import { useEffect } from 'react';
-import {
-  Container,
-  ListGroup,
-  Image,
-  Row,
-  Col,
-  Badge,
-  Card,
-  Jumbotron,
-} from 'react-bootstrap';
+import { Container, Image, Row, Col, Badge, Card, Jumbotron } from 'react-bootstrap';
+import FlipMove from 'react-flip-move';
 import { Order } from './Interfaces/EmeraldTypes';
 import cat from './cat.jpg';
 import background from './congruent_pentagon.png';
@@ -48,30 +40,42 @@ function Orders() {
           </Jumbotron>
         </Col>
       </Row>
-      {orders.map((order: Order) => {
-        const mapAddress = `${order.address} ${order.city},${order.state}`;
-        const encodedAddress = encodeURI(mapAddress);
-        const addressToUse = `https://www.google.com/maps/search/?api=1&query=${encodedAddress}`;
-        // console.log('addr', mapAddress, addressToUse);
-        return (
-          <Card key={order.id} style={{ marginBottom: '3px' }}>
-            <Row>
-              <Col style={{ maxWidth: '108px' }}>
-                <Image src={cat} rounded />
-              </Col>
-              <Col>
-                <Card.Title>{order.name}</Card.Title>
-                <Card.Text>
-                  {order.quantity} {order.description}
-                </Card.Text>
-                <Card.Text style={{ fontSize: 'medium' }}>
-                  <a href={addressToUse}>{mapAddress}</a>
-                </Card.Text>
-              </Col>
-            </Row>
-          </Card>
-        );
-      })}
+      <FlipMove
+        typeName='div'
+        staggerDurationBy='22'
+        duration={500}
+        leaveAnimation='accordionVertical'
+        enterAnimation='accordionVertical'
+        appearAnimation='accordionVertical'
+        maintainContainerHeight={true}
+        easing='cubic-bezier(0.39, 0.0, 0.45, 1.4)'
+        style={{ textAlign: 'left' }}
+      >
+        {orders.map((order: Order) => {
+          const mapAddress = `${order.address} ${order.city},${order.state}`;
+          const encodedAddress = encodeURI(mapAddress);
+          const addressToUse = `https://www.google.com/maps/search/?api=1&query=${encodedAddress}`;
+          // console.log('addr', mapAddress, addressToUse);
+          return (
+            <Card key={order.id} style={{ marginBottom: '3px' }}>
+              <Row>
+                <Col style={{ maxWidth: '108px' }}>
+                  <Image src={cat} rounded />
+                </Col>
+                <Col>
+                  <Card.Title>{order.name}</Card.Title>
+                  <Card.Text>
+                    {order.quantity} {order.description}
+                  </Card.Text>
+                  <Card.Text style={{ fontSize: 'medium' }}>
+                    <a href={addressToUse}>{mapAddress}</a>
+                  </Card.Text>
+                </Col>
+              </Row>
+            </Card>
+          );
+        })}
+      </FlipMove>
     </Container>
   );
 }
