@@ -44,9 +44,9 @@ function Orders() {
         typeName='div'
         staggerDurationBy='22'
         duration={500}
-        leaveAnimation='accordionVertical'
-        enterAnimation='accordionVertical'
-        appearAnimation='accordionVertical'
+        leaveAnimation='elevator'
+        enterAnimation='elevator'
+        appearAnimation='elevator'
         maintainContainerHeight={true}
         easing='cubic-bezier(0.39, 0.0, 0.45, 1.4)'
         style={{ textAlign: 'left' }}
@@ -57,7 +57,7 @@ function Orders() {
           const addressToUse = `https://www.google.com/maps/search/?api=1&query=${encodedAddress}`;
           // console.log('addr', mapAddress, addressToUse);
           return (
-            <Card key={order.id} style={{ marginBottom: '3px' }}>
+            <Card key={order.id} style={{ marginBottom: '3px', padding: '5px' }}>
               <Row>
                 <Col style={{ maxWidth: '108px' }}>
                   <Image src={cat} rounded />
