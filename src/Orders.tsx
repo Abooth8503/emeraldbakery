@@ -1,6 +1,15 @@
 import * as React from 'react';
 import { useEffect } from 'react';
-import { Container, ListGroup, Image, Row, Col, Badge, Card } from 'react-bootstrap';
+import {
+  Container,
+  ListGroup,
+  Image,
+  Row,
+  Col,
+  Badge,
+  Card,
+  Jumbotron,
+} from 'react-bootstrap';
 import { Order } from './Interfaces/EmeraldTypes';
 import cat from './cat.jpg';
 import background from './congruent_pentagon.png';
@@ -29,12 +38,14 @@ function Orders() {
     <Container fluid style={sectionStyle}>
       <Row>
         <Col className='text-center'>
-          <h1>
-            Orders
-            <Badge variant='success' style={{ marginLeft: '3px' }}>
-              {orders.length}
-            </Badge>
-          </h1>
+          <Jumbotron>
+            <h1>
+              Orders
+              <Badge variant='success' style={{ marginLeft: '3px' }}>
+                {orders.length}
+              </Badge>
+            </h1>
+          </Jumbotron>
         </Col>
       </Row>
       {orders.map((order: Order) => {

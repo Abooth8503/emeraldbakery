@@ -1,11 +1,13 @@
 import * as React from 'react';
 import { Router, Switch, Route, Link } from 'react-router-dom';
+import { slide as Menu } from 'react-burger-menu';
 import { EmeraldProvider } from './Interfaces/EmeraldTypes';
 import Dashboard from './Common/Dashboard';
 import history from './Common/History';
 import Orders from './Orders';
 import CreateOrder from './Forms/CreateOrder';
 import CalendarOrders from './CalendarOrders';
+import './css/burgerMenu.css';
 
 // Used when a user hits a route not defined below
 const FourOhFour = (): JSX.Element => (
@@ -18,8 +20,28 @@ const FourOhFour = (): JSX.Element => (
 );
 
 function App() {
+  // function showSettings(event: MouseEvent<HTMLAnchorElement, MouseEvent>) {
+  //   event.preventDefault();
+  // }
   return (
     <EmeraldProvider>
+      <Menu>
+        <a id='home' className='menu-item' href='/'>
+          Home
+        </a>
+        <a id='orders' className='menu-item' href='/orders'>
+          Orders
+        </a>
+        <a id='create' className='menu-item' href='/create'>
+          Create Order
+        </a>
+        <a id='calendar' className='menu-item' href='/calendar'>
+          Calendar
+        </a>
+        {/* <a onClick={showSettings} className='menu-item--small' href=''>
+          Settings
+        </a> */}
+      </Menu>
       <Router history={history}>
         <Switch>
           <Route exact path='/' render={() => <Dashboard />} />
