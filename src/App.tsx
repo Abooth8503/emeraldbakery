@@ -8,6 +8,10 @@ import Orders from './Orders';
 import CreateOrder from './Forms/CreateOrder';
 import CalendarOrders from './CalendarOrders';
 import './css/burgerMenu.css';
+import { FcHome } from 'react-icons/fc';
+import { BiCookie } from 'react-icons/bi';
+import { AiOutlineForm } from 'react-icons/ai';
+import { FcCalendar } from 'react-icons/fc';
 
 // Used when a user hits a route not defined below
 const FourOhFour = (): JSX.Element => (
@@ -27,17 +31,22 @@ function App() {
     <EmeraldProvider>
       <Menu>
         <a id='home' className='menu-item' href='/'>
+          <FcHome style={{ marginRight: '3px', verticalAlign: 'middle' }} />
           Home
         </a>
         <a id='orders' className='menu-item' href='/orders'>
+          <BiCookie style={{ marginRight: '3px' }} />
           Orders
         </a>
         <a id='create' className='menu-item' href='/create'>
+          <AiOutlineForm style={{ marginRight: '3px' }} />
           Create Order
         </a>
         <a id='calendar' className='menu-item' href='/calendar'>
+          <FcCalendar style={{ marginRight: '3px' }} />
           Calendar
         </a>
+        <hr />
         {/* <a onClick={showSettings} className='menu-item--small' href=''>
           Settings
         </a> */}
