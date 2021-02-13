@@ -3,10 +3,17 @@ import * as React from 'react';
 export interface Order {
   id: number;
   name: string;
+  area: string;
   address: string;
+  city: string;
+  state: string;
+  zipcode: string;
   ordertype: string;
   quantity: number;
   description: string;
+  deliverydate: Date;
+  orderdate: Date;
+  prepaid: boolean;
 }
 
 const useOrders = (initial: Order[] = []) => {

@@ -30,11 +30,18 @@ function Orders() {
       <Row>
         <Col className='text-center'>
           <h1>
-            Orders<Badge variant='success'>{orders.length}</Badge>
+            Orders
+            <Badge variant='success' style={{ marginLeft: '3px' }}>
+              {orders.length}
+            </Badge>
           </h1>
         </Col>
       </Row>
       {orders.map((order: Order) => {
+        const mapAddress = `${order.address} ${order.city},${order.state}`;
+        const encodedAddress = encodeURI(mapAddress);
+        const addressToUse = `https://www.google.com/maps/search/?api=1&query=${encodedAddress}`;
+        // console.log('addr', mapAddress, addressToUse);
         return (
           <Card key={order.id} style={{ marginBottom: '3px' }}>
             <Row>
@@ -45,6 +52,11 @@ function Orders() {
                 <Card.Title>{order.name}</Card.Title>
                 <Card.Text>
                   {order.quantity} {order.description}
+                </Card.Text>
+                <Card.Text style={{ fontSize: 'medium' }}>
+                  <a
+                    href={addressToUse}
+                  >{`${order.address} ${order.city},${order.state}`}</a>
                 </Card.Text>
               </Col>
             </Row>
