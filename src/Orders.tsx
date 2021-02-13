@@ -54,9 +54,7 @@ function Orders() {
                   {order.quantity} {order.description}
                 </Card.Text>
                 <Card.Text style={{ fontSize: 'medium' }}>
-                  <a
-                    href={addressToUse}
-                  >{`${order.address} ${order.city},${order.state}`}</a>
+                  <a href={addressToUse}>{mapAddress}</a>
                 </Card.Text>
               </Col>
             </Row>

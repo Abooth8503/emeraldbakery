@@ -15,6 +15,6 @@ code {
   position: absolute;
   left: 0;
   width: 100%;
-  overflow: hidden;
+  overflow-y: scroll;
   background-image: url(./congruent_pentagon.png);
 }

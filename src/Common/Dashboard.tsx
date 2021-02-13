@@ -12,7 +12,7 @@ function Dashboard() {
     <Container fluid style={sectionStyle}>
       <Row className='justify-content-center h-100' style={{ marginTop: '5px' }}>
         <Col>
-          <Jumbotron style={{ backgroundColor: 'lightgreen' }}>
+          <Jumbotron style={{ backgroundColor: 'white' }}>
             <h2 className='text-center'>Welcome Ariel!</h2>
           </Jumbotron>
         </Col>
@@ -30,20 +30,22 @@ function Dashboard() {
         </Col>
       </Row>
       <br></br>
-      <Row>
+      <Row className='justify-content-center'>
         <Col className='text-center'>
           <Link to='/create'>
             <Button variant='light'>Create</Button>
           </Link>
         </Col>
-        <Col className='text-center'></Col>
+        <Col>
+          <Button variant='light'>Map</Button>
+        </Col>
       </Row>
       <br></br>
       <br></br>
       <hr></hr>
       <Row>
         <Col>
-          <Jumbotron style={{ backgroundColor: 'lightgreen' }}>
+          <Jumbotron style={{ backgroundColor: 'white' }}>
             <h3 className='text-center'>Admin</h3>
           </Jumbotron>
         </Col>
