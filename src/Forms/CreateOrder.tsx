@@ -30,11 +30,23 @@ function CreateOrder() {
     setValue(e.target.value, true);
   };
 
-  const handleSelect = ({ description }: { description: any }) => () => {
+  const handleSelect = ({
+    description,
+    place_id,
+  }: {
+    description: any;
+    place_id: any;
+  }) => () => {
     // When user selects a place, we can replace the keyword without request data from API
     // by setting the second parameter to "false"
     setValue(description, false);
+    // console.log('id is ', place_id);
     clearSuggestions();
+
+    const address = description.split(',');
+    if (address.length > 3) {
+      //
+    }
 
     // Get latitude and longitude via utility functions
     getGeocode({ address: description })
@@ -53,17 +65,17 @@ function CreateOrder() {
         place_id,
         structured_formatting: { main_text, secondary_text },
       } = suggestion;
-
+      console.log('sugg ', suggestion);
       return (
         <li key={place_id} onClick={handleSelect(suggestion)}>
-          <strong>{main_text}</strong> <small>{secondary_text}</small>
+          📍-<strong>{main_text}</strong> <small>{secondary_text}</small>
         </li>
       );
     });
 
   return (
     <Container>
-      <Jumbotron style={{ backgroundColor: 'lightgreen', marginTop: '3px' }}>
+      <Jumbotron style={{ backgroundColor: 'white', marginTop: '3px' }}>
         <h2 className='text-center'>Create Order</h2>
       </Jumbotron>
 
@@ -73,8 +85,10 @@ function CreateOrder() {
           <Form.Control type='text' placeholder='Enter name of order' />
         </Form.Group>
 
-        <div ref={ref}>
-          <input
+        <div style={{ marginBottom: '10px' }} ref={ref}>
+          <Form.Label>Search Address</Form.Label>
+          <Form.Control
+            type='text'
             value={value}
             onChange={handleInput}
             disabled={!ready}
@@ -82,12 +96,24 @@ function CreateOrder() {
             style={{ width: '100%' }}
           />
           {/* We can use the "status" to decide whether we should display the dropdown or not */}
-          {status === 'OK' && <ul>{renderSuggestions()}</ul>}
+          {status === 'OK' && (
+            <ul style={{ listStyleType: 'none' }}>{renderSuggestions()}</ul>
+          )}
         </div>
 
         <Form.Group controlId='formBasicPassword'>
           <Form.Label>Address</Form.Label>
-          <Form.Control type='text' placeholder='123 Street City, state zipcode' />
+          <Form.Control type='text' placeholder='123 Street' />
+        </Form.Group>
+
+        <Form.Group controlId='formBasicPassword'>
+          <Form.Label>City</Form.Label>
+          <Form.Control type='text' placeholder='City' />
+        </Form.Group>
+
+        <Form.Group controlId='formBasicPassword'>
+          <Form.Label>State</Form.Label>
+          <Form.Control type='text' placeholder='State' />
         </Form.Group>
 
         <Form.Group controlId='formBasicPassword'>
@@ -131,17 +157,21 @@ function CreateOrder() {
           </div>
         </Form.Group>
 
+        <Form.Group controlId='formBasicPassword'>
+          <Form.Label>Price</Form.Label>
+          <div className='input-group'>
+            <span className='input-group-addon'>$</span>
+            <Form.Control type='number' placeholder='10.00' min='1' step='0.01' />
+          </div>
+        </Form.Group>
+
         <Form.Group controlId='formBasicCheckbox'>
           <Form.Check type='checkbox' label='PrePaid?' />
         </Form.Group>
 
         <Form.Group controlId='formBasicPassword'>
           <Form.Label>Description</Form.Label>
-          <Form.Control
-            as='textarea'
-            rows={4}
-            placeholder='123 Street City, state zipcode'
-          />
+          <Form.Control as='textarea' rows={4} placeholder='Description here' />
         </Form.Group>
 
         <Form.Group controlId='formBasicPassword'>
@@ -157,6 +187,7 @@ function CreateOrder() {
         <Button variant='primary' type='submit'>
           Submit
         </Button>
+        <br></br>
       </Form>
     </Container>
   );

@@ -5,27 +5,29 @@ import FlipMove from 'react-flip-move';
 import { Order } from './Interfaces/EmeraldTypes';
 import cat from './cat.jpg';
 import background from './congruent_pentagon.png';
+import { useEmeraldContext } from './Interfaces/EmeraldTypes';
 
 const sectionStyle = {
   backgroundImage: `url(${background})`,
 };
 
 function Orders() {
-  const [orders, ordersSet] = React.useState<Order[]>([]);
-  useEffect(() => {
-    fetch('https://raw.githubusercontent.com/Abooth8503/emeraldbakery/master/orders.json')
-      .then((resp) => resp.json())
-      .then((tds: Order[]) => {
-        console.log('orders', tds);
-        ordersSet(tds);
-      });
-  }, []);
+  const { orders } = useEmeraldContext();
+  // const [orders, ordersSet] = React.useState<Order[]>([]);
+  // useEffect(() => {
+  //   fetch('https://raw.githubusercontent.com/Abooth8503/emeraldbakery/master/orders.json')
+  //     .then((resp) => resp.json())
+  //     .then((tds: Order[]) => {
+  //       console.log('orders', tds);
+  //       ordersSet(tds);
+  //     });
+  // }, []);
 
   if (orders.length === 0) {
     return <div>Orders not ready.</div>;
   }
 
-  console.log(orders[0].name, orders.length);
+  console.log(orders[0].Name, orders.length);
   return (
     <Container fluid style={sectionStyle}>
       <Row>
@@ -52,20 +54,21 @@ function Orders() {
         style={{ textAlign: 'left' }}
       >
         {orders.map((order: Order) => {
-          const mapAddress = `${order.address} ${order.city},${order.state}`;
+          const mapAddress = `${order.Address} ${order.City},${order.State}`;
           const encodedAddress = encodeURI(mapAddress);
           const addressToUse = `https://www.google.com/maps/search/?api=1&query=${encodedAddress}`;
           // console.log('addr', mapAddress, addressToUse);
+          console.log('order', order);
           return (
-            <Card key={order.id} style={{ marginBottom: '3px', padding: '5px' }}>
+            <Card key={order.Id} style={{ marginBottom: '3px', padding: '5px' }}>
               <Row>
                 <Col style={{ maxWidth: '108px' }}>
                   <Image src={cat} rounded />
                 </Col>
                 <Col>
-                  <Card.Title>{order.name}</Card.Title>
+                  <Card.Title>{order.Name}</Card.Title>
                   <Card.Text>
-                    {order.quantity} {order.description}
+                    {order.Quantity} {order.Description}
                   </Card.Text>
                   <Card.Text style={{ fontSize: 'medium' }}>
                     <a href={addressToUse}>{mapAddress}</a>

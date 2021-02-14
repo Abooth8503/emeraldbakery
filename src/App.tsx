@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Router, Switch, Route, Link } from 'react-router-dom';
 import { slide as Menu } from 'react-burger-menu';
-import { EmeraldProvider } from './Interfaces/EmeraldTypes';
+import { EmeraldProvider, useEmeraldContext } from './Interfaces/EmeraldTypes';
 import Dashboard from './Common/Dashboard';
 import history from './Common/History';
 import Orders from './Orders';

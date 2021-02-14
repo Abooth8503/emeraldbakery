@@ -1,24 +1,33 @@
 import * as React from 'react';
+import { useEffect } from 'react';
 
 export interface Order {
-  id: number;
-  name: string;
-  area: string;
-  address: string;
-  city: string;
-  state: string;
-  zipcode: string;
-  ordertype: string;
-  quantity: number;
-  description: string;
-  deliverydate: Date;
-  orderdate: Date;
-  prepaid: boolean;
+  Id: number;
+  Name: string;
+  Area: string;
+  Address: string;
+  City: string;
+  State: string;
+  ZipCode: string;
+  OrderType: string;
+  Quantity: number;
+  Description: string;
+  DeliveryDate: Date;
+  OrderDate: Date;
+  PrePaid: boolean;
 }
 
 const useOrders = (initial: Order[] = []) => {
   const [orders, setOrders] = React.useState<Order[]>(initial);
   const [newOrder, setNewOrder] = React.useState<string>('');
+
+  useEffect(() => {
+    fetch(`http://localhost:7071/api/Function1`)
+      .then((response) => response.json()) // parse JSON from request
+      .then((resultData) => {
+        setOrders(resultData);
+      });
+  }, []);
 
   return {
     orders,
