@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as React from 'react';
-import { useEffect } from 'react';
 import Calendar from 'react-calendar';
 import moment from 'moment';
 import 'react-calendar/dist/Calendar.css';
@@ -12,7 +11,6 @@ import cat from './cat.jpg';
 
 function CalendarOrders(): JSX.Element {
   const { orders } = useEmeraldContext();
-  // const [, ordersSet] = React.useState<Order[]>([]);
   const [selectedDay, daySet] = React.useState<Date | undefined>(undefined);
   const [value, onChange] = React.useState<Date | Date[]>(new Date());
 
@@ -99,17 +97,6 @@ function CalendarOrders(): JSX.Element {
           alert(`There was an error adding a new order. Status code:${resp.status}`);
         }
       });
-
-      // Adds Build hook fetch if any Blog is updated/created
-      // if (cbetContentCategory === 3) {
-      //   const buildHookInit = {
-      //     method: 'POST',
-      //   };
-      //   fetch(
-      //     'https://api.netlify.com/build_hooks/5ecebf26051d938410c0d4fc',
-      //     buildHookInit
-      //   );
-      // }
     } catch (e) {
       console.log(`catch error on create/edit: ${e}`);
     }

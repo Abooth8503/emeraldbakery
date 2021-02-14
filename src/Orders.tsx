@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { useEffect } from 'react';
 import { Container, Image, Row, Col, Badge, Card, Jumbotron } from 'react-bootstrap';
 import FlipMove from 'react-flip-move';
 import { Order } from './Interfaces/EmeraldTypes';
@@ -13,15 +12,6 @@ const sectionStyle = {
 
 function Orders() {
   const { orders } = useEmeraldContext();
-  // const [orders, ordersSet] = React.useState<Order[]>([]);
-  // useEffect(() => {
-  //   fetch('https://raw.githubusercontent.com/Abooth8503/emeraldbakery/master/orders.json')
-  //     .then((resp) => resp.json())
-  //     .then((tds: Order[]) => {
-  //       console.log('orders', tds);
-  //       ordersSet(tds);
-  //     });
-  // }, []);
 
   if (orders.length === 0) {
     return <div>Orders not ready.</div>;

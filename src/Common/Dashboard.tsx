@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { Container, Row, Col, Button, Jumbotron } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Container, Row, Col, Jumbotron } from 'react-bootstrap';
 import background from '../congruent_pentagon.png';
 
 const sectionStyle = {
