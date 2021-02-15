@@ -2,8 +2,13 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import * as React from 'react';
 import { Container, Jumbotron, Form, Button } from 'react-bootstrap';
-import usePlacesAutocomplete, { getGeocode, getLatLng } from 'use-places-autocomplete';
+import usePlacesAutocomplete, {
+  getGeocode,
+  getLatLng,
+  getZipCode,
+} from 'use-places-autocomplete';
 import useOnclickOutside from 'react-cool-onclickoutside';
+import '../css/createOrder.css';
 
 function CreateOrder() {
   const [name, nameSet] = React.useState<string | undefined>(undefined);
@@ -55,11 +60,16 @@ function CreateOrder() {
     // by setting the second parameter to "false"
     setValue(description, false);
     console.log('id is ', description);
+    console.log('data: ', data);
     clearSuggestions();
 
     const address = description.split(',');
+    console.log('address obj: ', address);
     if (address.length > 3) {
-      //
+      // set address, city and state
+      addressSet(address[0]);
+      citySet(address[1]);
+      stateSet(address[2]);
     }
 
     // Get latitude and longitude via utility functions
@@ -70,6 +80,15 @@ function CreateOrder() {
       })
       .catch((error) => {
         console.log('😱 Error: ', error);
+      });
+
+    getGeocode({ address: description })
+      .then((results) => getZipCode(results[0], false))
+      .then((zip) => {
+        console.log('ZipCode: ', zip);
+        if (zip !== null) {
+          zipCodeSet(zip);
+        }
       });
   };
 
@@ -366,7 +385,7 @@ function CreateOrder() {
         <Form.Group controlId='formBasicCheckbox'>
           <Form.Check
             type='checkbox'
-            label='PrePaid?'
+            label='PrePaid'
             checked={prepaid}
             onChange={onPrePaidCheckClick}
           />
