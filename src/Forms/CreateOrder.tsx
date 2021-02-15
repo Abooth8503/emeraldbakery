@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import * as React from 'react';
 import { Container, Jumbotron, Form, Button } from 'react-bootstrap';
@@ -5,14 +6,19 @@ import usePlacesAutocomplete, { getGeocode, getLatLng } from 'use-places-autocom
 import useOnclickOutside from 'react-cool-onclickoutside';
 
 function CreateOrder() {
+  const [name, nameSet] = React.useState<string | undefined>(undefined);
+  const [area, areaSet] = React.useState<string | undefined>(undefined);
   const [address, addressSet] = React.useState<string | undefined>(undefined);
   const [city, citySet] = React.useState<string | undefined>(undefined);
   const [state, stateSet] = React.useState<string | undefined>(undefined);
+  const [zipCode, zipCodeSet] = React.useState<string | undefined>(undefined);
   const [orderType, orderTypeSet] = React.useState<string | undefined>(undefined);
+  const [orderStatus, orderStatusSet] = React.useState<string | undefined>(undefined);
   const [quantity, quantitySet] = React.useState<number>(0);
   const [price, priceSet] = React.useState<string | undefined>(undefined);
   const [prepaid, prepaidSet] = React.useState<boolean>(false);
   const [description, descriptionSet] = React.useState<string | undefined>(undefined);
+  const [trafficSource, trafficSourceSet] = React.useState<string | undefined>(undefined);
 
   const {
     ready,
@@ -43,7 +49,7 @@ function CreateOrder() {
     description,
   }: {
     description: string;
-    place_id: any;
+    place_id: string;
   }) => () => {
     // When user selects a place, we can replace the keyword without request data from API
     // by setting the second parameter to "false"
@@ -81,6 +87,16 @@ function CreateOrder() {
       );
     });
 
+  function onChangeName(e: React.ChangeEvent<HTMLInputElement>) {
+    e.preventDefault();
+    nameSet(e.target.value);
+  }
+
+  function onChangeArea(e: React.ChangeEvent<HTMLInputElement>) {
+    e.preventDefault();
+    areaSet(e.target.value);
+  }
+
   function onChangeAddress(e: React.ChangeEvent<HTMLInputElement>) {
     e.preventDefault();
     addressSet(e.target.value);
@@ -96,9 +112,19 @@ function CreateOrder() {
     stateSet(e.target.value);
   }
 
+  function onChangeZipCode(e: React.ChangeEvent<HTMLInputElement>) {
+    e.preventDefault();
+    zipCodeSet(e.target.value);
+  }
+
   function onChangeOrderType(e: React.ChangeEvent<HTMLSelectElement>) {
     e.preventDefault();
     orderTypeSet(e.target.value);
+  }
+
+  function onChangeOrderStatus(e: React.ChangeEvent<HTMLSelectElement>) {
+    e.preventDefault();
+    orderStatusSet(e.target.value);
   }
 
   function onClickPlus(e: React.MouseEvent) {
@@ -126,6 +152,66 @@ function CreateOrder() {
     descriptionSet(e.target.value);
   }
 
+  function onChangeTrafficSource(e: React.ChangeEvent<HTMLSelectElement>) {
+    e.preventDefault();
+    trafficSourceSet(e.target.value);
+  }
+
+  function insertOrder(id: any) {
+    let orderContent = {};
+
+    orderContent = {
+      Id: 0,
+      Name: name,
+      Area: area,
+      Address: address,
+      City: city,
+      State: state,
+      ZipCode: zipCode,
+      OrderType: orderType,
+      OrderStatus: orderStatus,
+      Quantity: quantity,
+      Description: description,
+      DeliveryDate: 'string',
+      OrderDate: new Date(),
+      PrePaid: false,
+    };
+
+    console.log('payload', orderContent);
+
+    const payload = new FormData();
+
+    payload.append('orderContent', JSON.stringify(orderContent));
+
+    const myInit = {
+      method: 'POST',
+      body: payload,
+    };
+
+    try {
+      const response = fetch('http://localhost:7071/api/Function1', myInit);
+      // const response = fetch(
+      //   `https://cbetdata.azurewebsites.net/api/GetCbetContent?code=${process.env.cbetContentCode}`,
+      //   myInit
+      // );
+
+      response.then((resp) => {
+        if (resp.status === 200) {
+          setTimeout(() => {
+            // setIsSubmitting(false);
+            // clearFields();
+            // setIsDone(true);
+            // ClearDone();
+          }, 3000);
+        } else {
+          alert(`There was an error adding a new order. Status code:${resp.status}`);
+        }
+      });
+    } catch (e) {
+      console.log(`catch error on create/edit: ${e}`);
+    }
+  }
+
   return (
     <Container>
       <Jumbotron style={{ backgroundColor: 'white', marginTop: '3px' }}>
@@ -135,7 +221,22 @@ function CreateOrder() {
       <Form>
         <Form.Group controlId='formName'>
           <Form.Label>Name</Form.Label>
-          <Form.Control type='text' placeholder='Enter name of order' />
+          <Form.Control
+            type='text'
+            placeholder='Enter name of order'
+            onChange={onChangeName}
+            value={name}
+          />
+        </Form.Group>
+
+        <Form.Group controlId='formName'>
+          <Form.Label>Area</Form.Label>
+          <Form.Control
+            type='text'
+            placeholder='Enter name of order'
+            onChange={onChangeArea}
+            value={area}
+          />
         </Form.Group>
 
         <div style={{ marginBottom: '10px' }} ref={ref}>
@@ -185,11 +286,31 @@ function CreateOrder() {
         </Form.Group>
 
         <Form.Group controlId='formBasicPassword'>
+          <Form.Label>ZipCode</Form.Label>
+          <Form.Control
+            type='text'
+            placeholder='12345'
+            value={zipCode}
+            onChange={onChangeZipCode}
+          />
+        </Form.Group>
+
+        <Form.Group controlId='formBasicPassword'>
           <Form.Label>Order Type</Form.Label>
           <Form.Control as='select' onChange={onChangeOrderType} value={orderType}>
             <option>Select Order Type</option>
             <option>Erotic</option>
             <option>Cheetah</option>
+          </Form.Control>
+        </Form.Group>
+
+        <Form.Group controlId='formBasicPassword'>
+          <Form.Label>Order Status</Form.Label>
+          <Form.Control as='select' onChange={onChangeOrderStatus} value={orderStatus}>
+            <option>Select Order Status</option>
+            <option>Pending</option>
+            <option>Ordered</option>
+            <option>Delivered</option>
           </Form.Control>
         </Form.Group>
 
@@ -264,7 +385,11 @@ function CreateOrder() {
 
         <Form.Group controlId='formBasicPassword'>
           <Form.Label>Source of Traffic</Form.Label>
-          <Form.Control as='select'>
+          <Form.Control
+            as='select'
+            onChange={onChangeTrafficSource}
+            value={trafficSource}
+          >
             <option>Select Traffic</option>
             <option>3009 Moms group</option>
             <option>Facebook</option>
