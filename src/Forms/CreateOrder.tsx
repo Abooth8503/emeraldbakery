@@ -5,6 +5,15 @@ import usePlacesAutocomplete, { getGeocode, getLatLng } from 'use-places-autocom
 import useOnclickOutside from 'react-cool-onclickoutside';
 
 function CreateOrder() {
+  const [address, addressSet] = React.useState<string | undefined>(undefined);
+  const [city, citySet] = React.useState<string | undefined>(undefined);
+  const [state, stateSet] = React.useState<string | undefined>(undefined);
+  const [orderType, orderTypeSet] = React.useState<string | undefined>(undefined);
+  const [quantity, quantitySet] = React.useState<number>(0);
+  const [price, priceSet] = React.useState<string | undefined>(undefined);
+  const [prepaid, prepaidSet] = React.useState<boolean>(false);
+  const [description, descriptionSet] = React.useState<string | undefined>(undefined);
+
   const {
     ready,
     value,
@@ -24,13 +33,18 @@ function CreateOrder() {
     clearSuggestions();
   });
 
-  const handleInput = (e: any) => {
+  const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     console.log(e.target.value);
     // Update the keyword of the input element
     setValue(e.target.value, true);
   };
 
-  const handleSelect = ({ description }: { description: any; place_id: any }) => () => {
+  const handleSelect = ({
+    description,
+  }: {
+    description: string;
+    place_id: any;
+  }) => () => {
     // When user selects a place, we can replace the keyword without request data from API
     // by setting the second parameter to "false"
     setValue(description, false);
@@ -67,6 +81,51 @@ function CreateOrder() {
       );
     });
 
+  function onChangeAddress(e: React.ChangeEvent<HTMLInputElement>) {
+    e.preventDefault();
+    addressSet(e.target.value);
+  }
+
+  function onChangeCity(e: React.ChangeEvent<HTMLInputElement>) {
+    e.preventDefault();
+    citySet(e.target.value);
+  }
+
+  function onChangeState(e: React.ChangeEvent<HTMLInputElement>) {
+    e.preventDefault();
+    stateSet(e.target.value);
+  }
+
+  function onChangeOrderType(e: React.ChangeEvent<HTMLSelectElement>) {
+    e.preventDefault();
+    orderTypeSet(e.target.value);
+  }
+
+  function onClickPlus(e: React.MouseEvent) {
+    e.preventDefault();
+    quantitySet(quantity + 1);
+  }
+
+  function onClickMinus(e: React.MouseEvent) {
+    e.preventDefault();
+    quantitySet(quantity - 1);
+  }
+
+  function onChangePrice(e: React.ChangeEvent<HTMLSelectElement>) {
+    e.preventDefault();
+    priceSet(e.target.value);
+  }
+
+  function onPrePaidCheckClick(e: React.ChangeEvent<HTMLInputElement>) {
+    e.preventDefault();
+    prepaidSet(!prepaid);
+  }
+
+  function onChangeDescription(e: React.ChangeEvent<HTMLTextAreaElement>) {
+    e.preventDefault();
+    descriptionSet(e.target.value);
+  }
+
   return (
     <Container>
       <Jumbotron style={{ backgroundColor: 'white', marginTop: '3px' }}>
@@ -97,22 +156,37 @@ function CreateOrder() {
 
         <Form.Group controlId='formBasicPassword'>
           <Form.Label>Address</Form.Label>
-          <Form.Control type='text' placeholder='123 Street' />
+          <Form.Control
+            type='text'
+            placeholder='123 Street'
+            value={address}
+            onChange={onChangeAddress}
+          />
         </Form.Group>
 
         <Form.Group controlId='formBasicPassword'>
           <Form.Label>City</Form.Label>
-          <Form.Control type='text' placeholder='City' />
+          <Form.Control
+            type='text'
+            placeholder='City'
+            value={city}
+            onChange={onChangeCity}
+          />
         </Form.Group>
 
         <Form.Group controlId='formBasicPassword'>
           <Form.Label>State</Form.Label>
-          <Form.Control type='text' placeholder='State' />
+          <Form.Control
+            type='text'
+            placeholder='State'
+            value={state}
+            onChange={onChangeState}
+          />
         </Form.Group>
 
         <Form.Group controlId='formBasicPassword'>
           <Form.Label>Order Type</Form.Label>
-          <Form.Control as='select'>
+          <Form.Control as='select' onChange={onChangeOrderType} value={orderType}>
             <option>Select Order Type</option>
             <option>Erotic</option>
             <option>Cheetah</option>
@@ -124,7 +198,7 @@ function CreateOrder() {
           <div>
             <Form.Control
               type='text'
-              value={0}
+              value={quantity}
               placeholder='1'
               style={{ width: '50px', display: 'inline' }}
             />
@@ -135,6 +209,7 @@ function CreateOrder() {
                 verticalAlign: 'top',
                 fontWeight: 'bold',
               }}
+              onClick={onClickPlus}
             >
               +
             </Button>
@@ -145,6 +220,7 @@ function CreateOrder() {
                 verticalAlign: 'top',
                 fontWeight: 'bold',
               }}
+              onClick={onClickMinus}
             >
               -
             </Button>
@@ -155,17 +231,35 @@ function CreateOrder() {
           <Form.Label>Price</Form.Label>
           <div className='input-group'>
             <span className='input-group-addon'>$</span>
-            <Form.Control type='number' placeholder='10.00' min='1' step='0.01' />
+            <Form.Control
+              type='number'
+              placeholder='10.00'
+              min='1'
+              step='0.01'
+              value={price}
+              onChange={onChangePrice}
+            />
           </div>
         </Form.Group>
 
         <Form.Group controlId='formBasicCheckbox'>
-          <Form.Check type='checkbox' label='PrePaid?' />
+          <Form.Check
+            type='checkbox'
+            label='PrePaid?'
+            checked={prepaid}
+            onChange={onPrePaidCheckClick}
+          />
         </Form.Group>
 
         <Form.Group controlId='formBasicPassword'>
           <Form.Label>Description</Form.Label>
-          <Form.Control as='textarea' rows={4} placeholder='Description here' />
+          <Form.Control
+            as='textarea'
+            rows={4}
+            value={description}
+            placeholder='Description here'
+            onChange={onChangeDescription}
+          />
         </Form.Group>
 
         <Form.Group controlId='formBasicPassword'>
