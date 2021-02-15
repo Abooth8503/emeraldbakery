@@ -8,7 +8,7 @@ import { useEmeraldContext } from './Interfaces/EmeraldTypes';
 function GMap() {
   const mapRef: HTMLDivElement | null = null;
   const googleMapRef = React.useRef<HTMLDivElement | null>(mapRef);
-  const { orders } = useEmeraldContext();
+  const { orders, fetchOrders } = useEmeraldContext();
   let googleMap: google.maps.Map | undefined = undefined;
 
   // list of icons
@@ -25,6 +25,20 @@ function GMap() {
 
   useEffect(() => {
     googleMap = initGoogleMap();
+
+    fetchOrders();
+    setMarkers();
+  }, []);
+
+  // initialize the google map
+  const initGoogleMap = () => {
+    return new google.maps.Map(googleMapRef.current as HTMLElement, {
+      center: { lat: 29.56638929999999, lng: -98.3988705 },
+      zoom: 10,
+    });
+  };
+
+  function setMarkers() {
     const bounds = new google.maps.LatLngBounds();
     console.log('about to create a marker');
     orders.map((order) => {
@@ -32,8 +46,8 @@ function GMap() {
       console.log('creating marker', address);
       const marker = createMarker(address);
       console.log('marker', marker);
-      //   console.log('marker 1 ', marker.position);
       if (marker !== null) {
+        console.log('marker 1 ', marker);
         // const newLatLng = new google.maps.LatLng(
         //   marker.getPosition()?.lat(),
         //   marker.getPosition()?.lng(),
@@ -45,31 +59,19 @@ function GMap() {
         }
       }
     });
-  }, []);
-
-  // initialize the google map
-  const initGoogleMap = () => {
-    return new google.maps.Map(googleMapRef.current as HTMLElement, {
-      center: { lat: 29.56638929999999, lng: -98.3988705 },
-      zoom: 9,
-    });
-  };
+  }
 
   // create marker on google map
   function createMarker(markerObj: string): google.maps.Marker | null {
-    let latValue = 0;
-    let lgnValue = 0;
     getGeocode({ address: markerObj })
       .then((results) => {
         return getLatLng(results[0]);
       })
       .then(({ lat, lng }) => {
         console.log('📍 Coordinates: ', { lat, lng });
-        latValue = lat;
-        lgnValue = lng;
 
         return new google.maps.Marker({
-          position: { lat: latValue, lng: lgnValue },
+          position: { lat: lat, lng: lng },
           map: googleMap,
           icon: {
             url: iconList.icon1,
@@ -83,12 +85,17 @@ function GMap() {
         console.log('😱 Error: ', error);
       });
 
-    console.log('lat and lng', latValue, lgnValue);
     return null;
   }
 
-  if (!orders) {
-    return <div>loading...</div>;
+  console.log('orders', orders);
+
+  if (orders.length < 1) {
+    return (
+      <div ref={googleMapRef} style={{ width: 600, height: '100%' }}>
+        loading...
+      </div>
+    );
   }
   return <div ref={googleMapRef} style={{ width: 600, height: '100%' }} />;
 }

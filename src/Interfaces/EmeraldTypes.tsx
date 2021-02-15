@@ -21,19 +21,28 @@ const useOrders = (initial: Order[] = []) => {
   const [orders, setOrders] = React.useState<Order[]>(initial);
   const [newOrder, setNewOrder] = React.useState<string>('');
 
-  useEffect(() => {
+  // useEffect(() => {
+  //   fetch(`http://localhost:7071/api/Function1`)
+  //     .then((response) => response.json()) // parse JSON from request
+  //     .then((resultData) => {
+  //       setOrders(resultData);
+  //     });
+  // }, []);
+
+  function fetchOrders() {
     fetch(`http://localhost:7071/api/Function1`)
       .then((response) => response.json()) // parse JSON from request
       .then((resultData) => {
         setOrders(resultData);
       });
-  }, []);
+  }
 
   return {
     orders,
     newOrder,
     setNewOrder,
     setOrders,
+    fetchOrders,
   };
 };
 
