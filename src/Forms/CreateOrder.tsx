@@ -30,17 +30,11 @@ function CreateOrder() {
     setValue(e.target.value, true);
   };
 
-  const handleSelect = ({
-    description,
-    place_id,
-  }: {
-    description: any;
-    place_id: any;
-  }) => () => {
+  const handleSelect = ({ description }: { description: any; place_id: any }) => () => {
     // When user selects a place, we can replace the keyword without request data from API
     // by setting the second parameter to "false"
     setValue(description, false);
-    // console.log('id is ', place_id);
+    console.log('id is ', description);
     clearSuggestions();
 
     const address = description.split(',');

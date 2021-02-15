@@ -13,6 +13,7 @@ import { BiCookie } from 'react-icons/bi';
 import { AiOutlineForm } from 'react-icons/ai';
 import { FcCalendar } from 'react-icons/fc';
 import { FaMap } from 'react-icons/fa';
+import GMap from './Gmap';
 
 // Used when a user hits a route not defined below
 const FourOhFour = (): JSX.Element => (
@@ -62,6 +63,7 @@ function App() {
           <Route exact path='/orders' render={() => <Orders />} />
           <Route exact path='/create' render={() => <CreateOrder />} />
           <Route exact path='/calendar' render={() => <CalendarOrders />} />
+          <Route exact path='/map' render={() => <GMap />} />
           <Route component={FourOhFour} />
         </Switch>
       </Router>

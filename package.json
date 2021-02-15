@@ -53,6 +53,7 @@
     ]
   },
   "devDependencies": {
+    "@types/google.maps": "^3.43.0",
     "@types/googlemaps": "^3.43.3",
     "@types/react-burger-menu": "^2.6.2",
     "@types/react-icons": "^3.0.0",
