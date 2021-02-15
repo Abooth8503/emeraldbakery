@@ -7,7 +7,7 @@ import 'react-calendar/dist/Calendar.css';
 import './css/reactCalendar.css';
 import { Jumbotron, Container, Row, Col, Card, Image } from 'react-bootstrap';
 import { Order } from './Interfaces/EmeraldTypes';
-import { useEmeraldContext } from './Interfaces/EmeraldTypes';
+import { useEmeraldContext, formatDate } from './Interfaces/EmeraldTypes';
 import cat from './cat.jpg';
 
 function CalendarOrders(): JSX.Element {
@@ -147,7 +147,7 @@ function CalendarOrders(): JSX.Element {
                     <Card.Title>
                       {`${order.Name} `}
                       <span style={{ fontSize: 'small', verticalAlign: 'baseline' }}>
-                        ({`${order.DeliveryDate}`})
+                        ({`${formatDate(order.DeliveryDate, false, true)}`})
                       </span>
                     </Card.Title>
                     <Card.Text>

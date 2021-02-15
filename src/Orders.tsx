@@ -5,7 +5,7 @@ import FlipMove from 'react-flip-move';
 import { Order } from './Interfaces/EmeraldTypes';
 import cat from './cat.jpg';
 import background from './congruent_pentagon.png';
-import { useEmeraldContext } from './Interfaces/EmeraldTypes';
+import { useEmeraldContext, formatDate } from './Interfaces/EmeraldTypes';
 
 const sectionStyle = {
   backgroundImage: `url(${background})`,
@@ -61,7 +61,12 @@ function Orders() {
                   <Image src={cat} rounded />
                 </Col>
                 <Col>
-                  <Card.Title>{order.Name}</Card.Title>
+                  <Card.Title>
+                    {order.Name}{' '}
+                    <span style={{ fontSize: 'small', verticalAlign: 'baseline' }}>
+                      ({`${formatDate(order.DeliveryDate, false, true)}`})
+                    </span>
+                  </Card.Title>
                   <Card.Text>
                     {order.Quantity} {order.Description}
                   </Card.Text>

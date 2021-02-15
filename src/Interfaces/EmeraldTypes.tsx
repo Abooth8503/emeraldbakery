@@ -57,3 +57,50 @@ export function EmeraldProvider({ children }: { children: React.ReactNode }) {
 }
 
 export type OnChangeDateCallback = (date: Date | Date[]) => void;
+
+export function formatDate(
+  date: string | Date,
+  withTime: boolean,
+  withSlashes: boolean
+): string {
+  const monthNames = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ];
+  const dateF = new Date(date);
+  const day = dateF.getDate();
+  const monthIndex = dateF.getMonth();
+  const year = dateF.getFullYear();
+  const time = dateF.toLocaleTimeString();
+  if (withTime) return `${monthIndex}/${day}/${year} ${time}`;
+  if (withSlashes) return `${monthIndex + 1}/${day}/${year}`;
+
+  return `${day} ${monthNames[monthIndex]} ${year}`;
+}
+
+export function calculateDate(date: string): number {
+  // JavaScript program to illustrate
+  // calculation of no. of days between two date
+
+  // To set two dates to two variables
+  const date1 = new Date(date);
+  const date2 = new Date();
+
+  // To calculate the time difference of two dates
+  const DifferenceInTime = date2.getTime() - date1.getTime();
+
+  // To calculate the no. of days between two dates
+  const DifferenceInDays = DifferenceInTime / (1000 * 3600 * 24);
+
+  return Math.floor(DifferenceInDays);
+}
