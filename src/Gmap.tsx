@@ -27,7 +27,9 @@ function GMap() {
     googleMap = initGoogleMap();
 
     fetchOrders();
-    setMarkers();
+    setTimeout(() => {
+      setMarkers();
+    }, 6000);
   }, []);
 
   // initialize the google map

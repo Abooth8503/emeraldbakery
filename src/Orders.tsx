@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useEffect } from 'react';
 import { Container, Image, Row, Col, Badge, Card, Jumbotron } from 'react-bootstrap';
 import FlipMove from 'react-flip-move';
 import { Order } from './Interfaces/EmeraldTypes';
@@ -11,7 +12,11 @@ const sectionStyle = {
 };
 
 function Orders() {
-  const { orders } = useEmeraldContext();
+  const { orders, fetchOrders } = useEmeraldContext();
+
+  useEffect(() => {
+    fetchOrders();
+  }, []);
 
   if (orders.length === 0) {
     return <div>Orders not ready.</div>;
