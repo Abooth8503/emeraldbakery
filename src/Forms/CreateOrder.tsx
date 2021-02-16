@@ -17,6 +17,48 @@ import { calculateDays, Order } from '../Interfaces/EmeraldTypes';
 const year = new Date().getFullYear();
 const years = Array.from(new Array(2), (val, index) => year - index);
 
+const times = [
+  '05:00 AM',
+  '05:30 AM',
+  '06:00 AM',
+  '06:30 AM',
+  '07:00 AM',
+  '07:30 AM',
+  '08:00 AM',
+  '08:30 AM',
+  '09:00 AM',
+  '09:30 AM',
+  '10:00 AM',
+  '10:30 AM',
+  '11:00 AM',
+  '11:30 AM',
+  '12:00 PM',
+  '12:30 PM',
+  '13:00 PM',
+  '13:30 PM',
+  '14:00 PM',
+  '14:30 PM',
+  '15:00 PM',
+  '15:30 PM',
+  '16:00 PM',
+  '16:30 PM',
+  '17:00 PM',
+  '17:30 PM',
+  '18:00 PM',
+  '18:30 PM',
+  '19:00 PM',
+  '19:30 PM',
+  '20:00 PM',
+  '20:30 PM',
+  '21:00 PM',
+  '21:30 PM',
+  '22:00 PM',
+  '22:30 PM',
+  '23:00 PM',
+  '23:30 PM',
+  '24:00 AM',
+];
+
 function CreateOrder() {
   const [name, nameSet] = React.useState<string | undefined>(undefined);
   const [area, areaSet] = React.useState<string | undefined>(undefined);
@@ -35,7 +77,18 @@ function CreateOrder() {
   const [deliveryDay, deliveryDaySet] = React.useState<string | undefined>(undefined);
   const [deliveryYear, deliveryYearSet] = React.useState<string | undefined>(undefined);
   const [daysLength, daysLengthSet] = React.useState<number>(31);
-  const [beginTime, beginTimeSet] = React.useState<TimePickerValue>('10:00');
+  const [beginTime, beginTimeSet] = React.useState<string | undefined>(undefined);
+  const [deliveryMonthEnd, deliveryMonthEndSet] = React.useState<string | undefined>(
+    undefined
+  );
+  const [deliveryDayEnd, deliveryDayEndSet] = React.useState<string | undefined>(
+    undefined
+  );
+  const [deliveryYearEnd, deliveryYearEndSet] = React.useState<string | undefined>(
+    undefined
+  );
+  const [daysLengthEnd, daysLengthEndSet] = React.useState<number>(31);
+  const [endTime, endTimeSet] = React.useState<string | undefined>(undefined);
 
   const {
     ready,
@@ -210,14 +263,39 @@ function CreateOrder() {
     }
   }
 
-  function onChangeBeginTime(timeValue: TimePickerValue) {
-    // e.preventDefault();
-    beginTimeSet(timeValue);
+  function onChangeBeginTime(e: React.ChangeEvent<HTMLSelectElement>) {
+    e.preventDefault();
+    beginTimeSet(e.target.value);
+  }
+
+  function onChangeDeliveryMonthEnd(e: React.ChangeEvent<HTMLSelectElement>) {
+    e.preventDefault();
+    deliveryMonthEndSet(e.target.value);
+    if (deliveryYearEnd !== undefined) {
+      daysLengthEndSet(calculateDays(e.target.value, deliveryYearEnd));
+    }
+  }
+
+  function onChangeDeliveryDayEnd(e: React.ChangeEvent<HTMLSelectElement>) {
+    e.preventDefault();
+    deliveryDayEndSet(e.target.value);
+  }
+
+  function onChangeEndTime(e: React.ChangeEvent<HTMLSelectElement>) {
+    e.preventDefault();
+    endTimeSet(e.target.value);
+  }
+
+  function onChangeDeliveryYearEnd(e: React.ChangeEvent<HTMLSelectElement>) {
+    e.preventDefault();
+    deliveryYearEndSet(e.target.value);
+    if (deliveryMonthEnd !== undefined) {
+      daysLengthEndSet(calculateDays(deliveryMonthEnd, e.target.value));
+    }
   }
 
   function insertOrder(e: React.MouseEvent<HTMLElement>) {
     e.preventDefault();
-    // let orderContent: Order = {};
 
     const orderContent: Order = {
       Id: 0,
@@ -420,8 +498,8 @@ function CreateOrder() {
             onChange={onPrePaidCheckClick}
           />
         </Form.Group>
-        <Form.Label>Delivery Date</Form.Label>  
-        <Form.Group controlId='formBasicCheckbox'>
+        <Form.Label>Delivery Begin Date</Form.Label>  
+        <Form.Group>
           <Form.Control
             as='select'
             value={deliveryMonth}
@@ -486,7 +564,7 @@ function CreateOrder() {
                 );
               })}
           </Form.Control>
-                        
+                       
           <Form.Control
             as='select'
             id='addYear'
@@ -504,8 +582,129 @@ function CreateOrder() {
               );
             })}
           </Form.Control>
+          <Form.Label style={{ marginTop: '10px' }}>Begin Time</Form.Label>  
+          <Form.Control
+            as='select'
+            id='beginTimeCtl'
+            value={beginTime}
+            onChange={onChangeBeginTime}
+            style={{ display: 'inline' }}
+          >
+            <option>Select Time</option>        
+            {times.map((time, index) => {
+              const keyIndex = index;
+              return (
+                <option key={`time-${keyIndex}`} value={time}>
+                  {time}           
+                </option>
+              );
+            })}
+          </Form.Control>
         </Form.Group>
-        <TimePicker value={beginTime} onChange={onChangeBeginTime} />
+        <hr></hr>
+        <Form.Label>Delivery End Date</Form.Label>  
+        <Form.Group>
+          <Form.Control
+            as='select'
+            value={deliveryMonthEnd}
+            onChange={onChangeDeliveryMonthEnd}
+            style={{ width: '78px', display: 'inline' }}
+          >
+            <option value='MM'>MM</option>
+            {['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'].map(
+              (day) => {
+                return <option value={`${day}`} key={Number(day)}>{`${day}`}</option>;
+              }
+            )}
+          </Form.Control>
+                        
+          <Form.Control
+            as='select'
+            id='addDay'
+            value={deliveryDay}
+            onChange={onChangeDeliveryDayEnd}
+            style={{ width: '78px', display: 'inline' }}
+          >
+            <option value='DD'>DD</option>
+            {[
+              '01',
+              '02',
+              '03',
+              '04',
+              '05',
+              '06',
+              '07',
+              '08',
+              '09',
+              '10',
+              '11',
+              '12',
+              '13',
+              '14',
+              '15',
+              '16',
+              '17',
+              '18',
+              '19',
+              '20',
+              '21',
+              '22',
+              '23',
+              '24',
+              '25',
+              '26',
+              '27',
+              '28',
+              '29',
+              '30',
+              '31',
+            ]
+              .filter((numberOfDays) => {
+                return Number(numberOfDays) <= daysLength;
+              })
+              .map((day) => {
+                return (
+                  <option value={`${day}`} key={`day-${Number(day)}`}>{`${day}`}</option>
+                );
+              })}
+          </Form.Control>
+                       
+          <Form.Control
+            as='select'
+            id='addYear'
+            value={deliveryYearEnd}
+            onChange={onChangeDeliveryYearEnd}
+            style={{ display: 'inline', width: '100px' }}
+          >
+            <option value='YYYY'>YYYY</option>       
+            {years.map((everyYear, index) => {
+              const keyIndex = index;
+              return (
+                <option key={`everyYear-${keyIndex}`} value={everyYear}>
+                  {everyYear}           
+                </option>
+              );
+            })}
+          </Form.Control>
+          <Form.Label style={{ marginTop: '10px' }}>End Time</Form.Label>  
+          <Form.Control
+            as='select'
+            id='endTimeCtl'
+            value={endTime}
+            onChange={onChangeEndTime}
+            style={{ display: 'inline' }}
+          >
+            <option>Select Time</option>        
+            {times.map((time, index) => {
+              const keyIndex = index;
+              return (
+                <option key={`time-${keyIndex}`} value={time}>
+                  {time}           
+                </option>
+              );
+            })}
+          </Form.Control>
+        </Form.Group>
         <Form.Group style={{ marginTop: '5px' }}>
           <Form.Label>Description</Form.Label>
           <Form.Control
