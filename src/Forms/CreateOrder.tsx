@@ -87,6 +87,43 @@ function CreateOrder() {
   );
   const [daysLengthEnd, daysLengthEndSet] = React.useState<number>(31);
   const [endTime, endTimeSet] = React.useState<string | undefined>(undefined);
+  // validation state
+  const [nameValidated, setNameValidated] = React.useState<boolean>(false);
+  const [areaValidated, setAreaValidated] = React.useState<boolean>(false);
+  const [addressValidated, setAddressValidated] = React.useState<boolean>(false);
+  const [cityValidated, setCityValidated] = React.useState<boolean>(false);
+  const [stateValidated, setStateValidated] = React.useState<boolean>(false);
+  const [zipCodeValidated, setZipCodeValidated] = React.useState<boolean>(false);
+  const [orderTypeValidated, setOrderTypeValidated] = React.useState<boolean>(false);
+  const [orderStatusValidated, setOrderStatusValidated] = React.useState<boolean>(false);
+  const [quantityValidated, setQuantityValidated] = React.useState<boolean>(false);
+  const [priceValidated, setPriceValidated] = React.useState<boolean>(false);
+  const [prepaidValidated, setPrepaidValidated] = React.useState<boolean>(false);
+  const [descriptionValidated, setDescriptionValidated] = React.useState<boolean>(false);
+  const [trafficSourceValidated, setTrafficSourceValidated] = React.useState<boolean>(
+    false
+  );
+  const [deliveryMonthValidated, setDeliveryMonthValidated] = React.useState<boolean>(
+    false
+  );
+  const [deliveryDayValidated, setDeliveryDayValidated] = React.useState<boolean>(false);
+  const [deliveryYearValidated, setDeliveryYearValidated] = React.useState<boolean>(
+    false
+  );
+  const [beginTimeValidated, setBeginTimeValidated] = React.useState<boolean>(false);
+  const [
+    deliveryDateMonthEndValidated,
+    setDeliveryDateMonthEndValidated,
+  ] = React.useState<boolean>(false);
+  const [
+    deliveryDateDayEndValidated,
+    setDeliveryDateDayEndValidated,
+  ] = React.useState<boolean>(false);
+  const [
+    deliveryDateYearEndValidated,
+    setdeliveryDateYearEndValidated,
+  ] = React.useState<boolean>(false);
+  const [endTimeValidated, setEndTimeValidated] = React.useState<boolean>(false);
 
   const {
     ready,
@@ -290,6 +327,22 @@ function CreateOrder() {
     if (deliveryMonthEnd !== undefined) {
       daysLengthEndSet(calculateDays(deliveryMonthEnd, e.target.value));
     }
+  }
+
+  function isFormValidated(): void {
+    // if (
+    //   this.state.isDollarAmtValidated &&
+    //   this.state.isFormUploaded &&
+    //   this.state.isUnitValidated
+    // ) {
+    //   this.setState({
+    //     isSubmitDisabled: false,
+    //   });
+    // } else {
+    //   this.setState({
+    //     isSubmitDisabled: true,
+    //   });
+    // }
   }
 
   function insertOrder(e: React.MouseEvent<HTMLElement>) {
@@ -661,7 +714,7 @@ function CreateOrder() {
               '31',
             ]
               .filter((numberOfDays) => {
-                return Number(numberOfDays) <= daysLength;
+                return Number(numberOfDays) <= daysLengthEnd;
               })
               .map((day) => {
                 return (
