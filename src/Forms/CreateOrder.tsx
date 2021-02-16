@@ -9,7 +9,9 @@ import usePlacesAutocomplete, {
   getZipCode,
 } from 'use-places-autocomplete';
 import useOnclickOutside from 'react-cool-onclickoutside';
+import TimePicker, { TimePickerValue } from 'react-time-picker';
 import '../css/createOrder.css';
+import '../css/TimePicker.css';
 import { calculateDays, Order } from '../Interfaces/EmeraldTypes';
 
 const year = new Date().getFullYear();
@@ -33,6 +35,7 @@ function CreateOrder() {
   const [deliveryDay, deliveryDaySet] = React.useState<string | undefined>(undefined);
   const [deliveryYear, deliveryYearSet] = React.useState<string | undefined>(undefined);
   const [daysLength, daysLengthSet] = React.useState<number>(31);
+  const [beginTime, beginTimeSet] = React.useState<TimePickerValue>('10:00');
 
   const {
     ready,
@@ -205,6 +208,11 @@ function CreateOrder() {
     if (deliveryMonth !== undefined) {
       daysLengthSet(calculateDays(deliveryMonth, e.target.value));
     }
+  }
+
+  function onChangeBeginTime(timeValue: TimePickerValue) {
+    // e.preventDefault();
+    beginTimeSet(timeValue);
   }
 
   function insertOrder(e: React.MouseEvent<HTMLElement>) {
@@ -497,7 +505,8 @@ function CreateOrder() {
             })}
           </Form.Control>
         </Form.Group>
-        <Form.Group>
+        <TimePicker value={beginTime} onChange={onChangeBeginTime} />
+        <Form.Group style={{ marginTop: '5px' }}>
           <Form.Label>Description</Form.Label>
           <Form.Control
             as='textarea'
