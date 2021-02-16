@@ -1,3 +1,4 @@
+/* eslint-disable no-irregular-whitespace */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import * as React from 'react';
@@ -9,6 +10,10 @@ import usePlacesAutocomplete, {
 } from 'use-places-autocomplete';
 import useOnclickOutside from 'react-cool-onclickoutside';
 import '../css/createOrder.css';
+import { calculateDays, Order } from '../Interfaces/EmeraldTypes';
+
+const year = new Date().getFullYear();
+const years = Array.from(new Array(2), (val, index) => year - index);
 
 function CreateOrder() {
   const [name, nameSet] = React.useState<string | undefined>(undefined);
@@ -24,6 +29,10 @@ function CreateOrder() {
   const [prepaid, prepaidSet] = React.useState<boolean>(false);
   const [description, descriptionSet] = React.useState<string | undefined>(undefined);
   const [trafficSource, trafficSourceSet] = React.useState<string | undefined>(undefined);
+  const [deliveryMonth, deliveryMonthSet] = React.useState<string | undefined>(undefined);
+  const [deliveryDay, deliveryDaySet] = React.useState<string | undefined>(undefined);
+  const [deliveryYear, deliveryYearSet] = React.useState<string | undefined>(undefined);
+  const [daysLength, daysLengthSet] = React.useState<number>(31);
 
   const {
     ready,
@@ -59,8 +68,6 @@ function CreateOrder() {
     // When user selects a place, we can replace the keyword without request data from API
     // by setting the second parameter to "false"
     setValue(description, false);
-    console.log('id is ', description);
-    console.log('data: ', data);
     clearSuggestions();
 
     const address = description.split(',');
@@ -82,6 +89,7 @@ function CreateOrder() {
         console.log('😱 Error: ', error);
       });
 
+    // Get Zip code from address.
     getGeocode({ address: description })
       .then((results) => getZipCode(results[0], false))
       .then((zip) => {
@@ -92,6 +100,7 @@ function CreateOrder() {
       });
   };
 
+  // Render temp ul of suggestions
   const renderSuggestions = () =>
     data.map((suggestion) => {
       const {
@@ -176,10 +185,33 @@ function CreateOrder() {
     trafficSourceSet(e.target.value);
   }
 
-  function insertOrder(id: any) {
-    let orderContent = {};
+  function onChangeDeliveryMonth(e: React.ChangeEvent<HTMLSelectElement>) {
+    e.preventDefault();
+    const newDate = e.target.value;
+    deliveryMonthSet(e.target.value);
+    if (deliveryYear !== undefined) {
+      daysLengthSet(calculateDays(newDate, deliveryYear));
+    }
+  }
 
-    orderContent = {
+  function onChangeDeliveryDay(e: React.ChangeEvent<HTMLSelectElement>) {
+    e.preventDefault();
+    deliveryDaySet(e.target.value);
+  }
+
+  function onChangeDeliveryYear(e: React.ChangeEvent<HTMLSelectElement>) {
+    e.preventDefault();
+    deliveryYearSet(e.target.value);
+    if (deliveryMonth !== undefined) {
+      daysLengthSet(calculateDays(deliveryMonth, e.target.value));
+    }
+  }
+
+  function insertOrder(e: React.MouseEvent<HTMLElement>) {
+    e.preventDefault();
+    // let orderContent: Order = {};
+
+    const orderContent: Order = {
       Id: 0,
       Name: name,
       Area: area,
@@ -191,7 +223,7 @@ function CreateOrder() {
       OrderStatus: orderStatus,
       Quantity: quantity,
       Description: description,
-      DeliveryDate: 'string',
+      DeliveryDate: new Date(`${deliveryMonth}/${deliveryDay}/${deliveryYear}`),
       OrderDate: new Date(),
       PrePaid: false,
     };
@@ -238,7 +270,7 @@ function CreateOrder() {
       </Jumbotron>
 
       <Form>
-        <Form.Group controlId='formName'>
+        <Form.Group>
           <Form.Label>Name</Form.Label>
           <Form.Control
             type='text'
@@ -247,17 +279,15 @@ function CreateOrder() {
             value={name}
           />
         </Form.Group>
-
-        <Form.Group controlId='formName'>
+        <Form.Group>
           <Form.Label>Area</Form.Label>
           <Form.Control
             type='text'
-            placeholder='Enter name of order'
+            placeholder='Enter name of Area'
             onChange={onChangeArea}
             value={area}
           />
         </Form.Group>
-
         <div style={{ marginBottom: '10px' }} ref={ref}>
           <Form.Label>Search Address</Form.Label>
           <Form.Control
@@ -273,8 +303,7 @@ function CreateOrder() {
             <ul style={{ listStyleType: 'none' }}>{renderSuggestions()}</ul>
           )}
         </div>
-
-        <Form.Group controlId='formBasicPassword'>
+        <Form.Group>
           <Form.Label>Address</Form.Label>
           <Form.Control
             type='text'
@@ -283,8 +312,7 @@ function CreateOrder() {
             onChange={onChangeAddress}
           />
         </Form.Group>
-
-        <Form.Group controlId='formBasicPassword'>
+        <Form.Group>
           <Form.Label>City</Form.Label>
           <Form.Control
             type='text'
@@ -293,8 +321,7 @@ function CreateOrder() {
             onChange={onChangeCity}
           />
         </Form.Group>
-
-        <Form.Group controlId='formBasicPassword'>
+        <Form.Group>
           <Form.Label>State</Form.Label>
           <Form.Control
             type='text'
@@ -303,8 +330,7 @@ function CreateOrder() {
             onChange={onChangeState}
           />
         </Form.Group>
-
-        <Form.Group controlId='formBasicPassword'>
+        <Form.Group>
           <Form.Label>ZipCode</Form.Label>
           <Form.Control
             type='text'
@@ -313,17 +339,16 @@ function CreateOrder() {
             onChange={onChangeZipCode}
           />
         </Form.Group>
-
-        <Form.Group controlId='formBasicPassword'>
+        <Form.Group>
           <Form.Label>Order Type</Form.Label>
           <Form.Control as='select' onChange={onChangeOrderType} value={orderType}>
             <option>Select Order Type</option>
             <option>Erotic</option>
             <option>Cheetah</option>
+            <option>Other</option>
           </Form.Control>
         </Form.Group>
-
-        <Form.Group controlId='formBasicPassword'>
+        <Form.Group>
           <Form.Label>Order Status</Form.Label>
           <Form.Control as='select' onChange={onChangeOrderStatus} value={orderStatus}>
             <option>Select Order Status</option>
@@ -332,8 +357,7 @@ function CreateOrder() {
             <option>Delivered</option>
           </Form.Control>
         </Form.Group>
-
-        <Form.Group controlId='formBasicPassword'>
+        <Form.Group>
           <Form.Label>Quantity</Form.Label>
           <div>
             <Form.Control
@@ -366,8 +390,7 @@ function CreateOrder() {
             </Button>
           </div>
         </Form.Group>
-
-        <Form.Group controlId='formBasicPassword'>
+        <Form.Group>
           <Form.Label>Price</Form.Label>
           <div className='input-group'>
             <span className='input-group-addon'>$</span>
@@ -381,7 +404,6 @@ function CreateOrder() {
             />
           </div>
         </Form.Group>
-
         <Form.Group controlId='formBasicCheckbox'>
           <Form.Check
             type='checkbox'
@@ -390,8 +412,92 @@ function CreateOrder() {
             onChange={onPrePaidCheckClick}
           />
         </Form.Group>
-
-        <Form.Group controlId='formBasicPassword'>
+        <Form.Label>Delivery Date</Form.Label>  
+        <Form.Group controlId='formBasicCheckbox'>
+          <Form.Control
+            as='select'
+            value={deliveryMonth}
+            onChange={onChangeDeliveryMonth}
+            style={{ width: '78px', display: 'inline' }}
+          >
+            <option value='MM'>MM</option>
+            {['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'].map(
+              (day) => {
+                return <option value={`${day}`} key={Number(day)}>{`${day}`}</option>;
+              }
+            )}
+          </Form.Control>
+                        
+          <Form.Control
+            as='select'
+            id='addDay'
+            value={deliveryDay}
+            onChange={onChangeDeliveryDay}
+            style={{ width: '78px', display: 'inline' }}
+          >
+            <option value='DD'>DD</option>
+            {[
+              '01',
+              '02',
+              '03',
+              '04',
+              '05',
+              '06',
+              '07',
+              '08',
+              '09',
+              '10',
+              '11',
+              '12',
+              '13',
+              '14',
+              '15',
+              '16',
+              '17',
+              '18',
+              '19',
+              '20',
+              '21',
+              '22',
+              '23',
+              '24',
+              '25',
+              '26',
+              '27',
+              '28',
+              '29',
+              '30',
+              '31',
+            ]
+              .filter((numberOfDays) => {
+                return Number(numberOfDays) <= daysLength;
+              })
+              .map((day) => {
+                return (
+                  <option value={`${day}`} key={`day-${Number(day)}`}>{`${day}`}</option>
+                );
+              })}
+          </Form.Control>
+                        
+          <Form.Control
+            as='select'
+            id='addYear'
+            value={deliveryYear}
+            onChange={onChangeDeliveryYear}
+            style={{ display: 'inline', width: '100px' }}
+          >
+            <option value='YYYY'>YYYY</option>       
+            {years.map((everyYear, index) => {
+              const keyIndex = index;
+              return (
+                <option key={`everyYear-${keyIndex}`} value={everyYear}>
+                  {everyYear}           
+                </option>
+              );
+            })}
+          </Form.Control>
+        </Form.Group>
+        <Form.Group>
           <Form.Label>Description</Form.Label>
           <Form.Control
             as='textarea'
@@ -401,8 +507,7 @@ function CreateOrder() {
             onChange={onChangeDescription}
           />
         </Form.Group>
-
-        <Form.Group controlId='formBasicPassword'>
+        <Form.Group>
           <Form.Label>Source of Traffic</Form.Label>
           <Form.Control
             as='select'
@@ -411,12 +516,14 @@ function CreateOrder() {
           >
             <option>Select Traffic</option>
             <option>3009 Moms group</option>
+            <option>San Antonio Moms group</option>
+            <option>Grocery Facebook Group</option>
             <option>Facebook</option>
             <option>Instagram</option>
+            <option>Other</option>
           </Form.Control>
         </Form.Group>
-
-        <Button variant='primary' type='submit'>
+        <Button variant='primary' onClick={insertOrder}>
           Submit
         </Button>
         <br></br>

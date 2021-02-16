@@ -1,22 +1,26 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import * as React from 'react';
 import { useEffect } from 'react';
+import { JsxChild } from 'typescript';
 
 export interface Order {
   Id: number;
-  Name: string;
-  Area: string;
-  Address: string;
-  City: string;
-  State: string;
-  ZipCode: string;
-  OrderType: string;
+  Name: string | undefined;
+  Area: string | undefined;
+  Address: string | undefined;
+  City: string | undefined;
+  State: string | undefined;
+  ZipCode: string | undefined;
+  OrderType: string | undefined;
+  OrderStatus: string | undefined;
   Quantity: number;
-  Description: string;
+  Description: string | undefined;
   DeliveryDate: Date;
   OrderDate: Date;
   PrePaid: boolean;
 }
 
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 const useOrders = (initial: Order[] = []) => {
   const [orders, setOrders] = React.useState<Order[]>(initial);
   const [newOrder, setNewOrder] = React.useState<string>('');
@@ -104,3 +108,43 @@ export function calculateDate(date: string): number {
 
   return Math.floor(DifferenceInDays);
 }
+
+export function isLeapYear(yearSelected: number) {
+  const isLeapYearMade = yearSelected % 4 === 0;
+  const AndEvenDivisible = yearSelected % 100 !== 0;
+  const OrEvenDiv100 = yearSelected % 400 === 0;
+  console.log('isLeapYear', isLeapYearMade);
+  const isItEvenLeapYear = (isLeapYearMade && AndEvenDivisible) || OrEvenDiv100;
+  return isItEvenLeapYear;
+}
+export function calculateDays(month: string, yearSelected: string) {
+  let daysArrayLength = 31;
+  if (month === '' || yearSelected === '') {
+    return daysArrayLength;
+  }
+  if (
+    month === '01' ||
+    month === '03' ||
+    month === '05' ||
+    month === '07' ||
+    month === '08' ||
+    month === '10' ||
+    month === '12'
+  ) {
+    // these are 31 days
+    daysArrayLength = MonthDays.FullMonth;
+  } else if (month === '02' && isLeapYear(Number(yearSelected)) === true) {
+    daysArrayLength = MonthDays.LeapYear;
+  } else if (month === '02') {
+    daysArrayLength = MonthDays.NonLeapYear;
+  } else if (month === '04' || month === '06' || month === '09' || month === '11') {
+    daysArrayLength = MonthDays.Thirty;
+  }
+  return daysArrayLength;
+}
+export function isValidDate(day: any, month: any, year: any) {
+  return day <= calculateDays(month, year);
+}
+
+const MonthDays = { FullMonth: 31, Thirty: 30, NonLeapYear: 28, LeapYear: 29 };
+Object.freeze(MonthDays);
