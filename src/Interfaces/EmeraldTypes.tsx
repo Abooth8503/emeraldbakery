@@ -16,6 +16,7 @@ export interface Order {
   Quantity: number;
   Description: string | undefined;
   DeliveryDate: Date;
+  DeliveryDateEnd: Date;
   OrderDate: Date;
   PrePaid: boolean;
 }

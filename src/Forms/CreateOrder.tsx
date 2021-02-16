@@ -310,6 +310,9 @@ function CreateOrder() {
       Quantity: quantity,
       Description: description,
       DeliveryDate: new Date(`${deliveryMonth}/${deliveryDay}/${deliveryYear}`),
+      DeliveryDateEnd: new Date(
+        `${deliveryMonthEnd}/${deliveryDayEnd}/${deliveryYearEnd}`
+      ),
       OrderDate: new Date(),
       PrePaid: false,
     };
