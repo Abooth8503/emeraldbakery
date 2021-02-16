@@ -124,6 +124,7 @@ function CreateOrder() {
     setdeliveryDateYearEndValidated,
   ] = React.useState<boolean>(false);
   const [endTimeValidated, setEndTimeValidated] = React.useState<boolean>(false);
+  const [isSubmitDisabled, setIsSubmitDisabled] = React.useState<boolean>(false);
 
   const {
     ready,
@@ -209,61 +210,133 @@ function CreateOrder() {
   function onChangeName(e: React.ChangeEvent<HTMLInputElement>) {
     e.preventDefault();
     nameSet(e.target.value);
+    if (name !== undefined) {
+      if (name?.length > 0) {
+        setNameValidated(true);
+      }
+    }
+    isFormValidated();
   }
 
   function onChangeArea(e: React.ChangeEvent<HTMLInputElement>) {
     e.preventDefault();
     areaSet(e.target.value);
+
+    if (area !== undefined) {
+      if (area?.length > 0) {
+        setAreaValidated(true);
+      }
+    }
+    isFormValidated();
   }
 
   function onChangeAddress(e: React.ChangeEvent<HTMLInputElement>) {
     e.preventDefault();
     addressSet(e.target.value);
+
+    if (address !== undefined) {
+      if (address?.length > 0) {
+        setAddressValidated(true);
+      }
+    }
+    isFormValidated();
   }
 
   function onChangeCity(e: React.ChangeEvent<HTMLInputElement>) {
     e.preventDefault();
     citySet(e.target.value);
+
+    if (city !== undefined) {
+      if (city?.length > 0) {
+        setCityValidated(true);
+      }
+    }
+    isFormValidated();
   }
 
   function onChangeState(e: React.ChangeEvent<HTMLInputElement>) {
     e.preventDefault();
     stateSet(e.target.value);
+
+    if (state !== undefined) {
+      if (state?.length > 0) {
+        setStateValidated(true);
+      }
+    }
+    isFormValidated();
   }
 
   function onChangeZipCode(e: React.ChangeEvent<HTMLInputElement>) {
     e.preventDefault();
     zipCodeSet(e.target.value);
+
+    if (zipCode !== undefined) {
+      if (zipCode?.length > 0) {
+        setZipCodeValidated(true);
+      }
+    }
+    isFormValidated();
   }
 
   function onChangeOrderType(e: React.ChangeEvent<HTMLSelectElement>) {
     e.preventDefault();
     orderTypeSet(e.target.value);
+
+    if (orderType !== undefined) {
+      if (orderType?.length > 0) {
+        setOrderTypeValidated(true);
+      }
+    }
+    isFormValidated();
   }
 
   function onChangeOrderStatus(e: React.ChangeEvent<HTMLSelectElement>) {
     e.preventDefault();
     orderStatusSet(e.target.value);
+
+    if (orderStatus !== undefined) {
+      if (orderStatus?.length > 0) {
+        setOrderStatusValidated(true);
+      }
+    }
+    isFormValidated();
   }
 
   function onClickPlus(e: React.MouseEvent) {
     e.preventDefault();
     quantitySet(quantity + 1);
+
+    if (quantity !== undefined) {
+      setQuantityValidated(true);
+    }
+    isFormValidated();
   }
 
   function onClickMinus(e: React.MouseEvent) {
     e.preventDefault();
     quantitySet(quantity - 1);
+
+    if (quantity !== undefined) {
+      setQuantityValidated(true);
+    }
+    isFormValidated();
   }
 
   function onChangePrice(e: React.ChangeEvent<HTMLSelectElement>) {
     e.preventDefault();
     priceSet(e.target.value);
+
+    if (price !== undefined) {
+      setPriceValidated(true);
+    }
+    isFormValidated();
   }
 
   function onPrePaidCheckClick(e: React.ChangeEvent<HTMLInputElement>) {
     e.preventDefault();
-    prepaidSet(!prepaid);
+    console.log('price is ', e.target.checked, prepaid);
+
+    prepaidSet(e.target.checked);
   }
 
   function onChangeDescription(e: React.ChangeEvent<HTMLTextAreaElement>) {
@@ -330,19 +403,34 @@ function CreateOrder() {
   }
 
   function isFormValidated(): void {
-    // if (
-    //   this.state.isDollarAmtValidated &&
-    //   this.state.isFormUploaded &&
-    //   this.state.isUnitValidated
-    // ) {
-    //   this.setState({
-    //     isSubmitDisabled: false,
-    //   });
-    // } else {
-    //   this.setState({
-    //     isSubmitDisabled: true,
-    //   });
-    // }
+    if (
+      nameValidated &&
+      areaValidated &&
+      addressValidated &&
+      cityValidated &&
+      stateValidated &&
+      zipCodeValidated &&
+      orderTypeValidated &&
+      orderStatusValidated &&
+      quantityValidated &&
+      priceValidated &&
+      prepaidValidated &&
+      trafficSourceValidated &&
+      deliveryMonthValidated &&
+      deliveryDayValidated &&
+      deliveryYearValidated &&
+      beginTimeValidated &&
+      deliveryDateMonthEndValidated &&
+      deliveryDateDayEndValidated &&
+      deliveryDateYearEndValidated &&
+      endTimeValidated &&
+      descriptionValidated &&
+      isSubmitDisabled
+    ) {
+      setIsSubmitDisabled(true);
+    } else {
+      setIsSubmitDisabled(false);
+    }
   }
 
   function insertOrder(e: React.MouseEvent<HTMLElement>) {
