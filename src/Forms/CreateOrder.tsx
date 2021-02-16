@@ -9,9 +9,7 @@ import usePlacesAutocomplete, {
   getZipCode,
 } from 'use-places-autocomplete';
 import useOnclickOutside from 'react-cool-onclickoutside';
-import TimePicker, { TimePickerValue } from 'react-time-picker';
 import '../css/createOrder.css';
-import '../css/TimePicker.css';
 import { calculateDays, Order } from '../Interfaces/EmeraldTypes';
 
 const year = new Date().getFullYear();
@@ -591,7 +589,7 @@ function CreateOrder() {
             id='beginTimeCtl'
             value={beginTime}
             onChange={onChangeBeginTime}
-            style={{ display: 'inline' }}
+            style={{ width: '40%' }}
           >
             <option>Select Time</option>        
             {times.map((time, index) => {
@@ -624,7 +622,7 @@ function CreateOrder() {
           <Form.Control
             as='select'
             id='addDay'
-            value={deliveryDay}
+            value={deliveryDayEnd}
             onChange={onChangeDeliveryDayEnd}
             style={{ width: '78px', display: 'inline' }}
           >
@@ -695,7 +693,7 @@ function CreateOrder() {
             id='endTimeCtl'
             value={endTime}
             onChange={onChangeEndTime}
-            style={{ display: 'inline' }}
+            style={{ width: '40%' }}
           >
             <option>Select Time</option>        
             {times.map((time, index) => {
