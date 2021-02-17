@@ -14,6 +14,7 @@ export interface Order {
   OrderType: string | undefined;
   OrderStatus: string | undefined;
   Quantity: number;
+  Price: string | undefined;
   Description: string | undefined;
   DeliveryDate: Date;
   DeliveryDateEnd: Date;

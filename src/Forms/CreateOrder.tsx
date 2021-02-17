@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import * as React from 'react';
-import { Container, Jumbotron, Form, Button } from 'react-bootstrap';
+import { Container, Jumbotron, Form, Button, Accordion, Card } from 'react-bootstrap';
 import usePlacesAutocomplete, {
   getGeocode,
   getLatLng,
@@ -98,8 +98,6 @@ function CreateOrder() {
   const [orderStatusValidated, setOrderStatusValidated] = React.useState<boolean>(false);
   const [quantityValidated, setQuantityValidated] = React.useState<boolean>(false);
   const [priceValidated, setPriceValidated] = React.useState<boolean>(false);
-  const [prepaidValidated, setPrepaidValidated] = React.useState<boolean>(false);
-  const [descriptionValidated, setDescriptionValidated] = React.useState<boolean>(false);
   const [trafficSourceValidated, setTrafficSourceValidated] = React.useState<boolean>(
     false
   );
@@ -124,7 +122,9 @@ function CreateOrder() {
     setdeliveryDateYearEndValidated,
   ] = React.useState<boolean>(false);
   const [endTimeValidated, setEndTimeValidated] = React.useState<boolean>(false);
-  const [isSubmitDisabled, setIsSubmitDisabled] = React.useState<boolean>(false);
+  const [isSubmitDisabled, setIsSubmitDisabled] = React.useState<boolean>(true);
+  // other
+  const [isOrderSubmitted, setOrderSubmitted] = React.useState<boolean>(false);
 
   const {
     ready,
@@ -347,6 +347,10 @@ function CreateOrder() {
   function onChangeTrafficSource(e: React.ChangeEvent<HTMLSelectElement>) {
     e.preventDefault();
     trafficSourceSet(e.target.value);
+    if (e.target.value !== undefined) {
+      setTrafficSourceValidated(true);
+    }
+    isFormValidated();
   }
 
   function onChangeDeliveryMonth(e: React.ChangeEvent<HTMLSelectElement>) {
@@ -356,11 +360,19 @@ function CreateOrder() {
     if (deliveryYear !== undefined) {
       daysLengthSet(calculateDays(newDate, deliveryYear));
     }
+    if (e.target.value !== 'MM' && e.target.value !== undefined) {
+      setDeliveryMonthValidated(true);
+    }
+    isFormValidated();
   }
 
   function onChangeDeliveryDay(e: React.ChangeEvent<HTMLSelectElement>) {
     e.preventDefault();
     deliveryDaySet(e.target.value);
+    if (e.target.value !== 'DD' && e.target.value !== undefined) {
+      setDeliveryDayValidated(true);
+    }
+    isFormValidated();
   }
 
   function onChangeDeliveryYear(e: React.ChangeEvent<HTMLSelectElement>) {
@@ -369,11 +381,18 @@ function CreateOrder() {
     if (deliveryMonth !== undefined) {
       daysLengthSet(calculateDays(deliveryMonth, e.target.value));
     }
+    if (e.target.value !== 'YYYY' && e.target.value !== undefined) {
+      setDeliveryYearValidated(true);
+    }
+    isFormValidated();
   }
 
   function onChangeBeginTime(e: React.ChangeEvent<HTMLSelectElement>) {
     e.preventDefault();
     beginTimeSet(e.target.value);
+    if (e.target.value !== 'Select Time') {
+      setBeginTimeValidated(true);
+    }
   }
 
   function onChangeDeliveryMonthEnd(e: React.ChangeEvent<HTMLSelectElement>) {
@@ -382,16 +401,27 @@ function CreateOrder() {
     if (deliveryYearEnd !== undefined) {
       daysLengthEndSet(calculateDays(e.target.value, deliveryYearEnd));
     }
+    if (e.target.value !== 'MM' && e.target.value !== undefined) {
+      setDeliveryDateMonthEndValidated(true);
+    }
+    isFormValidated();
   }
 
   function onChangeDeliveryDayEnd(e: React.ChangeEvent<HTMLSelectElement>) {
     e.preventDefault();
     deliveryDayEndSet(e.target.value);
+    if (e.target.value !== 'DD' && e.target.value !== undefined) {
+      setDeliveryDateDayEndValidated(true);
+    }
+    isFormValidated();
   }
 
   function onChangeEndTime(e: React.ChangeEvent<HTMLSelectElement>) {
     e.preventDefault();
     endTimeSet(e.target.value);
+    if (e.target.value !== 'Select Time') {
+      setEndTimeValidated(true);
+    }
   }
 
   function onChangeDeliveryYearEnd(e: React.ChangeEvent<HTMLSelectElement>) {
@@ -400,6 +430,10 @@ function CreateOrder() {
     if (deliveryMonthEnd !== undefined) {
       daysLengthEndSet(calculateDays(deliveryMonthEnd, e.target.value));
     }
+    if (e.target.value !== 'YYYY' && e.target.value !== undefined) {
+      setdeliveryDateYearEndValidated(true);
+    }
+    isFormValidated();
   }
 
   function isFormValidated(): void {
@@ -414,7 +448,6 @@ function CreateOrder() {
       orderStatusValidated &&
       quantityValidated &&
       priceValidated &&
-      prepaidValidated &&
       trafficSourceValidated &&
       deliveryMonthValidated &&
       deliveryDayValidated &&
@@ -424,7 +457,6 @@ function CreateOrder() {
       deliveryDateDayEndValidated &&
       deliveryDateYearEndValidated &&
       endTimeValidated &&
-      descriptionValidated &&
       isSubmitDisabled
     ) {
       setIsSubmitDisabled(true);
@@ -447,6 +479,7 @@ function CreateOrder() {
       OrderType: orderType,
       OrderStatus: orderStatus,
       Quantity: quantity,
+      Price: price,
       Description: description,
       DeliveryDate: new Date(`${deliveryMonth}/${deliveryDay}/${deliveryYear}`),
       DeliveryDateEnd: new Date(
@@ -473,14 +506,13 @@ function CreateOrder() {
       //   `https://cbetdata.azurewebsites.net/api/GetCbetContent?code=${process.env.cbetContentCode}`,
       //   myInit
       // );
+      setOrderSubmitted(true);
 
       response.then((resp) => {
         if (resp.status === 200) {
           setTimeout(() => {
-            // setIsSubmitting(false);
-            // clearFields();
-            // setIsDone(true);
-            // ClearDone();
+            clearFields();
+            setOrderSubmitted(false);
           }, 3000);
         } else {
           alert(`There was an error adding a new order. Status code:${resp.status}`);
@@ -489,6 +521,27 @@ function CreateOrder() {
     } catch (e) {
       console.log(`catch error on create/edit: ${e}`);
     }
+  }
+
+  function clearFields() {
+    nameSet('');
+    areaSet('');
+    addressSet('');
+    citySet('');
+    stateSet('');
+    zipCodeSet('');
+    orderTypeSet('Select Order Type');
+    orderStatusSet('Select Order Status');
+    quantitySet(0);
+    deliveryMonthSet('MM');
+    deliveryDaySet('DD');
+    deliveryYearSet('YYYY');
+    deliveryMonthEndSet('MM');
+    deliveryDayEndSet('DD');
+    deliveryYearEndSet('YYYY');
+    beginTimeSet('Select Time');
+    endTimeSet('Select Time');
+    trafficSourceSet('Select Traffic');
   }
 
   return (
@@ -531,42 +584,53 @@ function CreateOrder() {
             <ul style={{ listStyleType: 'none' }}>{renderSuggestions()}</ul>
           )}
         </div>
-        <Form.Group>
-          <Form.Label>Address</Form.Label>
-          <Form.Control
-            type='text'
-            placeholder='123 Street'
-            value={address}
-            onChange={onChangeAddress}
-          />
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>City</Form.Label>
-          <Form.Control
-            type='text'
-            placeholder='City'
-            value={city}
-            onChange={onChangeCity}
-          />
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>State</Form.Label>
-          <Form.Control
-            type='text'
-            placeholder='State'
-            value={state}
-            onChange={onChangeState}
-          />
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>ZipCode</Form.Label>
-          <Form.Control
-            type='text'
-            placeholder='12345'
-            value={zipCode}
-            onChange={onChangeZipCode}
-          />
-        </Form.Group>
+        <Accordion>
+          <Card>
+            <Accordion.Toggle as={Card.Header} eventKey='0'>
+              Address Info
+            </Accordion.Toggle>
+            <Accordion.Collapse eventKey='0'>
+              <Card.Body>
+                <Form.Group>
+                  <Form.Label>Address</Form.Label>
+                  <Form.Control
+                    type='text'
+                    placeholder='123 Street'
+                    value={address}
+                    onChange={onChangeAddress}
+                  />
+                </Form.Group>
+                <Form.Group>
+                  <Form.Label>City</Form.Label>
+                  <Form.Control
+                    type='text'
+                    placeholder='City'
+                    value={city}
+                    onChange={onChangeCity}
+                  />
+                </Form.Group>
+                <Form.Group>
+                  <Form.Label>State</Form.Label>
+                  <Form.Control
+                    type='text'
+                    placeholder='State'
+                    value={state}
+                    onChange={onChangeState}
+                  />
+                </Form.Group>
+                <Form.Group>
+                  <Form.Label>ZipCode</Form.Label>
+                  <Form.Control
+                    type='text'
+                    placeholder='12345'
+                    value={zipCode}
+                    onChange={onChangeZipCode}
+                  />
+                </Form.Group>
+              </Card.Body>
+            </Accordion.Collapse>
+          </Card>
+        </Accordion>
         <Form.Group>
           <Form.Label>Order Type</Form.Label>
           <Form.Control as='select' onChange={onChangeOrderType} value={orderType}>
@@ -873,9 +937,15 @@ function CreateOrder() {
             <option>Other</option>
           </Form.Control>
         </Form.Group>
-        <Button variant='primary' onClick={insertOrder}>
+        <Button variant='primary' onClick={insertOrder} disabled={isSubmitDisabled}>
           Submit
         </Button>
+        <Button onClick={clearFields} style={{ marginLeft: '5px' }}>
+          Clear
+        </Button>
+        {isOrderSubmitted ? (
+          <Form.Label style={{ marginLeft: '5px' }}>Order is submitted!</Form.Label>
+        ) : null}
         <br></br>
       </Form>
     </Container>

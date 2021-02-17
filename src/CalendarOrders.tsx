@@ -52,61 +52,6 @@ function CalendarOrders(): JSX.Element {
     return;
   }
 
-  function insertOrder(id: any) {
-    let orderContent = {};
-
-    orderContent = {
-      Id: id,
-      Name: 'string',
-      Area: 'string',
-      Address: 'string',
-      City: 'string',
-      State: 'string',
-      ZipCode: 'string',
-      OrderType: 'string',
-      OrderStatus: 'string',
-      Quantity: 1,
-      Description: 'string',
-      DeliveryDate: '2/1/2021',
-      OrderDate: '2/1/2021',
-      PrePaid: false,
-    };
-
-    console.log('payload', orderContent);
-
-    const payload = new FormData();
-
-    payload.append('orderContent', JSON.stringify(orderContent));
-
-    const myInit = {
-      method: 'POST',
-      body: payload,
-    };
-
-    try {
-      const response = fetch('http://localhost:7071/api/Function1', myInit);
-      // const response = fetch(
-      //   `https://cbetdata.azurewebsites.net/api/GetCbetContent?code=${process.env.cbetContentCode}`,
-      //   myInit
-      // );
-
-      response.then((resp) => {
-        if (resp.status === 200) {
-          setTimeout(() => {
-            // setIsSubmitting(false);
-            // clearFields();
-            // setIsDone(true);
-            // ClearDone();
-          }, 3000);
-        } else {
-          alert(`There was an error adding a new order. Status code:${resp.status}`);
-        }
-      });
-    } catch (e) {
-      console.log(`catch error on create/edit: ${e}`);
-    }
-  }
-
   // console.log('value is ', value, ' type of: ', typeof value);
   return (
     <Container className='text-center' style={{ marginTop: '5px' }}>
@@ -134,11 +79,7 @@ function CalendarOrders(): JSX.Element {
             const addressToUse = `https://www.google.com/maps/search/?api=1&query=${encodedAddress}`;
             // console.log('addr', mapAddress, addressToUse);
             return (
-              <Card
-                key={order.Id}
-                style={{ marginBottom: '3px' }}
-                onClick={() => insertOrder(order.Id)}
-              >
+              <Card key={order.Id} style={{ marginBottom: '3px' }}>
                 <Row>
                   <Col style={{ maxWidth: '108px' }}>
                     <Image src={cat} rounded style={{ marginTop: '3px' }} />
