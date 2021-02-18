@@ -12,53 +12,16 @@ import {
 } from 'react-bootstrap';
 import Calendar from 'react-calendar';
 import moment from 'moment';
-import 'react-calendar/dist/Calendar.css';
-import './css/reactCalendar.css';
 import { RouteComponentProps } from 'react-router-dom';
 import { useEmeraldContext, formatDate } from './Interfaces/EmeraldTypes';
 import OrderTypeImage from './images/Erotic1.jpg';
 
 function OrderDetail(props: RouteComponentProps<number>): JSX.Element {
   const { orders, fetchOrders } = useEmeraldContext();
-  const [value, onChange] = React.useState<Date | Date[]>(new Date());
-  const [selectedDay, daySet] = React.useState<Date | undefined>(undefined);
 
   useEffect(() => {
     fetchOrders();
   }, []);
-
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-  function tileClassName({
-    date,
-    view,
-  }: {
-    date: any;
-    view: any;
-  }): string | string[] | null {
-    // Add class to tiles in month view only
-    if (view === 'month') {
-      // console.log('date and view', date, view, moment(date).format('MM-DD-YYYY'));
-
-      if (
-        orders.find(
-          (x) =>
-            moment(x.DeliveryDate).format('MM-DD-YYYY') ===
-            moment(date).format('MM-DD-YYYY')
-        )
-      ) {
-        // console.log('found day!');
-        return 'highlight';
-      }
-      return null;
-    }
-    return null;
-  }
-
-  function onClickDayDate(value: Date): void {
-    console.log('onclickday is ', value);
-    daySet(value);
-    return;
-  }
 
   console.log('props for orderDetail', props.location.state, orders);
   if (orders.length < 1) {
@@ -72,13 +35,6 @@ function OrderDetail(props: RouteComponentProps<number>): JSX.Element {
         <Jumbotron style={{ backgroundColor: 'white' }}>
           <h2>Order Detail</h2>
         </Jumbotron>
-        <Calendar
-          onChange={(val) => onChange(val)}
-          value={value}
-          tileClassName={tileClassName}
-          onClickDay={onClickDayDate}
-          className='centercalendar'
-        />
         <Row>
           <Col>
             {filteredOrderProp.map((order) => {
@@ -114,13 +70,23 @@ function OrderDetail(props: RouteComponentProps<number>): JSX.Element {
                 const addressToUse = `https://www.google.com/maps/search/?api=1&query=${encodedAddress}`;
                 return (
                   <React.Fragment key={order.Id}>
-                    <ListGroup.Item key={order.Id} className='d-flex align-items-center'>
+                    <ListGroup.Item className='d-flex align-items-center'>
                       <b>Date Created:</b>{' '}
-                      <span style={{ marginLeft: '5px' }}>
+                      <span style={{ marginLeft: '6px' }}>
                         {formatDate(order.OrderDate, false, true)}
                       </span>
                     </ListGroup.Item>
-                    <ListGroup.Item key={order.Id} className='d-flex align-items-center'>
+                    <ListGroup.Item className='d-flex align-items-center'>
+                      <b>Delivery Date:</b>{' '}
+                      <span style={{ marginLeft: '5px', marginRight: '5px' }}>
+                        {formatDate(order.DeliveryDate, false, true)}
+                      </span>
+                      <b>TO</b>
+                      <span style={{ marginLeft: '5px' }}>
+                        {formatDate(order.DeliveryDateEnd, false, true)}
+                      </span>
+                    </ListGroup.Item>
+                    <ListGroup.Item className='d-flex align-items-center'>
                       <b>Description:</b>{' '}
                       <span style={{ marginLeft: '5px' }}>{order.Description}</span>
                     </ListGroup.Item>
