@@ -8,7 +8,7 @@ import { useEmeraldContext } from './Interfaces/EmeraldTypes';
 function GMap() {
   const mapRef: HTMLDivElement | null = null;
   const googleMapRef = React.useRef<HTMLDivElement | null>(mapRef);
-  const { orders, fetchOrders } = useEmeraldContext();
+  const { orders } = useEmeraldContext();
   let googleMap: google.maps.Map | undefined = undefined;
 
   // list of icons
@@ -26,7 +26,6 @@ function GMap() {
   useEffect(() => {
     googleMap = initGoogleMap();
 
-    fetchOrders();
     setTimeout(() => {
       setMarkers();
     }, 6000);
@@ -43,24 +42,26 @@ function GMap() {
   function setMarkers() {
     const bounds = new google.maps.LatLngBounds();
     console.log('about to create a marker');
-    orders.map((order) => {
-      const address = `${order.Address}, ${order.City}, ${order.State} ${order.ZipCode}`;
-      console.log('creating marker', address);
-      const marker = createMarker(address);
-      console.log('marker', marker);
-      if (marker !== null) {
-        console.log('marker 1 ', marker);
-        // const newLatLng = new google.maps.LatLng(
-        //   marker.getPosition()?.lat(),
-        //   marker.getPosition()?.lng(),
-        //   false
-        // );
-        // bounds.extend(newLatLng);
-        if (googleMap !== undefined) {
-          googleMap.fitBounds(bounds); // the map to contain all markers
+    if (orders.length > 0) {
+      orders.map((order) => {
+        const address = `${order.Address}, ${order.City}, ${order.State} ${order.ZipCode}`;
+        console.log('creating marker', address);
+        const marker = createMarker(address);
+        console.log('marker', marker);
+        if (marker !== null) {
+          console.log('marker 1 ', marker);
+          // const newLatLng = new google.maps.LatLng(
+          //   marker.getPosition()?.lat(),
+          //   marker.getPosition()?.lng(),
+          //   false
+          // );
+          // bounds.extend(newLatLng);
+          if (googleMap !== undefined) {
+            googleMap.fitBounds(bounds); // the map to contain all markers
+          }
         }
-      }
-    });
+      });
+    }
   }
 
   // create marker on google map

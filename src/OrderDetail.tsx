@@ -17,11 +17,7 @@ import { useEmeraldContext, formatDate } from './Interfaces/EmeraldTypes';
 import OrderTypeImage from './images/Erotic1.jpg';
 
 function OrderDetail(props: RouteComponentProps<number>): JSX.Element {
-  const { orders, fetchOrders } = useEmeraldContext();
-
-  useEffect(() => {
-    fetchOrders();
-  }, []);
+  const { orders } = useEmeraldContext();
 
   function editOrder(id: number) {
     console.log('id', id);

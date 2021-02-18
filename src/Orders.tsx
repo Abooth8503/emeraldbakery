@@ -15,14 +15,9 @@ const sectionStyle = {
 type Props = RouteComponentProps;
 
 function Orders(props: Props) {
-  const { orders, fetchOrders } = useEmeraldContext();
-
-  useEffect(() => {
-    fetchOrders();
-  }, []);
+  const { orders } = useEmeraldContext();
 
   function selectOrder(id: any): void {
-    // e.preventDefault();
     console.log('id is ' + id);
     props.history.push(`/detail`, id);
   }

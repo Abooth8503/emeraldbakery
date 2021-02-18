@@ -143,21 +143,30 @@ function CreateOrder(props: Props) {
     debounce: 300,
   });
 
-  const { orders, fetchOrders } = useEmeraldContext();
+  const { orders } = useEmeraldContext();
 
   useEffect(() => {
-    fetchOrders();
-
     if (props.location.state !== undefined) {
       console.log('found edit order id', props.location.state);
-      const filteredEditOrder = orders.filter((order) => order.Id === props.location.state);
+      const filteredEditOrder = orders.filter(
+        (order) => order.Id === props.location.state
+      );
       console.log('filteredOrder', filteredEditOrder);
       if (filteredEditOrder.length > 0) {
-        console.log('found order');
+        console.log('found order', filteredEditOrder[0]);
         nameSet(filteredEditOrder[0].Name);
+        areaSet(filteredEditOrder[0].Area);
+        addressSet(filteredEditOrder[0].Address);
+        citySet(filteredEditOrder[0].City);
+        stateSet(filteredEditOrder[0].State);
+        zipCodeSet(filteredEditOrder[0].ZipCode);
+        orderTypeSet(filteredEditOrder[0].OrderType);
+        orderStatusSet(filteredEditOrder[0].OrderStatus);
+        quantitySet(filteredEditOrder[0].Quantity);
+        priceSet(filteredEditOrder[0].Price);
+        prepaidSet(filteredEditOrder[0].PrePaid);
       }
     }
-
   }, []);
 
   const ref = useOnclickOutside(() => {

@@ -14,13 +14,9 @@ import cat from './cat.jpg';
 type Props = RouteComponentProps;
 
 function CalendarOrders(props: Props): JSX.Element {
-  const { orders, fetchOrders } = useEmeraldContext();
+  const { orders } = useEmeraldContext();
   const [selectedDay, daySet] = React.useState<Date | undefined>(undefined);
   const [value, onChange] = React.useState<Date | Date[]>(new Date());
-
-  useEffect(() => {
-    fetchOrders();
-  }, []);
 
   console.log('router props', props);
 
@@ -61,6 +57,10 @@ function CalendarOrders(props: Props): JSX.Element {
     // e.preventDefault();
     console.log('id is ' + id);
     props.history.push(`/detail`, id);
+  }
+
+  if (orders.length < 1) {
+    return <div>Loading...</div>;
   }
 
   // console.log('value is ', value, ' type of: ', typeof value);

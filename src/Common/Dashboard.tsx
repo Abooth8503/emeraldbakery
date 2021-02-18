@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { useEffect } from 'react';
 import { Container, Row, Col, Jumbotron } from 'react-bootstrap';
 import background from '../congruent_pentagon.png';
 import { useEmeraldContext } from '../Interfaces/EmeraldTypes';
@@ -52,15 +51,13 @@ const motivationalQuotes = [
 ];
 
 function Dashboard() {
-  const { orders, fetchOrders } = useEmeraldContext();
-
-  useEffect(() => {
-    fetchOrders();
-  }, []);
+  const { orders } = useEmeraldContext();
 
   const randNumber = Math.floor(Math.random() * motivationalQuotes.length);
   console.log('random number: ', randNumber);
-
+  if (orders.length < 1) {
+    return <div>Loading...</div>;
+  }
   return (
     <Container fluid style={sectionStyle}>
       <Row className='justify-content-center h-100' style={{ marginTop: '5px' }}>
