@@ -5,6 +5,7 @@ import * as React from 'react';
 import { useEffect } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import { Container, Jumbotron, Form, Button, Accordion, Card } from 'react-bootstrap';
+import moment from 'moment';
 import usePlacesAutocomplete, {
   getGeocode,
   getLatLng,
@@ -12,7 +13,12 @@ import usePlacesAutocomplete, {
 } from 'use-places-autocomplete';
 import useOnclickOutside from 'react-cool-onclickoutside';
 import '../css/createOrder.css';
-import { calculateDays, Order, useEmeraldContext } from '../Interfaces/EmeraldTypes';
+import {
+  calculateDays,
+  Order,
+  useEmeraldContext,
+  formatDate,
+} from '../Interfaces/EmeraldTypes';
 
 type Props = RouteComponentProps;
 
@@ -165,6 +171,25 @@ function CreateOrder(props: Props) {
         quantitySet(filteredEditOrder[0].Quantity);
         priceSet(filteredEditOrder[0].Price);
         prepaidSet(filteredEditOrder[0].PrePaid);
+
+        // delivery date start
+        const deliveryDateStart = moment(filteredEditOrder[0].DeliveryDate);
+        // console.log('month', deliveryDateStart.format('MM'));
+        deliveryMonthSet(deliveryDateStart.format('MM'));
+        deliveryDaySet(deliveryDateStart.format('DD'));
+        deliveryYearSet(deliveryDateStart.format('YYYY'));
+        // console.log('start time', deliveryDateStart.format('hh:mm a').toUpperCase());
+        beginTimeSet(deliveryDateStart.format('hh:mm a').toUpperCase());
+
+        // delivery date end
+        const deliveryDateEnd = moment(filteredEditOrder[0].DeliveryDateEnd);
+        deliveryMonthEndSet(deliveryDateEnd.format('MM'));
+        deliveryDayEndSet(deliveryDateEnd.format('DD'));
+        deliveryYearEndSet(deliveryDateEnd.format('YYYY'));
+        endTimeSet(deliveryDateEnd.format('hh:mm a').toUpperCase());
+
+        // trafficSourceSet(filteredEditOrder[0].TrafficSource);
+        descriptionSet(filteredEditOrder[0].Description);
       }
     }
   }, []);
@@ -577,7 +602,9 @@ function CreateOrder(props: Props) {
   return (
     <Container>
       <Jumbotron style={{ backgroundColor: 'white', marginTop: '3px' }}>
-        <h2 className='text-center'>Create Order</h2>
+        <h2 className='text-center'>
+          {props.location.state === undefined ? 'Create Order' : 'Edit Order'}
+        </h2>
       </Jumbotron>
 
       <Form>

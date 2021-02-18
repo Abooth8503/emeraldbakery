@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as React from 'react';
-import { useEffect } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import Calendar from 'react-calendar';
 import moment from 'moment';
