@@ -13,12 +13,7 @@ import usePlacesAutocomplete, {
 } from 'use-places-autocomplete';
 import useOnclickOutside from 'react-cool-onclickoutside';
 import '../css/createOrder.css';
-import {
-  calculateDays,
-  Order,
-  useEmeraldContext,
-  formatDate,
-} from '../Interfaces/EmeraldTypes';
+import { calculateDays, Order, useEmeraldContext } from '../Interfaces/EmeraldTypes';
 
 type Props = RouteComponentProps;
 
@@ -188,7 +183,7 @@ function CreateOrder(props: Props) {
         deliveryYearEndSet(deliveryDateEnd.format('YYYY'));
         endTimeSet(deliveryDateEnd.format('hh:mm a').toUpperCase());
 
-        // trafficSourceSet(filteredEditOrder[0].TrafficSource);
+        trafficSourceSet(filteredEditOrder[0].TrafficSource);
         descriptionSet(filteredEditOrder[0].Description);
       }
     }
@@ -524,7 +519,7 @@ function CreateOrder(props: Props) {
     e.preventDefault();
 
     const orderContent: Order = {
-      Id: 0,
+      Id: props.location.state === undefined ? 0 : Number(props.location.state),
       Name: name,
       Area: area,
       Address: address,
@@ -542,6 +537,7 @@ function CreateOrder(props: Props) {
       ),
       OrderDate: new Date(),
       PrePaid: false,
+      TrafficSource: trafficSource,
     };
 
     console.log('payload', orderContent);
@@ -588,6 +584,7 @@ function CreateOrder(props: Props) {
     orderTypeSet('Select Order Type');
     orderStatusSet('Select Order Status');
     quantitySet(0);
+    priceSet('');
     deliveryMonthSet('MM');
     deliveryDaySet('DD');
     deliveryYearSet('YYYY');

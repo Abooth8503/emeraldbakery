@@ -20,6 +20,7 @@ export interface Order {
   DeliveryDateEnd: Date;
   OrderDate: Date;
   PrePaid: boolean;
+  TrafficSource: string | undefined;
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
