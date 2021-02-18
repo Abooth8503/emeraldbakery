@@ -69,7 +69,7 @@ function App() {
             render={(props) => <CalendarOrders {...props} />}
           />
           <Route exact path='/map' render={() => <GMap />} />
-          <Route exact path='/detail' render={() => <OrderDetail />} />
+          <Route exact path='/detail' render={(props) => <OrderDetail {...props} />} />
           <Route component={FourOhFour} />
         </Switch>
       </Router>

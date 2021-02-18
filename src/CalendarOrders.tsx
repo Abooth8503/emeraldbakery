@@ -22,6 +22,8 @@ function CalendarOrders(props: Props): JSX.Element {
     fetchOrders();
   }, []);
 
+  console.log('router props', props);
+
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   function tileClassName({
     date,
@@ -58,6 +60,7 @@ function CalendarOrders(props: Props): JSX.Element {
   function selectOrder(id: any): void {
     // e.preventDefault();
     console.log('id is ' + id);
+    props.history.push(`/detail`, id);
   }
 
   // console.log('value is ', value, ' type of: ', typeof value);
