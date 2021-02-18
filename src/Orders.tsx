@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { useEffect } from 'react';
+import { RouteComponentProps } from 'react-router-dom';
 import { Container, Image, Row, Col, Badge, Card, Jumbotron } from 'react-bootstrap';
 import FlipMove from 'react-flip-move';
 import { Order } from './Interfaces/EmeraldTypes';
@@ -11,12 +12,20 @@ const sectionStyle = {
   backgroundImage: `url(${background})`,
 };
 
-function Orders() {
+type Props = RouteComponentProps;
+
+function Orders(props: Props) {
   const { orders, fetchOrders } = useEmeraldContext();
 
   useEffect(() => {
     fetchOrders();
   }, []);
+
+  function selectOrder(id: any): void {
+    // e.preventDefault();
+    console.log('id is ' + id);
+    props.history.push(`/detail`, id);
+  }
 
   if (orders.length === 0) {
     return <div>Orders not ready.</div>;
@@ -55,7 +64,11 @@ function Orders() {
           // console.log('addr', mapAddress, addressToUse);
           console.log('order', order);
           return (
-            <Card key={order.Id} style={{ marginBottom: '3px', padding: '5px' }}>
+            <Card
+              key={order.Id}
+              style={{ marginBottom: '3px', padding: '5px' }}
+              onClick={() => selectOrder(order.Id)}
+            >
               <Row>
                 <Col style={{ maxWidth: '108px' }}>
                   <Image src={cat} rounded />

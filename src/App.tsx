@@ -61,8 +61,8 @@ function App() {
       <Router history={history}>
         <Switch>
           <Route exact path='/' render={() => <Dashboard />} />
-          <Route exact path='/orders' render={() => <Orders />} />
-          <Route exact path='/create' render={() => <CreateOrder />} />
+          <Route exact path='/orders' render={(props) => <Orders {...props} />} />
+          <Route exact path='/create' render={(props) => <CreateOrder {...props} />} />
           <Route
             exact
             path='/calendar'

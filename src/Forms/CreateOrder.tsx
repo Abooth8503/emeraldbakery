@@ -2,6 +2,8 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import * as React from 'react';
+import { useEffect } from 'react';
+import { RouteComponentProps } from 'react-router-dom';
 import { Container, Jumbotron, Form, Button, Accordion, Card } from 'react-bootstrap';
 import usePlacesAutocomplete, {
   getGeocode,
@@ -10,7 +12,9 @@ import usePlacesAutocomplete, {
 } from 'use-places-autocomplete';
 import useOnclickOutside from 'react-cool-onclickoutside';
 import '../css/createOrder.css';
-import { calculateDays, Order } from '../Interfaces/EmeraldTypes';
+import { calculateDays, Order, useEmeraldContext } from '../Interfaces/EmeraldTypes';
+
+type Props = RouteComponentProps;
 
 const year = new Date().getFullYear();
 const years = Array.from(new Array(2), (val, index) => year - index);
@@ -57,7 +61,7 @@ const times = [
   '24:00 AM',
 ];
 
-function CreateOrder() {
+function CreateOrder(props: Props) {
   const [name, nameSet] = React.useState<string | undefined>(undefined);
   const [area, areaSet] = React.useState<string | undefined>(undefined);
   const [address, addressSet] = React.useState<string | undefined>(undefined);
@@ -138,6 +142,23 @@ function CreateOrder() {
     },
     debounce: 300,
   });
+
+  const { orders, fetchOrders } = useEmeraldContext();
+
+  useEffect(() => {
+    fetchOrders();
+
+    if (props.location.state !== undefined) {
+      console.log('found edit order id', props.location.state);
+      const filteredEditOrder = orders.filter((order) => order.Id === props.location.state);
+      console.log('filteredOrder', filteredEditOrder);
+      if (filteredEditOrder.length > 0) {
+        console.log('found order');
+        nameSet(filteredEditOrder[0].Name);
+      }
+    }
+
+  }, []);
 
   const ref = useOnclickOutside(() => {
     // When user clicks outside of the component, we can dismiss

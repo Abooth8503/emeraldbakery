@@ -10,8 +10,8 @@ import {
   ListGroup,
   Button,
 } from 'react-bootstrap';
-import Calendar from 'react-calendar';
-import moment from 'moment';
+// import Calendar from 'react-calendar';
+// import moment from 'moment';
 import { RouteComponentProps } from 'react-router-dom';
 import { useEmeraldContext, formatDate } from './Interfaces/EmeraldTypes';
 import OrderTypeImage from './images/Erotic1.jpg';
@@ -22,6 +22,11 @@ function OrderDetail(props: RouteComponentProps<number>): JSX.Element {
   useEffect(() => {
     fetchOrders();
   }, []);
+
+  function editOrder(id: number) {
+    console.log('id', id);
+    props.history.push(`/create`, id);
+  }
 
   console.log('props for orderDetail', props.location.state, orders);
   if (orders.length < 1) {
@@ -52,7 +57,7 @@ function OrderDetail(props: RouteComponentProps<number>): JSX.Element {
                   </Card.Header>
                   <Card.Text>Order Type: {order.OrderType}</Card.Text>
                   <Card.Text>Quantity: {order.Quantity}</Card.Text>
-                  <Button>Edit</Button>
+                  <Button onClick={() => editOrder(order.Id)}>Edit</Button>
                 </Card>
               );
             })}
