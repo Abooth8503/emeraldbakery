@@ -73,76 +73,86 @@ function CalendarOrders(): JSX.Element {
         </Col>
       </Row>
       {selectedDay === undefined
-        ? orders.map((order: Order) => {
-            const mapAddress = `${order.Address} ${order.City},${order.State}`;
-            const encodedAddress = encodeURI(mapAddress);
-            const addressToUse = `https://www.google.com/maps/search/?api=1&query=${encodedAddress}`;
-            // console.log('addr', mapAddress, addressToUse);
-            return (
-              <Card key={order.Id} style={{ marginBottom: '3px' }}>
-                <Row>
-                  <Col style={{ maxWidth: '108px' }}>
-                    <Image src={cat} rounded style={{ marginTop: '3px' }} />
-                  </Col>
-                  <Col>
-                    <Card.Title>
-                      {`${order.Name} `}
-                      <span style={{ fontSize: 'small', verticalAlign: 'baseline' }}>
-                        ({`${formatDate(order.DeliveryDate, false, true)}`})
-                      </span>
-                    </Card.Title>
-                    <Card.Text>
-                      {order.Quantity} {order.Description}
-                    </Card.Text>
-                    <Card.Text style={{ fontSize: 'medium' }}>
-                      <a href={addressToUse}>{mapAddress}</a>
-                    </Card.Text>
-                  </Col>
-                </Row>
-              </Card>
-            );
-          })
-        : null}
+        ? orders
+            .filter((upcomingOrder) => {
+              const deliveryDate = moment(upcomingOrder.DeliveryDate);
+              const currentDate = moment();
 
-      {orders
-        .filter((day) => {
-          console.log('day', day.DeliveryDate);
-          if (
-            moment(day.DeliveryDate).format('MM-DD-YYYY') ==
-            moment(selectedDay).format('MM-DD-YYYY')
-          ) {
-            return day;
-          }
-        })
-        .map((order: Order) => {
-          const mapAddress = `${order.Address} ${order.City},${order.State}`;
-          const encodedAddress = encodeURI(mapAddress);
-          const addressToUse = `https://www.google.com/maps/search/?api=1&query=${encodedAddress}`;
-          // console.log('addr', mapAddress, addressToUse);
-          return (
-            <Card key={order.Id} style={{ marginBottom: '3px' }}>
-              <Row>
-                <Col style={{ maxWidth: '108px' }}>
-                  <Image src={cat} rounded style={{ marginTop: '3px' }} />
-                </Col>
-                <Col>
-                  <Card.Title>
-                    {`${order.Name} `}
-                    <span style={{ fontSize: 'small', verticalAlign: 'baseline' }}>
-                      ({`${order.DeliveryDate}`})
-                    </span>
-                  </Card.Title>
-                  <Card.Text>
-                    {order.Quantity} {order.Description}
-                  </Card.Text>
-                  <Card.Text style={{ fontSize: 'medium' }}>
-                    <a href={addressToUse}>{mapAddress}</a>
-                  </Card.Text>
-                </Col>
-              </Row>
-            </Card>
-          );
-        })}
+              if (deliveryDate > currentDate) {
+                console.log('found day greater than today');
+                return upcomingOrder;
+              }
+            })
+            .map((order: Order) => {
+              const mapAddress = `${order.Address} ${order.City},${order.State}`;
+              const encodedAddress = encodeURI(mapAddress);
+              const addressToUse = `https://www.google.com/maps/search/?api=1&query=${encodedAddress}`;
+              // console.log('addr', mapAddress, addressToUse);
+              return (
+                <Card key={order.Id} style={{ marginBottom: '3px' }}>
+                  <Row>
+                    <Col style={{ maxWidth: '108px' }}>
+                      <Image src={cat} rounded style={{ marginTop: '3px' }} />
+                    </Col>
+                    <Col>
+                      <Card.Title>
+                        {`${order.Name} `}
+                        <span style={{ fontSize: 'small', verticalAlign: 'baseline' }}>
+                          ({`${formatDate(order.DeliveryDate, false, true)}`})
+                        </span>
+                      </Card.Title>
+                      <Card.Text>
+                        {order.Quantity} {order.Description}
+                      </Card.Text>
+                      <Card.Text style={{ fontSize: 'medium' }}>
+                        <a href={addressToUse}>{mapAddress}</a>
+                      </Card.Text>
+                    </Col>
+                  </Row>
+                </Card>
+              );
+            })
+        : orders
+            .filter((day) => {
+              console.log('day', day.DeliveryDate);
+              if (selectedDay) {
+                if (
+                  moment(day.DeliveryDate).format('MM-DD-YYYY') ==
+                  moment(selectedDay).format('MM-DD-YYYY')
+                ) {
+                  return day;
+                }
+              }
+            })
+            .map((order: Order) => {
+              const mapAddress = `${order.Address} ${order.City},${order.State}`;
+              const encodedAddress = encodeURI(mapAddress);
+              const addressToUse = `https://www.google.com/maps/search/?api=1&query=${encodedAddress}`;
+              console.log('addr', mapAddress, addressToUse);
+              return (
+                <Card key={order.Id} style={{ marginBottom: '3px' }}>
+                  <Row>
+                    <Col style={{ maxWidth: '108px' }}>
+                      <Image src={cat} rounded style={{ marginTop: '3px' }} />
+                    </Col>
+                    <Col>
+                      <Card.Title>
+                        {`${order.Name} `}
+                        <span style={{ fontSize: 'small', verticalAlign: 'baseline' }}>
+                          {`(${formatDate(order.DeliveryDate, false, true)})`}
+                        </span>
+                      </Card.Title>
+                      <Card.Text>
+                        {order.Quantity} {order.Description}
+                      </Card.Text>
+                      <Card.Text style={{ fontSize: 'medium' }}>
+                        <a href={addressToUse}>{mapAddress}</a>
+                      </Card.Text>
+                    </Col>
+                  </Row>
+                </Card>
+              );
+            })}
     </Container>
   );
 }
