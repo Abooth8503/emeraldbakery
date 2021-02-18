@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as React from 'react';
 import { useEffect } from 'react';
+import { RouteComponentProps } from 'react-router-dom';
 import Calendar from 'react-calendar';
 import moment from 'moment';
 import 'react-calendar/dist/Calendar.css';
@@ -10,7 +11,9 @@ import { Order } from './Interfaces/EmeraldTypes';
 import { useEmeraldContext, formatDate } from './Interfaces/EmeraldTypes';
 import cat from './cat.jpg';
 
-function CalendarOrders(): JSX.Element {
+type Props = RouteComponentProps;
+
+function CalendarOrders(props: Props): JSX.Element {
   const { orders, fetchOrders } = useEmeraldContext();
   const [selectedDay, daySet] = React.useState<Date | undefined>(undefined);
   const [value, onChange] = React.useState<Date | Date[]>(new Date());
@@ -52,6 +55,11 @@ function CalendarOrders(): JSX.Element {
     return;
   }
 
+  function selectOrder(id: any): void {
+    // e.preventDefault();
+    console.log('id is ' + id);
+  }
+
   // console.log('value is ', value, ' type of: ', typeof value);
   return (
     <Container className='text-center' style={{ marginTop: '5px' }}>
@@ -89,7 +97,11 @@ function CalendarOrders(): JSX.Element {
               const addressToUse = `https://www.google.com/maps/search/?api=1&query=${encodedAddress}`;
               // console.log('addr', mapAddress, addressToUse);
               return (
-                <Card key={order.Id} style={{ marginBottom: '3px' }}>
+                <Card
+                  key={order.Id}
+                  style={{ marginBottom: '3px' }}
+                  onClick={() => selectOrder(order.Id)}
+                >
                   <Row>
                     <Col style={{ maxWidth: '108px' }}>
                       <Image src={cat} rounded style={{ marginTop: '3px' }} />
@@ -130,7 +142,11 @@ function CalendarOrders(): JSX.Element {
               const addressToUse = `https://www.google.com/maps/search/?api=1&query=${encodedAddress}`;
               console.log('addr', mapAddress, addressToUse);
               return (
-                <Card key={order.Id} style={{ marginBottom: '3px' }}>
+                <Card
+                  key={order.Id}
+                  style={{ marginBottom: '3px' }}
+                  onClick={() => selectOrder(order.Id)}
+                >
                   <Row>
                     <Col style={{ maxWidth: '108px' }}>
                       <Image src={cat} rounded style={{ marginTop: '3px' }} />
