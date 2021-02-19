@@ -103,7 +103,6 @@ function OrderDetail(props: RouteComponentProps<number>): JSX.Element {
             </ListGroup>
           </Col>
         </Row>
-        {/* </Container> */}
       </Container>
     </React.Fragment>
   );

@@ -50,7 +50,6 @@ function App() {
   );
 
   const logoutSuccess = () => {
-    // alert('logout was successful!');
     setGoogleAccessToken('');
   };
 
@@ -82,12 +81,6 @@ function App() {
                 Map
               </a>
               <hr />
-              <GoogleLogout
-                clientId={`${process.env.REACT_APP_GOOGLE_AUTH_CLIENT_ID}`}
-                buttonText='Logout'
-                onLogoutSuccess={logoutSuccess}
-                style={{ marginLeft: '58px' }}
-              ></GoogleLogout>
             </Menu>
             <Router history={history}>
               <Switch>
@@ -126,7 +119,15 @@ function App() {
                   marginRight: '5px',
                 }}
               >
-                Logged in User: {loggedInUserName}
+                <GoogleLogout
+                  clientId={`${process.env.REACT_APP_GOOGLE_AUTH_CLIENT_ID}`}
+                  buttonText='Logout'
+                  onLogoutSuccess={logoutSuccess}
+                  style={{ marginBottom: '5px' }}
+                ></GoogleLogout>
+                <span style={{ marginLeft: '86px' }}>
+                  Logged in User: {loggedInUserName}
+                </span>
               </div>
             ) : null}
           </EmeraldProvider>
