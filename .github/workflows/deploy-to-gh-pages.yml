@@ -23,7 +23,7 @@ jobs:
         run: echo "$REACT_APP_GOOGLE_AUTH_CLIENT_ID"
         
       - name: Deploy 🚀
-        uses: JamesIves/github-pages-deploy-action@3.6.2
+        uses: JamesIves/github-pages-deploy-action@3.7.1
         env:
           REACT_APP_GOOGLE_AUTH_CLIENT_ID: ${{ secrets.REACT_APP_GOOGLE_AUTH_CLIENT_ID }}        
         with:
