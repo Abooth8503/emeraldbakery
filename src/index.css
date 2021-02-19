@@ -11,10 +11,13 @@ code {
 }
 
 #root {
-  height: 100%;
+  height: 97%;
   position: absolute;
   left: 0;
   width: 100%;
   overflow-y: scroll;
   background-image: url(./congruent_pentagon.png);
+  border-bottom: green;
+  border-style: solid;
+  border-width: medium;
 }

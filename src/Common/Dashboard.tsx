@@ -50,7 +50,11 @@ const motivationalQuotes = [
   },
 ];
 
-function Dashboard() {
+interface Props {
+  userName: string;
+}
+
+function Dashboard(props: Props) {
   const { orders } = useEmeraldContext();
 
   const randNumber = Math.floor(Math.random() * motivationalQuotes.length);
@@ -58,12 +62,14 @@ function Dashboard() {
   if (orders.length < 1) {
     return <div>Loading...</div>;
   }
+
+  const userNameString = props.userName.split(' ')[0];
   return (
     <Container fluid style={sectionStyle}>
       <Row className='justify-content-center h-100' style={{ marginTop: '5px' }}>
         <Col>
           <Jumbotron style={{ backgroundColor: 'white' }}>
-            <h2 className='text-center'>Welcome Ariel!</h2>
+            <h2 className='text-center'>Welcome {userNameString}!</h2>
           </Jumbotron>
         </Col>
       </Row>
