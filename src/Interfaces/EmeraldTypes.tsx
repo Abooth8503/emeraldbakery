@@ -27,9 +27,11 @@ export interface Order {
 const useOrders = (initial: Order[] = []) => {
   const [orders, setOrders] = React.useState<Order[]>(initial);
   const [newOrder, setNewOrder] = React.useState<string>('');
-
   useEffect(() => {
-    fetch(`http://localhost:7071/api/Function1`)
+    // fetch(`http://localhost:7071/api/Function1`)
+    fetch(
+      `https://emeraldorderfunction.azurewebsites.net/api/Function1?code=${process.env.REACT_APP_FUNC_KEY}`
+    )
       .then((response) => response.json()) // parse JSON from request
       .then((resultData) => {
         setOrders(resultData);
