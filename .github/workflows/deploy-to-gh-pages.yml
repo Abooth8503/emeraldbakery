@@ -19,13 +19,13 @@ jobs:
           
       - name: Run
         env:
-          REACT_APP_GOOGLE_AUTH_CLIENT_ID: ${{ secret.REACT_APP_GOOGLE_AUTH_CLIENT_ID }}
+          REACT_APP_GOOGLE_AUTH_CLIENT_ID: ${{ secrets.REACT_APP_GOOGLE_AUTH_CLIENT_ID }}
         run: echo "$REACT_APP_GOOGLE_AUTH_CLIENT_ID"
         
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@3.6.2
         env:
-          REACT_APP_GOOGLE_AUTH_CLIENT_ID: ${{ secret.REACT_APP_GOOGLE_AUTH_CLIENT_ID }}        
+          REACT_APP_GOOGLE_AUTH_CLIENT_ID: ${{ secrets.REACT_APP_GOOGLE_AUTH_CLIENT_ID }}        
         with:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}          
           BRANCH: gh-pages
