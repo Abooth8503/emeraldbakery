@@ -99,17 +99,27 @@ function App() {
             <HashRouter basename={process.env.PUBLIC_URL}>
               <Switch>
                 <Route
+                  exact
                   path='/'
                   render={() => <Dashboard userName={loggedInUserName} />}
                 />
-                <Route path='/orders' render={(props) => <Orders {...props} />} />
-                <Route path='/create' render={(props) => <CreateOrder {...props} />} />
+                <Route exact path='/orders' render={(props) => <Orders {...props} />} />
                 <Route
+                  exact
+                  path='/create'
+                  render={(props) => <CreateOrder {...props} />}
+                />
+                <Route
+                  exact
                   path='/calendar'
                   render={(props) => <CalendarOrders {...props} />}
                 />
-                <Route path='/map' render={() => <GMap />} />
-                <Route path='/detail' render={(props) => <OrderDetail {...props} />} />
+                <Route exact path='/map' render={() => <GMap />} />
+                <Route
+                  exact
+                  path='/detail'
+                  render={(props) => <OrderDetail {...props} />}
+                />
                 <Route path='*' component={FourOhFour} />
               </Switch>
             </HashRouter>
