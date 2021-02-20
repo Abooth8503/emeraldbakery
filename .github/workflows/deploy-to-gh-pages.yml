@@ -3,6 +3,12 @@ on:
   push:
     branches:
       - master
+      
+env:
+    REACT_APP_GOOGLE_AUTH_CLIENT_ID: ${{ secrets.REACT_APP_GOOGLE_AUTH_CLIENT_ID }}
+    REACT_APP_GOOGLE: ${{ secrets.REACT_APP_GOOGLE }}
+    REACT_APP_FUNC_KEY: ${{ secrets.REACT_APP_FUNC_KEY }}
+          
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -16,11 +22,7 @@ jobs:
         run: |
           npm install
           npm run build
-        env:
-          REACT_APP_GOOGLE_AUTH_CLIENT_ID: ${{ secrets.REACT_APP_GOOGLE_AUTH_CLIENT_ID }}
-          REACT_APP_GOOGLE: ${{ secrets.REACT_APP_GOOGLE }}
-          REACT_APP_FUNC_KEY: ${{ secrets.REACT_APP_FUNC_KEY }}
-         
+
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@3.7.1
         with: 
