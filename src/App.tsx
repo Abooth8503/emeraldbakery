@@ -61,7 +61,9 @@ function App() {
     <React.Fragment>
       {googleAccessToken &&
         (loggedInUserEmail === 'azrael7@gmail.com' ||
-          loggedInUserEmail === 'abooth8503@gmail.com') && (
+          loggedInUserEmail === 'abooth8503@gmail.com' ||
+          loggedInUserEmail === 'jbooth6985@gmail.com' ||
+          loggedInUserEmail === 'dlbooth64@gmail.com') && (
           <EmeraldProvider>
             <Menu>
               <a id='home' className='menu-item' href={process.env.PUBLIC_URL + '/'}>
@@ -152,7 +154,14 @@ function App() {
             ) : null}
           </EmeraldProvider>
         )}
-      {googleAccessToken ? null : componentToDisplay}
+      {googleAccessToken ? (
+        <div>
+          Unauthorized Access: please email:{' '}
+          <a href='email:azrael7@gmail.com'>azrael7@gmail.com</a>
+        </div>
+      ) : (
+        componentToDisplay
+      )}
     </React.Fragment>
   );
 }
