@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import { Container, Row, Col, Badge, Card, Jumbotron } from 'react-bootstrap';
@@ -9,6 +11,7 @@ import OrderCard from './Common/OrderCard';
 
 const sectionStyle = {
   backgroundImage: `url(${background})`,
+  marginTop: '5px',
 };
 
 type Props = RouteComponentProps;
