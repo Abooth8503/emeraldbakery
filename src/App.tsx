@@ -5,7 +5,7 @@ import { slide as Menu } from 'react-burger-menu';
 import { GoogleLoginResponse, GoogleLoginResponseOffline } from 'react-google-login';
 import { EmeraldProvider } from './Interfaces/EmeraldTypes';
 import Dashboard from './Common/Dashboard';
-import history from './Common/History';
+// import history from './Common/History';
 import Orders from './Orders';
 import CreateOrder from './Forms/CreateOrder';
 import CalendarOrders from './CalendarOrders';
@@ -97,32 +97,21 @@ function App() {
               <hr />
             </Menu>
             <HashRouter basename={process.env.PUBLIC_URL}>
-              {/* <Router> */}
-                <Switch>
-                  <Route
-                    path='/'
-                    render={() => <Dashboard userName={loggedInUserName} />}
-                  />
-                  <Route
-                    path='/orders'
-                    render={(props) => <Orders {...props} />}
-                  />
-                  <Route
-                    path='/create'
-                    render={(props) => <CreateOrder {...props} />}
-                  />
-                  <Route
-                    path='/calendar'
-                    render={(props) => <CalendarOrders {...props} />}
-                  />
-                  <Route path='/map'} render={() => <GMap />} /
-                  <Route
-                    path='/detail'
-                    render={(props) => <OrderDetail {...props} />}
-                  />
-                  <Route path='*' component={FourOhFour} />
-                </Switch>
-              {/* </Router> */}
+              <Switch>
+                <Route
+                  path='/'
+                  render={() => <Dashboard userName={loggedInUserName} />}
+                />
+                <Route path='/orders' render={(props) => <Orders {...props} />} />
+                <Route path='/create' render={(props) => <CreateOrder {...props} />} />
+                <Route
+                  path='/calendar'
+                  render={(props) => <CalendarOrders {...props} />}
+                />
+                <Route path='/map' render={() => <GMap />} />
+                <Route path='/detail' render={(props) => <OrderDetail {...props} />} />
+                <Route path='*' component={FourOhFour} />
+              </Switch>
             </HashRouter>
             {loggedInUserName ? (
               <div
