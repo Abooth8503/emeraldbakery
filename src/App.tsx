@@ -154,14 +154,26 @@ function App() {
             ) : null}
           </EmeraldProvider>
         )}
-      {googleAccessToken ? (
+      {googleAccessToken ? null : componentToDisplay}
+
+      {googleAccessToken === '' &&
+      !(
+        loggedInUserEmail === 'azrael7@gmail.com' ||
+        loggedInUserEmail === 'abooth8503@gmail.com' ||
+        loggedInUserEmail === 'jbooth6985@gmail.com' ||
+        loggedInUserEmail === 'dlbooth64@gmail.com'
+      ) ? (
         <div>
           Unauthorized Access: please email:{' '}
           <a href='email:azrael7@gmail.com'>azrael7@gmail.com</a>
+          <GoogleLogout
+            clientId={`${process.env.REACT_APP_GOOGLE_AUTH_CLIENT_ID}`}
+            buttonText='Logout'
+            onLogoutSuccess={logoutSuccess}
+            style={{ marginBottom: '5px' }}
+          ></GoogleLogout>
         </div>
-      ) : (
-        componentToDisplay
-      )}
+      ) : null}
     </React.Fragment>
   );
 }
