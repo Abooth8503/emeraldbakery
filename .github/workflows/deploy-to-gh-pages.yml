@@ -14,9 +14,9 @@ jobs:
           
       - name: Install and Build 🔧
         env:
-          REACT_APP_GOOGLE_AUTH_CLIENT_ID: ${{secrets.REACT_APP_GOOGLE_AUTH_CLIENT_ID}}
-          REACT_APP_GOOGLE: ${{secrets.REACT_APP_GOOGLE}}
-          REACT_APP_FUNC_KEY: ${{secrets.REACT_APP_FUNC_KEY}}
+          REACT_APP_GOOGLE_AUTH_CLIENT_ID: "${{ secrets.REACT_APP_GOOGLE_AUTH_CLIENT_ID }}"
+          REACT_APP_GOOGLE: "${{ secrets.REACT_APP_GOOGLE }}"
+          REACT_APP_FUNC_KEY: "${{ secrets.REACT_APP_FUNC_KEY }}"
         run: |
           npm install
           REACT_APP_GOOGLE_AUTH_CLIENT_ID=$REACT_APP_GOOGLE_AUTH_CLIENT_ID REACT_APP_GOOGLE=$REACT_APP_GOOGLE REACT_APP_FUNC_KEY=$REACT_APP_FUNC npm run build --if-present
