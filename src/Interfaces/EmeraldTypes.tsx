@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import * as React from 'react';
 import { useEffect } from 'react';
-import { JsxChild } from 'typescript';
 
 export interface Order {
   Id: number;

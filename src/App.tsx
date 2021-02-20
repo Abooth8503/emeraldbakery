@@ -89,29 +89,21 @@ function App() {
                   path='/'
                   render={() => <Dashboard userName={loggedInUserName} />}
                 />
+                <Route exact path='/orders' render={(props) => <Orders {...props} />} />
                 <Route
                   exact
-                  path={process.env.PUBLIC_URL + '/orders'}
-                  render={(props) => <Orders {...props} />}
-                />
-                <Route
-                  exact
-                  path={process.env.PUBLIC_URL + '/create'}
+                  path='/create'
                   render={(props) => <CreateOrder {...props} />}
                 />
                 <Route
                   exact
-                  path={process.env.PUBLIC_URL + '/calendar'}
+                  path='/calendar'
                   render={(props) => <CalendarOrders {...props} />}
                 />
+                <Route exact path='/map' render={() => <GMap />} />
                 <Route
                   exact
-                  path={process.env.PUBLIC_URL + '/map'}
-                  render={() => <GMap />}
-                />
-                <Route
-                  exact
-                  path={process.env.PUBLIC_URL + '/detail'}
+                  path='/detail'
                   render={(props) => <OrderDetail {...props} />}
                 />
                 <Route component={FourOhFour} />
