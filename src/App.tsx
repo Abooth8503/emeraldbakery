@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useState } from 'react';
 import { Switch, Route, Link, BrowserRouter } from 'react-router-dom';
-// import { Image } from 'react-bootstrap';
+import { Image } from 'react-bootstrap';
 import { slide as Menu } from 'react-burger-menu';
 import { GoogleLoginResponse, GoogleLoginResponseOffline } from 'react-google-login';
 import { EmeraldProvider } from './Interfaces/EmeraldTypes';
@@ -141,10 +141,13 @@ function App() {
                   onLogoutSuccess={logoutSuccess}
                   style={{ marginBottom: '5px' }}
                 ></GoogleLogout>
-                <span style={{ marginLeft: '86px' }}>
-                  {/* <Image src={profileImage}></Image> */}
+                <span style={{ marginLeft: '58px' }}>
                   Logged in User: {loggedInUserName}
                 </span>
+                <Image
+                  src={profileImage}
+                  style={{ height: '35px', marginLeft: '5px' }}
+                ></Image>
               </div>
             ) : null}
           </EmeraldProvider>

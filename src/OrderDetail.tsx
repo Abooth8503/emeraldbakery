@@ -1,5 +1,5 @@
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import * as React from 'react';
-import { useEffect } from 'react';
 import {
   Container,
   Jumbotron,
@@ -15,21 +15,31 @@ import {
 import { RouteComponentProps } from 'react-router-dom';
 import { useEmeraldContext, formatDate } from './Interfaces/EmeraldTypes';
 import OrderTypeImage from './images/Erotic1.jpg';
+import './css/orderDetail.css';
 
 function OrderDetail(props: RouteComponentProps<number>): JSX.Element {
   const { orders } = useEmeraldContext();
+  const [isOpen, setIsOpen] = React.useState<boolean>(false);
 
   function editOrder(id: number) {
     console.log('id', id);
     props.history.push(`/create`, id);
   }
 
+  function handleShowDialog() {
+    setIsOpen(!isOpen);
+    console.log('clicked');
+  }
+
   console.log('props for orderDetail', props.location.state, orders);
+
   if (orders.length < 1) {
     return <div>Loading...</div>;
   }
+
   const filteredOrderProp = orders.filter((order) => order.Id === props.location.state);
   console.log('filteredOrderProp', filteredOrderProp);
+
   return (
     <React.Fragment>
       <Container className='text-center' style={{ marginTop: '5px' }}>
@@ -59,8 +69,23 @@ function OrderDetail(props: RouteComponentProps<number>): JSX.Element {
             })}
           </Col>
           <Col className='d-flex align-items-center justify-content-center'>
-            <Image src={OrderTypeImage} thumbnail />
+            <Image src={OrderTypeImage} thumbnail onClick={handleShowDialog} />
           </Col>
+          {isOpen && (
+            <dialog
+              className='dialog'
+              style={{ position: 'absolute' }}
+              open
+              onClick={handleShowDialog}
+            >
+              <img
+                className='image'
+                src={OrderTypeImage}
+                onClick={handleShowDialog}
+                alt='no image'
+              />
+            </dialog>
+          )}
         </Row>
         <Row>
           <Col>
