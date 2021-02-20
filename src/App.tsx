@@ -119,7 +119,7 @@ function App() {
                   path={process.env.PUBLIC_URL + '/detail'}
                   render={(props) => <OrderDetail {...props} />}
                 />
-                <Route path='' component={FourOhFour} />
+                <Route path='*' component={FourOhFour} />
               </Switch>
             </Router>
             {loggedInUserName ? (
