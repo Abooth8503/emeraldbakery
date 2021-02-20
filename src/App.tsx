@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { useState } from 'react';
 import { Switch, Route, Link, BrowserRouter } from 'react-router-dom';
+import { Image } from 'react-bootstrap';
 import { slide as Menu } from 'react-burger-menu';
 import { GoogleLoginResponse, GoogleLoginResponseOffline } from 'react-google-login';
 import { EmeraldProvider } from './Interfaces/EmeraldTypes';
@@ -34,6 +35,7 @@ function App() {
   const [googleAccessToken, setGoogleAccessToken] = useState<string>('');
   const [loggedInUserEmail, setLoggedInUserEmail] = useState<string>('');
   const [loggedInUserName, setLoggedInUserName] = useState<string>('');
+  const [profileImage, setProfileImage] = useState<string>('');
 
   const componentToDisplay: any = (
     <GoogleSignInComponent
@@ -42,7 +44,7 @@ function App() {
           console.log('response: ', response);
           setLoggedInUserEmail(response.profileObj.email);
           setLoggedInUserName(response.profileObj.name);
-
+          setProfileImage(response.profileObj.imageUrl);
           setGoogleAccessToken(response.tokenId);
         }
       }}
@@ -140,6 +142,7 @@ function App() {
                   style={{ marginBottom: '5px' }}
                 ></GoogleLogout>
                 <span style={{ marginLeft: '86px' }}>
+                  <Image src={profileImage}></Image>
                   Logged in User: {loggedInUserName}
                 </span>
               </div>
