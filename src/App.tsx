@@ -99,36 +99,27 @@ function App() {
             <Router history={history}>
               <Switch>
                 <Route
-                  exact
                   path={process.env.PUBLIC_URL + '/'}
                   render={() => <Dashboard userName={loggedInUserName} />}
                 />
                 <Route
-                  exact
                   path={process.env.PUBLIC_URL + '/orders'}
                   render={(props) => <Orders {...props} />}
                 />
                 <Route
-                  exact
                   path={process.env.PUBLIC_URL + '/create'}
                   render={(props) => <CreateOrder {...props} />}
                 />
                 <Route
-                  exact
                   path={process.env.PUBLIC_URL + '/calendar'}
                   render={(props) => <CalendarOrders {...props} />}
                 />
+                <Route path={process.env.PUBLIC_URL + '/map'} render={() => <GMap />} />
                 <Route
-                  exact
-                  path={process.env.PUBLIC_URL + '/map'}
-                  render={() => <GMap />}
-                />
-                <Route
-                  exact
                   path={process.env.PUBLIC_URL + '/detail'}
                   render={(props) => <OrderDetail {...props} />}
                 />
-                <Route component={FourOhFour} />
+                <Route path='' component={FourOhFour} />
               </Switch>
             </Router>
             {loggedInUserName ? (
