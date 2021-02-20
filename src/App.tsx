@@ -60,23 +60,35 @@ function App() {
           loggedInUserEmail === 'abooth8503@gmail.com') && (
           <EmeraldProvider>
             <Menu>
-              <a id='home' className='menu-item' href='/'>
+              <a id='home' className='menu-item' href={process.env.PUBLIC_URL + '/'}>
                 <FcHome style={{ marginRight: '5px', verticalAlign: 'middle' }} />
                 Home
               </a>
-              <a id='calendar' className='menu-item' href='/calendar'>
+              <a
+                id='calendar'
+                className='menu-item'
+                href={process.env.PUBLIC_URL + '/calendar'}
+              >
                 <FcCalendar style={{ marginRight: '5px' }} />
                 Calendar
               </a>
-              <a id='create' className='menu-item' href='/create'>
+              <a
+                id='create'
+                className='menu-item'
+                href={process.env.PUBLIC_URL + '/create'}
+              >
                 <AiOutlineForm style={{ marginRight: '5px' }} />
                 Create Order
               </a>
-              <a id='orders' className='menu-item' href='/orders'>
+              <a
+                id='orders'
+                className='menu-item'
+                href={process.env.PUBLIC_URL + '/orders'}
+              >
                 <BiCookie style={{ marginRight: '5px' }} />
                 Orders
               </a>
-              <a id='orders' className='menu-item' href='/map'>
+              <a id='orders' className='menu-item' href={process.env.PUBLIC_URL + '/map'}>
                 <FaMap style={{ marginRight: '5px' }} />
                 Map
               </a>
