@@ -185,6 +185,7 @@ function App() {
                   <Image
                     src={profileImage}
                     style={{ height: '35px', marginLeft: '5px' }}
+                    roundedCircle
                   ></Image>
                 </div>
               </div>
@@ -205,13 +206,8 @@ function App() {
           Unauthorized Access: please email:{' '}
           <a href='email:azrael7@gmail.com'>azrael7@gmail.com</a>
           <GoogleLogout
-            render={(renderProps) => (
-              <button onClick={renderProps.onClick} style={logoutBtnStyles}>
-                This is my custom Google button
-              </button>
-            )}
             clientId={`${process.env.REACT_APP_GOOGLE_AUTH_CLIENT_ID}`}
-            // buttonText='Logout'
+            buttonText='Logout'
             onLogoutSuccess={logoutSuccess}
           ></GoogleLogout>
         </div>
