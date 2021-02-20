@@ -120,7 +120,7 @@ function App() {
                   path='/detail'
                   render={(props) => <OrderDetail {...props} />}
                 />
-                <Route path='*' component={FourOhFour} />
+                <Route component={FourOhFour} />
               </Switch>
             </HashRouter>
             {loggedInUserName ? (
