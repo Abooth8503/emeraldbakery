@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useState } from 'react';
 import { Switch, Route, Link, BrowserRouter } from 'react-router-dom';
-// import { Image } from 'react-bootstrap';
+import { Image } from 'react-bootstrap';
 import { slide as Menu } from 'react-burger-menu';
 import { GoogleLoginResponse, GoogleLoginResponseOffline } from 'react-google-login';
 import { EmeraldProvider } from './Interfaces/EmeraldTypes';
@@ -61,7 +61,9 @@ function App() {
     <React.Fragment>
       {googleAccessToken &&
         (loggedInUserEmail === 'azrael7@gmail.com' ||
-          loggedInUserEmail === 'abooth8503@gmail.com') && (
+          loggedInUserEmail === 'abooth8503@gmail.com' ||
+          loggedInUserEmail === 'jbooth6985@gmail.com' ||
+          loggedInUserEmail === 'dlbooth64@gmail.com') && (
           <EmeraldProvider>
             <Menu>
               <a id='home' className='menu-item' href={process.env.PUBLIC_URL + '/'}>
@@ -141,15 +143,37 @@ function App() {
                   onLogoutSuccess={logoutSuccess}
                   style={{ marginBottom: '5px' }}
                 ></GoogleLogout>
-                <span style={{ marginLeft: '86px' }}>
-                  {/* <Image src={profileImage}></Image> */}
+                <span style={{ marginLeft: '58px' }}>
                   Logged in User: {loggedInUserName}
                 </span>
+                <Image
+                  src={profileImage}
+                  style={{ height: '35px', marginLeft: '5px' }}
+                ></Image>
               </div>
             ) : null}
           </EmeraldProvider>
         )}
       {googleAccessToken ? null : componentToDisplay}
+
+      {googleAccessToken === '' &&
+      !(
+        loggedInUserEmail === 'azrael7@gmail.com' ||
+        loggedInUserEmail === 'abooth8503@gmail.com' ||
+        loggedInUserEmail === 'jbooth6985@gmail.com' ||
+        loggedInUserEmail === 'dlbooth64@gmail.com'
+      ) ? (
+        <div>
+          Unauthorized Access: please email:{' '}
+          <a href='email:azrael7@gmail.com'>azrael7@gmail.com</a>
+          <GoogleLogout
+            clientId={`${process.env.REACT_APP_GOOGLE_AUTH_CLIENT_ID}`}
+            buttonText='Logout'
+            onLogoutSuccess={logoutSuccess}
+            style={{ marginBottom: '5px' }}
+          ></GoogleLogout>
+        </div>
+      ) : null}
     </React.Fragment>
   );
 }
