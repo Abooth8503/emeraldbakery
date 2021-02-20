@@ -11,7 +11,7 @@ import Orders from './Orders';
 import CreateOrder from './Forms/CreateOrder';
 import CalendarOrders from './CalendarOrders';
 import './css/burgerMenu.css';
-import { FcHome } from 'react-icons/fc';
+import { FcHome, FcGoogle } from 'react-icons/fc';
 import { BiCookie } from 'react-icons/bi';
 import { AiOutlineForm } from 'react-icons/ai';
 import { FcCalendar } from 'react-icons/fc';
@@ -30,6 +30,25 @@ const FourOhFour = (): JSX.Element => (
     </p>
   </div>
 );
+
+const logoutBtnStyles = {
+  marginBottom: '10px',
+  backgroundColor: 'rgb(255, 255, 255)',
+  display: 'inline-flex',
+  alignItems: 'center',
+  color: 'rgba(0, 0, 0, 0.54)',
+  boxShadow: 'rgba(0, 0, 0, 0.24) 0px 2px 2px 0px, rgba(0, 0, 0, 0.24) 0px 0px 1px 0px',
+  padding: '0px',
+  borderRadius: '2px',
+  border: '1px solid transparent',
+  fontSize: '14px',
+  // fontWeight: 500,
+  fontFamily: 'Roboto, sans-serif',
+  top: '97%',
+  transform: 'translateY(-50%)',
+  position: 'fixed',
+  marginLeft: '5px',
+} as React.CSSProperties;
 
 function App() {
   const [googleAccessToken, setGoogleAccessToken] = useState<string>('');
@@ -129,27 +148,45 @@ function App() {
             </BrowserRouter>
             {loggedInUserName ? (
               <div
-                className='text-right'
                 style={{
                   position: 'fixed',
                   bottom: '0',
                   width: '98%',
                   marginRight: '5px',
+                  height: '42px',
                 }}
               >
                 <GoogleLogout
+                  render={(renderProps) => (
+                    <button onClick={renderProps.onClick} style={logoutBtnStyles}>
+                      <div
+                        style={{
+                          marginRight: '10px',
+                          background: 'rgb(255, 255, 255)',
+                          padding: '10px',
+                          borderRadius: '2px',
+                        }}
+                      >
+                        <FcGoogle size={20}></FcGoogle>
+                      </div>
+                      <span style={{ padding: '10px 10px 10px 0px', fontWeight: 500 }}>
+                        Logout
+                      </span>
+                    </button>
+                  )}
                   clientId={`${process.env.REACT_APP_GOOGLE_AUTH_CLIENT_ID}`}
                   buttonText='Logout'
                   onLogoutSuccess={logoutSuccess}
-                  style={{ marginBottom: '5px' }}
                 ></GoogleLogout>
-                <span style={{ marginLeft: '58px' }}>
-                  Logged in User: {loggedInUserName}
-                </span>
-                <Image
-                  src={profileImage}
-                  style={{ height: '35px', marginLeft: '5px' }}
-                ></Image>
+                <div className='text-right'>
+                  <span style={{ marginLeft: '58px' }}>
+                    Logged in User: {loggedInUserName}
+                  </span>
+                  <Image
+                    src={profileImage}
+                    style={{ height: '35px', marginLeft: '5px' }}
+                  ></Image>
+                </div>
               </div>
             ) : null}
           </EmeraldProvider>
@@ -162,15 +199,20 @@ function App() {
         loggedInUserEmail === 'abooth8503@gmail.com' ||
         loggedInUserEmail === 'jbooth6985@gmail.com' ||
         loggedInUserEmail === 'dlbooth64@gmail.com'
-      ) ? (
+      ) &&
+      loggedInUserEmail.length > 0 ? (
         <div>
           Unauthorized Access: please email:{' '}
           <a href='email:azrael7@gmail.com'>azrael7@gmail.com</a>
           <GoogleLogout
+            render={(renderProps) => (
+              <button onClick={renderProps.onClick} style={logoutBtnStyles}>
+                This is my custom Google button
+              </button>
+            )}
             clientId={`${process.env.REACT_APP_GOOGLE_AUTH_CLIENT_ID}`}
-            buttonText='Logout'
+            // buttonText='Logout'
             onLogoutSuccess={logoutSuccess}
-            style={{ marginBottom: '5px' }}
           ></GoogleLogout>
         </div>
       ) : null}
