@@ -86,24 +86,24 @@ function App() {
               <Switch>
                 <Route
                   exact
-                  path='/'
+                  path={process.env.PUBLIC_URL + '/'}
                   render={() => <Dashboard userName={loggedInUserName} />}
                 />
                 <Route exact path='/orders' render={(props) => <Orders {...props} />} />
                 <Route
                   exact
-                  path='/create'
+                  path={process.env.PUBLIC_URL + '/create'}
                   render={(props) => <CreateOrder {...props} />}
                 />
                 <Route
                   exact
-                  path='/calendar'
+                  path={process.env.PUBLIC_URL + '/calendar'}
                   render={(props) => <CalendarOrders {...props} />}
                 />
                 <Route exact path='/map' render={() => <GMap />} />
                 <Route
                   exact
-                  path='/detail'
+                  path={process.env.PUBLIC_URL + '/detail'}
                   render={(props) => <OrderDetail {...props} />}
                 />
                 <Route component={FourOhFour} />
