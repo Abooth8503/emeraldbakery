@@ -53,6 +53,8 @@ function App() {
     setGoogleAccessToken('');
   };
 
+  console.log('public url', process.env.PUBLIC_URL);
+
   return (
     <React.Fragment>
       {googleAccessToken &&
