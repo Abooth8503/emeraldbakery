@@ -25,7 +25,7 @@ const FourOhFour = (): JSX.Element => (
   <div>
     <h1>Page not found</h1>
     <p>
-      Go back to <Link to='/'>Dashboard</Link>.
+      Go back to <Link to='/'>Homepage</Link>.
     </p>
   </div>
 );
