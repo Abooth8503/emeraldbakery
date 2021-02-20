@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useState } from 'react';
-import { HashRouter, Switch, Route, Link } from 'react-router-dom';
+import { Switch, Route, Link, BrowserRouter } from 'react-router-dom';
 import { slide as Menu } from 'react-burger-menu';
 import { GoogleLoginResponse, GoogleLoginResponseOffline } from 'react-google-login';
 import { EmeraldProvider } from './Interfaces/EmeraldTypes';
@@ -96,7 +96,7 @@ function App() {
               </a>
               <hr />
             </Menu>
-            <HashRouter basename={process.env.PUBLIC_URL}>
+            <BrowserRouter basename={process.env.PUBLIC_URL}>
               <Switch>
                 <Route
                   exact
@@ -122,7 +122,7 @@ function App() {
                 />
                 <Route component={FourOhFour} />
               </Switch>
-            </HashRouter>
+            </BrowserRouter>
             {loggedInUserName ? (
               <div
                 className='text-right'
