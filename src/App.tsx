@@ -25,7 +25,7 @@ const FourOhFour = (): JSX.Element => (
   <div>
     <h1>Page not found</h1>
     <p>
-      Go back to <Link to='/'>Homepage</Link>.
+      Go back to <Link to={process.env.PUBLIC_URL + '/'}>Homepage</Link>.
     </p>
   </div>
 );
@@ -103,7 +103,11 @@ function App() {
                   path={process.env.PUBLIC_URL + '/'}
                   render={() => <Dashboard userName={loggedInUserName} />}
                 />
-                <Route exact path='/orders' render={(props) => <Orders {...props} />} />
+                <Route
+                  exact
+                  path={process.env.PUBLIC_URL + '/orders'}
+                  render={(props) => <Orders {...props} />}
+                />
                 <Route
                   exact
                   path={process.env.PUBLIC_URL + '/create'}
@@ -114,7 +118,11 @@ function App() {
                   path={process.env.PUBLIC_URL + '/calendar'}
                   render={(props) => <CalendarOrders {...props} />}
                 />
-                <Route exact path='/map' render={() => <GMap />} />
+                <Route
+                  exact
+                  path={process.env.PUBLIC_URL + '/map'}
+                  render={() => <GMap />}
+                />
                 <Route
                   exact
                   path={process.env.PUBLIC_URL + '/detail'}
