@@ -82,7 +82,8 @@ function App() {
         (loggedInUserEmail === 'azrael7@gmail.com' ||
           loggedInUserEmail === 'abooth8503@gmail.com' ||
           loggedInUserEmail === 'jbooth6985@gmail.com' ||
-          loggedInUserEmail === 'dlbooth64@gmail.com') && (
+          loggedInUserEmail === 'dlbooth64@gmail.com' ||
+          loggedInUserEmail === 'frank.pigeonjr@gmail.com') && (
           <EmeraldProvider>
             <Menu>
               <a id='home' className='menu-item' href={process.env.PUBLIC_URL + '/'}>
