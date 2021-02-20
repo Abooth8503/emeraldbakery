@@ -93,13 +93,6 @@ function GMap() {
 
   console.log('orders', orders);
 
-  if (orders.length < 1) {
-    return (
-      <div ref={googleMapRef} style={{ width: 600, height: '100%' }}>
-        loading...
-      </div>
-    );
-  }
   return <div ref={googleMapRef} style={{ width: 600, height: '100%' }} />;
 }
 

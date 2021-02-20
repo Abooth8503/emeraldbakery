@@ -6,6 +6,7 @@ import moment from 'moment';
 import 'react-calendar/dist/Calendar.css';
 import './css/reactCalendar.css';
 import { Jumbotron, Container, Row, Col, Card, Image } from 'react-bootstrap';
+import OrderCard from './Common/OrderCard';
 import { Order } from './Interfaces/EmeraldTypes';
 import { useEmeraldContext, formatDate } from './Interfaces/EmeraldTypes';
 import cat from './cat.jpg';
@@ -99,31 +100,12 @@ function CalendarOrders(props: Props): JSX.Element {
               const addressToUse = `https://www.google.com/maps/search/?api=1&query=${encodedAddress}`;
               // console.log('addr', mapAddress, addressToUse);
               return (
-                <Card
+                <OrderCard
                   key={order.Id}
-                  style={{ marginBottom: '3px' }}
-                  onClick={() => selectOrder(order.Id)}
-                >
-                  <Row>
-                    <Col style={{ maxWidth: '108px' }}>
-                      <Image src={cat} rounded style={{ marginTop: '3px' }} />
-                    </Col>
-                    <Col>
-                      <Card.Title>
-                        {`${order.Name} `}
-                        <span style={{ fontSize: 'small', verticalAlign: 'baseline' }}>
-                          ({`${formatDate(order.DeliveryDate, false, true)}`})
-                        </span>
-                      </Card.Title>
-                      <Card.Text>
-                        {order.Quantity} {order.Description}
-                      </Card.Text>
-                      <Card.Text style={{ fontSize: 'medium' }}>
-                        <a href={addressToUse}>{mapAddress}</a>
-                      </Card.Text>
-                    </Col>
-                  </Row>
-                </Card>
+                  routeComponentProps={props}
+                  order={order}
+                  address={addressToUse}
+                />
               );
             })
         : orders
@@ -144,31 +126,12 @@ function CalendarOrders(props: Props): JSX.Element {
               const addressToUse = `https://www.google.com/maps/search/?api=1&query=${encodedAddress}`;
               console.log('addr', mapAddress, addressToUse);
               return (
-                <Card
+                <OrderCard
                   key={order.Id}
-                  style={{ marginBottom: '3px' }}
-                  onClick={() => selectOrder(order.Id)}
-                >
-                  <Row>
-                    <Col style={{ maxWidth: '108px' }}>
-                      <Image src={cat} rounded style={{ marginTop: '3px' }} />
-                    </Col>
-                    <Col>
-                      <Card.Title>
-                        {`${order.Name} `}
-                        <span style={{ fontSize: 'small', verticalAlign: 'baseline' }}>
-                          {`(${formatDate(order.DeliveryDate, false, true)})`}
-                        </span>
-                      </Card.Title>
-                      <Card.Text>
-                        {order.Quantity} {order.Description}
-                      </Card.Text>
-                      <Card.Text style={{ fontSize: 'medium' }}>
-                        <a href={addressToUse}>{mapAddress}</a>
-                      </Card.Text>
-                    </Col>
-                  </Row>
-                </Card>
+                  routeComponentProps={props}
+                  order={order}
+                  address={addressToUse}
+                />
               );
             })}
     </Container>

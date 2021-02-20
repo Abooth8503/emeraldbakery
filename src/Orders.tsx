@@ -1,12 +1,11 @@
 import * as React from 'react';
-import { useEffect } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
-import { Container, Image, Row, Col, Badge, Card, Jumbotron } from 'react-bootstrap';
+import { Container, Row, Col, Badge, Card, Jumbotron } from 'react-bootstrap';
 import FlipMove from 'react-flip-move';
 import { Order } from './Interfaces/EmeraldTypes';
-import cat from './cat.jpg';
 import background from './congruent_pentagon.png';
-import { useEmeraldContext, formatDate } from './Interfaces/EmeraldTypes';
+import { useEmeraldContext } from './Interfaces/EmeraldTypes';
+import OrderCard from './Common/OrderCard';
 
 const sectionStyle = {
   backgroundImage: `url(${background})`,
@@ -16,11 +15,6 @@ type Props = RouteComponentProps;
 
 function Orders(props: Props) {
   const { orders } = useEmeraldContext();
-
-  function selectOrder(id: any): void {
-    console.log('id is ' + id);
-    props.history.push(`/detail`, id);
-  }
 
   if (orders.length === 0) {
     return <div>Orders not ready.</div>;
@@ -56,34 +50,14 @@ function Orders(props: Props) {
           const mapAddress = `${order.Address} ${order.City},${order.State}`;
           const encodedAddress = encodeURI(mapAddress);
           const addressToUse = `https://www.google.com/maps/search/?api=1&query=${encodedAddress}`;
-          // console.log('addr', mapAddress, addressToUse);
           console.log('order', order);
           return (
-            <Card
+            <OrderCard
               key={order.Id}
-              style={{ marginBottom: '3px', padding: '5px' }}
-              onClick={() => selectOrder(order.Id)}
-            >
-              <Row>
-                <Col style={{ maxWidth: '108px' }}>
-                  <Image src={cat} rounded />
-                </Col>
-                <Col>
-                  <Card.Title>
-                    {order.Name}{' '}
-                    <span style={{ fontSize: 'small', verticalAlign: 'baseline' }}>
-                      ({`${formatDate(order.DeliveryDate, false, true)}`})
-                    </span>
-                  </Card.Title>
-                  <Card.Text>
-                    {order.Quantity} {order.Description}
-                  </Card.Text>
-                  <Card.Text style={{ fontSize: 'medium' }}>
-                    <a href={addressToUse}>{mapAddress}</a>
-                  </Card.Text>
-                </Col>
-              </Row>
-            </Card>
+              routeComponentProps={props}
+              order={order}
+              address={addressToUse}
+            />
           );
         })}
       </FlipMove>
