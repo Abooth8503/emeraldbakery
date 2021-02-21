@@ -18,8 +18,6 @@ function CalendarOrders(props: Props): JSX.Element {
   const [selectedDay, daySet] = React.useState<Date | undefined>(undefined);
   const [value, onChange] = React.useState<Date | Date[]>(new Date());
 
-  console.log('router props', props);
-
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   function tileClassName({
     date,
@@ -67,7 +65,7 @@ function CalendarOrders(props: Props): JSX.Element {
   return (
     <Container className='text-center' style={{ marginTop: '5px' }}>
       <Jumbotron style={{ backgroundColor: 'white' }}>
-        <h2>Calendar</h2>
+        <h2 style={{ fontFamily: 'AmaticSC-Bold', fontSize: 'xxx-large' }}>Calendar</h2>
       </Jumbotron>
       <Calendar
         onChange={(val) => onChange(val)}
@@ -78,7 +76,7 @@ function CalendarOrders(props: Props): JSX.Element {
       />
       <Row>
         <Col>
-          <p className='text-left'>
+          <p className='text-left' style={{ fontFamily: 'Andika-R' }}>
             <u>Upcoming</u>
           </p>
         </Col>

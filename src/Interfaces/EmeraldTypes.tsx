@@ -143,7 +143,7 @@ export function isLeapYear(yearSelected: number) {
   const isLeapYearMade = yearSelected % 4 === 0;
   const AndEvenDivisible = yearSelected % 100 !== 0;
   const OrEvenDiv100 = yearSelected % 400 === 0;
-  console.log('isLeapYear', isLeapYearMade);
+  // console.log('isLeapYear', isLeapYearMade);
   const isItEvenLeapYear = (isLeapYearMade && AndEvenDivisible) || OrEvenDiv100;
   return isItEvenLeapYear;
 }
