@@ -131,7 +131,9 @@ function App() {
                 <Route
                   exact
                   path='/create'
-                  render={(props) => <CreateOrder {...props} />}
+                  render={(props) => (
+                    <CreateOrder user={loggedInUserEmail} routeComponentProps={props} />
+                  )}
                 />
                 <Route
                   exact
