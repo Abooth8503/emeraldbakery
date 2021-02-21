@@ -82,12 +82,11 @@ function Dashboard(props: Props) {
         <Col>
           <figure className='quote'>
             <blockquote
-              style={{ fontFamily: 'Andika-R', fontSize: 'large' }}
+              style={{ fontSize: 'large' }}
             >{`"${motivationalQuotes[randNumber].quote}"`}</blockquote>
             <figcaption
               style={{
                 textAlign: 'right',
-                fontFamily: 'Andika-R',
                 fontSize: 'larger',
               }}
             >
@@ -97,7 +96,7 @@ function Dashboard(props: Props) {
         </Col>
       </Row>
       <Row>
-        <Col style={{ fontFamily: 'Andika-R', fontSize: 'larger' }}>
+        <Col style={{ fontSize: 'larger' }}>
           {' '}
           Total <Link to='/orders'>Orders</Link>: {orders.length}
         </Col>

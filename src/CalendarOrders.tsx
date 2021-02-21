@@ -46,14 +46,11 @@ function CalendarOrders(props: Props): JSX.Element {
   }
 
   function onClickDayDate(value: Date): void {
-    console.log('onclickday is ', value);
     daySet(value);
     return;
   }
 
   function selectOrder(id: any): void {
-    // e.preventDefault();
-    console.log('id is ' + id);
     props.history.push(`/detail`, id);
   }
 
@@ -61,7 +58,6 @@ function CalendarOrders(props: Props): JSX.Element {
     return <div>Loading...</div>;
   }
 
-  // console.log('value is ', value, ' type of: ', typeof value);
   return (
     <Container className='text-center' style={{ marginTop: '5px' }}>
       <Jumbotron style={{ backgroundColor: 'white' }}>
@@ -76,7 +72,7 @@ function CalendarOrders(props: Props): JSX.Element {
       />
       <Row>
         <Col>
-          <p className='text-left' style={{ fontFamily: 'Andika-R' }}>
+          <p className='text-left'>
             <u>Upcoming</u>
           </p>
         </Col>
