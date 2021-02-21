@@ -13,7 +13,7 @@ type Props = {
 };
 
 function OrderCard(props: Props) {
-  function selectOrder(id: any): void {
+  function selectOrder(id: number): void {
     props.routeComponentProps.history.push(`/detail`, id);
   }
 

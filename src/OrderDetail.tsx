@@ -34,7 +34,7 @@ function OrderDetail(props: RouteComponentProps<number>): JSX.Element {
   }
 
   const filteredOrderProp = orders.filter((order) => order.Id === props.location.state);
-
+  console.log('order ', filteredOrderProp);
   return (
     <React.Fragment>
       <Container className='text-center' style={{ marginTop: '5px' }}>
@@ -96,7 +96,7 @@ function OrderDetail(props: RouteComponentProps<number>): JSX.Element {
                     <ListGroup.Item className='d-flex align-items-center'>
                       <b>Date Created:</b>{' '}
                       <span style={{ marginLeft: '6px' }}>
-                        {formatDate(order.OrderDate, false, true)}
+                        {formatDate(order.OrderDate, true, true)}
                       </span>
                     </ListGroup.Item>
                     <ListGroup.Item className='d-flex align-items-center'>
@@ -114,9 +114,15 @@ function OrderDetail(props: RouteComponentProps<number>): JSX.Element {
                       <span style={{ marginLeft: '5px' }}>{order.Description}</span>
                     </ListGroup.Item>
                     <ListGroup.Item className='d-flex align-items-center'>
-                      <b>Address:</b>{' '}
-                      <span>
+                      <b style={{ marginRight: '5px' }}>Address:</b>{' '}
+                      <span className='text-right' style={{ fontSize: 'small' }}>
                         <a href={addressToUse}>{mapAddress}</a>
+                      </span>
+                    </ListGroup.Item>
+                    <ListGroup.Item className='d-flex align-items-center'>
+                      <b style={{ marginRight: '5px' }}>Created By:</b>{' '}
+                      <span className='text-right' style={{ fontSize: 'small' }}>
+                        {order.CreatedBy}
                       </span>
                     </ListGroup.Item>
                   </React.Fragment>
