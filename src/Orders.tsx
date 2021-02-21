@@ -12,6 +12,7 @@ import OrderCard from './Common/OrderCard';
 const sectionStyle = {
   backgroundImage: `url(${background})`,
   marginTop: '5px',
+  fontFamily: 'Andika-R',
 };
 
 type Props = RouteComponentProps;
@@ -23,13 +24,12 @@ function Orders(props: Props) {
     return <div>Orders not ready.</div>;
   }
 
-  console.log(orders[0].Name, orders.length);
   return (
     <Container fluid style={sectionStyle}>
       <Row>
         <Col className='text-center'>
           <Jumbotron>
-            <h1>
+            <h1 style={{ fontFamily: 'AmaticSC-Bold', fontSize: 'xxx-large' }}>
               Orders
               <Badge variant='success' style={{ marginLeft: '3px' }}>
                 {orders.length}
@@ -47,13 +47,12 @@ function Orders(props: Props) {
         appearAnimation='elevator'
         maintainContainerHeight={true}
         easing='cubic-bezier(0.39, 0.0, 0.45, 1.4)'
-        style={{ textAlign: 'left' }}
+        style={{ textAlign: 'left', fontFamily: 'AmaticSC-Regular' }}
       >
         {orders.map((order: Order) => {
           const mapAddress = `${order.Address} ${order.City},${order.State}`;
           const encodedAddress = encodeURI(mapAddress);
           const addressToUse = `https://www.google.com/maps/search/?api=1&query=${encodedAddress}`;
-          console.log('order', order);
           return (
             <OrderCard
               key={order.Id}

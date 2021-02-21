@@ -4,6 +4,7 @@ import {
   GoogleLoginResponse,
   GoogleLoginResponseOffline,
 } from 'react-google-login';
+import { BiFontSize } from 'react-icons/bi';
 
 interface GoogleSignInComponentProps {
   loginSuccess: (response: GoogleLoginResponse | GoogleLoginResponseOffline) => void;
@@ -15,10 +16,19 @@ export const GoogleSignInComponent: FunctionComponent<GoogleSignInComponentProps
   const [loginFailed, setLoginFailed] = useState<boolean>();
 
   return (
-    <div className='text-center mb-4' style={{ marginTop: '329px' }}>
-      <h1 className='h3 mb-3 font-weight-normal'>Welcome to Emerald Bakery.</h1>
-      {loginFailed && <div>Could not sign you in! Try again. </div>}
-      <p>Sign In</p>
+    <div className='text-center mb-4' style={{ marginTop: '300px' }}>
+      <h1
+        className='h3 mb-3 font-weight-normal'
+        style={{ fontFamily: 'AmaticSC-Bold', fontSize: 'xxx-large' }}
+      >
+        Welcome to Emerald Bakery.
+      </h1>
+      {loginFailed && (
+        <div style={{ fontFamily: 'Andika-R', fontSize: 'larger' }}>
+          Could not sign you in! Try again.
+        </div>
+      )}
+      <p style={{ fontFamily: 'Andika-R', fontSize: 'larger' }}>Sign In</p>
       <GoogleLogin
         clientId={`${process.env.REACT_APP_GOOGLE_AUTH_CLIENT_ID}`}
         buttonText='Google'

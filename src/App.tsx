@@ -181,7 +181,7 @@ function App() {
                   buttonText='Logout'
                   onLogoutSuccess={logoutSuccess}
                 ></GoogleLogout>
-                <div className='text-right'>
+                <div className='text-right' style={{ fontFamily: 'Andika-R' }}>
                   <span style={{ marginLeft: '58px' }}>
                     Logged in User: {loggedInUserName}
                   </span>
@@ -205,7 +205,7 @@ function App() {
         loggedInUserEmail === 'dlbooth64@gmail.com'
       ) &&
       loggedInUserEmail.length > 0 ? (
-        <div>
+        <div style={{ fontFamily: 'Andika-R' }}>
           Unauthorized Access: please email:{' '}
           <a href='email:azrael7@gmail.com'>azrael7@gmail.com</a>
           <GoogleLogout

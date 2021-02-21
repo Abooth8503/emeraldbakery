@@ -4,7 +4,7 @@
   width: 32px;
   height: 30px;
   left: 36px;
-  top: 42px;
+  top: 52px;
 }
 
 /* Color/shape of burger icon bars */
@@ -73,7 +73,8 @@
   text-decoration: none;
   list-style-type: none;
   color: white;
-  font-family: sans-serif;
+  font-family: 'AmaticSC-Bold';
+  font-size: x-large;
   letter-spacing: 0.15em;
   margin-bottom: 10px;
 }

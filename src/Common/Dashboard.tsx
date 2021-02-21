@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Link } from 'react-router-dom';
 import { Container, Row, Col, Jumbotron } from 'react-bootstrap';
 import background from '../congruent_pentagon.png';
 import { useEmeraldContext } from '../Interfaces/EmeraldTypes';
@@ -58,7 +59,6 @@ function Dashboard(props: Props) {
   const { orders } = useEmeraldContext();
 
   const randNumber = Math.floor(Math.random() * motivationalQuotes.length);
-  console.log('random number: ', randNumber);
   if (orders.length < 1) {
     return <div>Loading...</div>;
   }
@@ -69,22 +69,38 @@ function Dashboard(props: Props) {
       <Row className='justify-content-center h-100' style={{ marginTop: '5px' }}>
         <Col>
           <Jumbotron style={{ backgroundColor: 'white' }}>
-            <h2 className='text-center'>Welcome {userNameString}!</h2>
+            <h2
+              className='text-center'
+              style={{ fontFamily: 'AmaticSC-Bold', fontSize: 'xxx-large' }}
+            >
+              Welcome {userNameString}!
+            </h2>
           </Jumbotron>
         </Col>
       </Row>
       <Row className='justify-content-center'>
         <Col>
           <figure className='quote'>
-            <blockquote>{`"${motivationalQuotes[randNumber].quote}"`}</blockquote>
-            <figcaption style={{ textAlign: 'right' }}>
+            <blockquote
+              style={{ fontFamily: 'Andika-R', fontSize: 'large' }}
+            >{`"${motivationalQuotes[randNumber].quote}"`}</blockquote>
+            <figcaption
+              style={{
+                textAlign: 'right',
+                fontFamily: 'Andika-R',
+                fontSize: 'larger',
+              }}
+            >
               <cite>{`- ${motivationalQuotes[randNumber].name} `}</cite>
             </figcaption>
           </figure>
         </Col>
       </Row>
       <Row>
-        <Col>Total Orders: {orders.length}</Col>
+        <Col style={{ fontFamily: 'Andika-R', fontSize: 'larger' }}>
+          {' '}
+          Total <Link to='/orders'>Orders</Link>: {orders.length}
+        </Col>
       </Row>
     </Container>
   );

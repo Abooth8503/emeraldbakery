@@ -14,7 +14,6 @@ type Props = {
 
 function OrderCard(props: Props) {
   function selectOrder(id: any): void {
-    console.log('id is ' + id);
     props.routeComponentProps.history.push(`/detail`, id);
   }
 
@@ -29,6 +28,7 @@ function OrderCard(props: Props) {
         border: 'black',
         borderWidth: '1px',
         borderStyle: 'solid',
+        fontFamily: 'Andika-R',
       }}
       onClick={() => selectOrder(props.order.Id)}
     >

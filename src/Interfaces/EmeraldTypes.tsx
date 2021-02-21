@@ -24,6 +24,14 @@ export interface Order {
   User: string | undefined;
 }
 
+export interface OrderType {
+  Id: number;
+  Name: string | undefined;
+  Description: string | undefined;
+  ImageUrl: string | undefined;
+  User: string | undefined;
+}
+
 export interface RouteComponentProps<P> {
   match: match<P>;
   location: H.Location;
@@ -39,8 +47,10 @@ export interface match<P> {
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-const useOrders = (initial: Order[] = []) => {
+const useOrders = (initial: Order[] = [], emeraldOrderTypes: OrderType[] = []) => {
   const [orders, setOrders] = React.useState<Order[]>(initial);
+  const [orderTypes, setOrderType] = React.useState<OrderType[]>(emeraldOrderTypes);
+
   const [newOrder, setNewOrder] = React.useState<string>('');
   useEffect(() => {
     // fetch(`http://localhost:7071/api/Function1`)
@@ -51,10 +61,19 @@ const useOrders = (initial: Order[] = []) => {
       .then((resultData) => {
         setOrders(resultData);
       });
+
+    fetch(
+      `https://emeraldordertype.azurewebsites.net/api/Function1?code=${process.env.REACT_APP_ORDERTYPE_FUNC_KEY}`
+    )
+      .then((response) => response.json()) // parse JSON from request
+      .then((resultData) => {
+        setOrderType(resultData);
+      });
   }, []);
 
   return {
     orders,
+    orderTypes,
     newOrder,
     setNewOrder,
     setOrders,
@@ -124,7 +143,7 @@ export function isLeapYear(yearSelected: number) {
   const isLeapYearMade = yearSelected % 4 === 0;
   const AndEvenDivisible = yearSelected % 100 !== 0;
   const OrEvenDiv100 = yearSelected % 400 === 0;
-  console.log('isLeapYear', isLeapYearMade);
+  // console.log('isLeapYear', isLeapYearMade);
   const isItEvenLeapYear = (isLeapYearMade && AndEvenDivisible) || OrEvenDiv100;
   return isItEvenLeapYear;
 }

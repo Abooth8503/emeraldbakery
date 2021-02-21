@@ -151,13 +151,10 @@ function CreateOrder(props: Props) {
 
   useEffect(() => {
     if (props.routeComponentProps.location.state !== undefined) {
-      console.log('found edit order id', props.routeComponentProps.location.state);
       const filteredEditOrder = orders.filter(
         (order) => order.Id === props.routeComponentProps.location.state
       );
-      console.log('filteredOrder', filteredEditOrder);
       if (filteredEditOrder.length > 0) {
-        console.log('found order', filteredEditOrder[0]);
         nameSet(filteredEditOrder[0].Name);
         areaSet(filteredEditOrder[0].Area);
         addressSet(filteredEditOrder[0].Address);
@@ -172,11 +169,9 @@ function CreateOrder(props: Props) {
 
         // delivery date start
         const deliveryDateStart = moment(filteredEditOrder[0].DeliveryDate);
-        // console.log('month', deliveryDateStart.format('MM'));
         deliveryMonthSet(deliveryDateStart.format('MM'));
         deliveryDaySet(deliveryDateStart.format('DD'));
         deliveryYearSet(deliveryDateStart.format('YYYY'));
-        // console.log('start time', deliveryDateStart.format('hh:mm a').toUpperCase());
         beginTimeSet(deliveryDateStart.format('hh:mm a').toUpperCase());
 
         // delivery date end
@@ -199,7 +194,6 @@ function CreateOrder(props: Props) {
   });
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.value);
     // Update the keyword of the input element
     setValue(e.target.value, true);
   };
@@ -216,7 +210,6 @@ function CreateOrder(props: Props) {
     clearSuggestions();
 
     const address = description.split(',');
-    console.log('address obj: ', address);
     if (address.length > 3) {
       // set address, city and state
       addressSet(address[0]);
@@ -238,7 +231,6 @@ function CreateOrder(props: Props) {
     getGeocode({ address: description })
       .then((results) => getZipCode(results[0], false))
       .then((zip) => {
-        console.log('ZipCode: ', zip);
         if (zip !== null) {
           zipCodeSet(zip);
         }
@@ -252,7 +244,6 @@ function CreateOrder(props: Props) {
         place_id,
         structured_formatting: { main_text, secondary_text },
       } = suggestion;
-      console.log('sugg ', suggestion);
       return (
         <li key={place_id} onClick={handleSelect(suggestion)}>
           📍-<strong>{main_text}</strong> <small>{secondary_text}</small>
@@ -387,7 +378,6 @@ function CreateOrder(props: Props) {
 
   function onPrePaidCheckClick(e: React.ChangeEvent<HTMLInputElement>) {
     e.preventDefault();
-    console.log('price is ', e.target.checked, prepaid);
 
     prepaidSet(e.target.checked);
   }
@@ -606,14 +596,17 @@ function CreateOrder(props: Props) {
   return (
     <Container>
       <Jumbotron style={{ backgroundColor: 'white', marginTop: '3px' }}>
-        <h2 className='text-center'>
+        <h2
+          className='text-center'
+          style={{ fontFamily: 'AmaticSC-Bold', fontSize: 'xxx-large' }}
+        >
           {props.routeComponentProps.location.state === undefined
             ? 'Create Order'
             : 'Edit Order'}
         </h2>
       </Jumbotron>
 
-      <Form>
+      <Form style={{ fontFamily: 'Andika-R' }}>
         <Form.Group>
           <Form.Label>Name</Form.Label>
           <Form.Control

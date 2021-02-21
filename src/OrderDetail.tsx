@@ -22,23 +22,18 @@ function OrderDetail(props: RouteComponentProps<number>): JSX.Element {
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
 
   function editOrder(id: number) {
-    console.log('id', id);
     props.history.push(`/create`, id);
   }
 
   function handleShowDialog() {
     setIsOpen(!isOpen);
-    console.log('clicked');
   }
-
-  console.log('props for orderDetail', props.location.state, orders);
 
   if (orders.length < 1) {
     return <div>Loading...</div>;
   }
 
   const filteredOrderProp = orders.filter((order) => order.Id === props.location.state);
-  console.log('filteredOrderProp', filteredOrderProp);
 
   return (
     <React.Fragment>
