@@ -15,7 +15,10 @@ import useOnclickOutside from 'react-cool-onclickoutside';
 import '../css/createOrder.css';
 import { calculateDays, Order, useEmeraldContext } from '../Interfaces/EmeraldTypes';
 
-type Props = RouteComponentProps;
+type Props = {
+  routeComponentProps: RouteComponentProps;
+  user: string;
+};
 
 const year = new Date().getFullYear();
 const years = Array.from(new Array(2), (val, index) => year - index);
@@ -147,10 +150,10 @@ function CreateOrder(props: Props) {
   const { orders } = useEmeraldContext();
 
   useEffect(() => {
-    if (props.location.state !== undefined) {
-      console.log('found edit order id', props.location.state);
+    if (props.routeComponentProps.location.state !== undefined) {
+      console.log('found edit order id', props.routeComponentProps.location.state);
       const filteredEditOrder = orders.filter(
-        (order) => order.Id === props.location.state
+        (order) => order.Id === props.routeComponentProps.location.state
       );
       console.log('filteredOrder', filteredEditOrder);
       if (filteredEditOrder.length > 0) {
@@ -519,7 +522,10 @@ function CreateOrder(props: Props) {
     e.preventDefault();
 
     const orderContent: Order = {
-      Id: props.location.state === undefined ? 0 : Number(props.location.state),
+      Id:
+        props.routeComponentProps.location.state === undefined
+          ? 0
+          : Number(props.routeComponentProps.location.state),
       Name: name,
       Area: area,
       Address: address,
@@ -538,6 +544,7 @@ function CreateOrder(props: Props) {
       OrderDate: new Date(),
       PrePaid: false,
       TrafficSource: trafficSource,
+      User: props.user,
     };
 
     console.log('payload', orderContent);
@@ -600,7 +607,9 @@ function CreateOrder(props: Props) {
     <Container>
       <Jumbotron style={{ backgroundColor: 'white', marginTop: '3px' }}>
         <h2 className='text-center'>
-          {props.location.state === undefined ? 'Create Order' : 'Edit Order'}
+          {props.routeComponentProps.location.state === undefined
+            ? 'Create Order'
+            : 'Edit Order'}
         </h2>
       </Jumbotron>
 

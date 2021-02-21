@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import * as React from 'react';
+import * as H from 'history';
 import { useEffect } from 'react';
 
 export interface Order {
@@ -20,6 +21,21 @@ export interface Order {
   OrderDate: Date;
   PrePaid: boolean;
   TrafficSource: string | undefined;
+  User: string | undefined;
+}
+
+export interface RouteComponentProps<P> {
+  match: match<P>;
+  location: H.Location;
+  history: H.History;
+  staticContext?: any;
+}
+
+export interface match<P> {
+  params: P;
+  isExact: boolean;
+  path: string;
+  url: string;
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
