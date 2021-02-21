@@ -24,11 +24,9 @@ export const GoogleSignInComponent: FunctionComponent<GoogleSignInComponentProps
         Welcome to Emerald Bakery.
       </h1>
       {loginFailed && (
-        <div style={{ fontFamily: 'Andika-R', fontSize: 'larger' }}>
-          Could not sign you in! Try again.
-        </div>
+        <div style={{ fontSize: 'larger' }}>Could not sign you in! Try again.</div>
       )}
-      <p style={{ fontFamily: 'Andika-R', fontSize: 'larger' }}>Sign In</p>
+      <p style={{ fontSize: 'larger' }}>Sign In</p>
       <GoogleLogin
         clientId={`${process.env.REACT_APP_GOOGLE_AUTH_CLIENT_ID}`}
         buttonText='Google'

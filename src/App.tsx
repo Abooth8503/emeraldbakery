@@ -205,7 +205,7 @@ function App() {
         loggedInUserEmail === 'dlbooth64@gmail.com'
       ) &&
       loggedInUserEmail.length > 0 ? (
-        <div style={{ fontFamily: 'Andika-R' }}>
+        <div>
           Unauthorized Access: please email:{' '}
           <a href='email:azrael7@gmail.com'>azrael7@gmail.com</a>
           <GoogleLogout

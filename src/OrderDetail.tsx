@@ -39,7 +39,9 @@ function OrderDetail(props: RouteComponentProps<number>): JSX.Element {
     <React.Fragment>
       <Container className='text-center' style={{ marginTop: '5px' }}>
         <Jumbotron style={{ backgroundColor: 'white' }}>
-          <h2>Order Detail</h2>
+          <h2 style={{ fontFamily: 'AmaticSC-Regular', fontSize: 'xxx-large' }}>
+            Order Detail
+          </h2>
         </Jumbotron>
         <Row>
           <Col>

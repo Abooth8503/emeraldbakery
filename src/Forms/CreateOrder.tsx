@@ -606,7 +606,7 @@ function CreateOrder(props: Props) {
         </h2>
       </Jumbotron>
 
-      <Form style={{ fontFamily: 'Andika-R' }}>
+      <Form>
         <Form.Group>
           <Form.Label>Name</Form.Label>
           <Form.Control
