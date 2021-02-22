@@ -27,6 +27,7 @@ function OrderTypeForm(props: Props) {
   const [name, setName] = React.useState<string | undefined>(undefined);
   const [description, setDescription] = React.useState<string | undefined>(undefined);
   const [imageUrl, setImageUrl] = React.useState<string | undefined>(undefined);
+  const [saveMessage, setSaveMessage] = React.useState<string | undefined>(undefined);
   // dropzone
   const [uploadFiles, setUploadFiles] = React.useState<Array<File>>([]);
 
@@ -101,8 +102,11 @@ function OrderTypeForm(props: Props) {
           throw Error('Network Request failed');
         }
 
+        setSaveMessage('Order Type saved!');
+
         setTimeout(() => {
           clearFields();
+          setSaveMessage('');
         }, 4000);
 
         return response;
@@ -219,10 +223,13 @@ function OrderTypeForm(props: Props) {
           <Image src={imageUrl} thumbnail />
         </Form.Group>
 
-        <Button onClick={formSubmit}>Save</Button>
-        <Button onClick={clearFields} style={{ marginLeft: '5px' }}>
-          Clear
-        </Button>
+        <Form.Group>
+          <Button onClick={formSubmit}>Save</Button>
+          <Button onClick={clearFields} style={{ marginLeft: '5px' }}>
+            Clear
+          </Button>
+          <Form.Label>{saveMessage}</Form.Label>
+        </Form.Group>
       </Form>
     </Container>
   );
