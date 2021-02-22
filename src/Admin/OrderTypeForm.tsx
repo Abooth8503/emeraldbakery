@@ -37,7 +37,11 @@ function OrderTypeForm(props: Props) {
     const selectedOrderType = orderTypes.filter((ot) => ot.Id === id);
     setId(selectedOrderType[0].Id);
     setName(selectedOrderType[0].Name);
-    setDescription(selectedOrderType[0].Description);
+    if (selectedOrderType[0].Description === null) {
+      setDescription('');
+    } else {
+      setDescription(selectedOrderType[0].Description);
+    }
     console.log('image url', selectedOrderType[0].ImageUrl);
     setImageUrl(selectedOrderType[0].ImageUrl);
   }
@@ -160,7 +164,6 @@ function OrderTypeForm(props: Props) {
           easing='cubic-bezier(0.39, 0.0, 0.45, 1.4)'
         >
           {orderTypes.map((orderType: OrderType) => {
-            console.log('map ordertype', orderType);
             return (
               <ListGroup.Item
                 key={orderType.Id}
