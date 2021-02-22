@@ -6,7 +6,6 @@ import { slide as Menu } from 'react-burger-menu';
 import { GoogleLoginResponse, GoogleLoginResponseOffline } from 'react-google-login';
 import { EmeraldProvider } from './Interfaces/EmeraldTypes';
 import Dashboard from './Common/Dashboard';
-// import history from './Common/History';
 import Orders from './Orders';
 import CreateOrder from './Forms/CreateOrder';
 import CalendarOrders from './CalendarOrders';
@@ -15,11 +14,12 @@ import { FcHome, FcGoogle } from 'react-icons/fc';
 import { BiCookie } from 'react-icons/bi';
 import { AiOutlineForm } from 'react-icons/ai';
 import { FcCalendar } from 'react-icons/fc';
-import { FaMap } from 'react-icons/fa';
+import { FaMap, FaClipboardList } from 'react-icons/fa';
 import GMap from './Gmap';
 import OrderDetail from './OrderDetail';
 import { GoogleSignInComponent } from './GoogleSignInComponent';
 import { GoogleLogout } from 'react-google-login';
+import OrderTypeForm from './Admin/OrderTypeForm';
 
 // Used when a user hits a route not defined below
 const FourOhFour = (): JSX.Element => (
@@ -42,7 +42,6 @@ const logoutBtnStyles = {
   borderRadius: '2px',
   border: '1px solid transparent',
   fontSize: '14px',
-  // fontWeight: 500,
   fontFamily: 'Roboto, sans-serif',
   top: '97%',
   transform: 'translateY(-50%)',
@@ -119,6 +118,14 @@ function App() {
                 Map
               </a>
               <hr />
+              <a
+                id='ordertypes'
+                className='menu-item'
+                href={process.env.PUBLIC_URL + '/ordertypes'}
+              >
+                <FaClipboardList style={{ marginRight: '5px' }} />
+                Order Types
+              </a>
             </Menu>
             <BrowserRouter basename={process.env.PUBLIC_URL}>
               <Switch>
@@ -145,6 +152,11 @@ function App() {
                   exact
                   path='/detail'
                   render={(props) => <OrderDetail {...props} />}
+                />
+                <Route
+                  exact
+                  path='/ordertypes'
+                  render={(props) => <OrderTypeForm user={loggedInUserEmail} />}
                 />
                 <Route component={FourOhFour} />
               </Switch>

@@ -535,6 +535,7 @@ function CreateOrder(props: Props) {
       PrePaid: false,
       TrafficSource: trafficSource,
       User: props.user,
+      CreatedBy: props.user,
     };
 
     console.log('payload', orderContent);

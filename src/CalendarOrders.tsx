@@ -5,11 +5,10 @@ import Calendar from 'react-calendar';
 import moment from 'moment';
 import 'react-calendar/dist/Calendar.css';
 import './css/reactCalendar.css';
-import { Jumbotron, Container, Row, Col, Card, Image } from 'react-bootstrap';
+import { Jumbotron, Container, Row, Col } from 'react-bootstrap';
 import OrderCard from './Common/OrderCard';
 import { Order } from './Interfaces/EmeraldTypes';
-import { useEmeraldContext, formatDate } from './Interfaces/EmeraldTypes';
-import cat from './cat.jpg';
+import { useEmeraldContext } from './Interfaces/EmeraldTypes';
 
 type Props = RouteComponentProps;
 
@@ -48,10 +47,6 @@ function CalendarOrders(props: Props): JSX.Element {
   function onClickDayDate(value: Date): void {
     daySet(value);
     return;
-  }
-
-  function selectOrder(id: any): void {
-    props.history.push(`/detail`, id);
   }
 
   if (orders.length < 1) {

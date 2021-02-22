@@ -22,6 +22,7 @@ export interface Order {
   PrePaid: boolean;
   TrafficSource: string | undefined;
   User: string | undefined;
+  CreatedBy: string | undefined;
 }
 
 export interface OrderType {
