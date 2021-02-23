@@ -536,6 +536,7 @@ function CreateOrder(props: Props) {
       TrafficSource: trafficSource,
       User: props.user,
       CreatedBy: props.user,
+      ImageUrl: '',
     };
 
     console.log('payload', orderContent);

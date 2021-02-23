@@ -23,6 +23,7 @@ export interface Order {
   TrafficSource: string | undefined;
   User: string | undefined;
   CreatedBy: string | undefined;
+  ImageUrl: string | undefined;
 }
 
 export interface OrderType {

@@ -66,7 +66,11 @@ function OrderDetail(props: RouteComponentProps<number>): JSX.Element {
             })}
           </Col>
           <Col className='d-flex align-items-center justify-content-center'>
-            <Image src={OrderTypeImage} thumbnail onClick={handleShowDialog} />
+            <Image
+              src={filteredOrderProp[0].ImageUrl}
+              thumbnail
+              onClick={handleShowDialog}
+            />
           </Col>
           {isOpen && (
             <dialog
