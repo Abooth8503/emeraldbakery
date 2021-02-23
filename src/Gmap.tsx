@@ -1,11 +1,9 @@
 /// <reference types="google.maps" />
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import React, { useEffect } from 'react';
 import { getGeocode, getLatLng } from 'use-places-autocomplete';
 import { useEmeraldContext } from './Interfaces/EmeraldTypes';
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-function GMap() {
+function GMap(): JSX.Element {
   const mapRef: HTMLDivElement | null = null;
   const googleMapRef = React.useRef<HTMLDivElement | null>(mapRef);
   const { orders } = useEmeraldContext();
@@ -32,14 +30,14 @@ function GMap() {
   }, []);
 
   // initialize the google map
-  const initGoogleMap = () => {
+  const initGoogleMap = (): google.maps.Map => {
     return new google.maps.Map(googleMapRef.current as HTMLElement, {
       center: { lat: 29.56638929999999, lng: -98.3988705 },
       zoom: 10,
     });
   };
 
-  function setMarkers() {
+  function setMarkers(): void {
     const bounds = new google.maps.LatLngBounds();
     console.log('about to create a marker');
     if (orders.length > 0) {

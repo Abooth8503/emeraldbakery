@@ -1,6 +1,3 @@
-/* eslint-disable no-irregular-whitespace */
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import * as React from 'react';
 import { useEffect } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
@@ -65,7 +62,7 @@ const times = [
   '24:00 AM',
 ];
 
-function CreateOrder(props: Props) {
+function CreateOrder(props: Props): JSX.Element {
   const [name, nameSet] = React.useState<string | undefined>(undefined);
   const [area, areaSet] = React.useState<string | undefined>(undefined);
   const [address, addressSet] = React.useState<string | undefined>(undefined);
@@ -193,7 +190,7 @@ function CreateOrder(props: Props) {
     clearSuggestions();
   });
 
-  const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInput = (e: React.ChangeEvent<HTMLInputElement>): void => {
     // Update the keyword of the input element
     setValue(e.target.value, true);
   };
@@ -238,7 +235,7 @@ function CreateOrder(props: Props) {
   };
 
   // Render temp ul of suggestions
-  const renderSuggestions = () =>
+  const renderSuggestions = (): JSX.Element[] =>
     data.map((suggestion) => {
       const {
         place_id,
@@ -251,7 +248,7 @@ function CreateOrder(props: Props) {
       );
     });
 
-  function onChangeName(e: React.ChangeEvent<HTMLInputElement>) {
+  function onChangeName(e: React.ChangeEvent<HTMLInputElement>): void {
     e.preventDefault();
     nameSet(e.target.value);
     if (name !== undefined) {
@@ -262,7 +259,7 @@ function CreateOrder(props: Props) {
     isFormValidated();
   }
 
-  function onChangeArea(e: React.ChangeEvent<HTMLInputElement>) {
+  function onChangeArea(e: React.ChangeEvent<HTMLInputElement>): void {
     e.preventDefault();
     areaSet(e.target.value);
 
@@ -274,7 +271,7 @@ function CreateOrder(props: Props) {
     isFormValidated();
   }
 
-  function onChangeAddress(e: React.ChangeEvent<HTMLInputElement>) {
+  function onChangeAddress(e: React.ChangeEvent<HTMLInputElement>): void {
     e.preventDefault();
     addressSet(e.target.value);
 
@@ -286,7 +283,7 @@ function CreateOrder(props: Props) {
     isFormValidated();
   }
 
-  function onChangeCity(e: React.ChangeEvent<HTMLInputElement>) {
+  function onChangeCity(e: React.ChangeEvent<HTMLInputElement>): void {
     e.preventDefault();
     citySet(e.target.value);
 
@@ -298,7 +295,7 @@ function CreateOrder(props: Props) {
     isFormValidated();
   }
 
-  function onChangeState(e: React.ChangeEvent<HTMLInputElement>) {
+  function onChangeState(e: React.ChangeEvent<HTMLInputElement>): void {
     e.preventDefault();
     stateSet(e.target.value);
 
@@ -310,7 +307,7 @@ function CreateOrder(props: Props) {
     isFormValidated();
   }
 
-  function onChangeZipCode(e: React.ChangeEvent<HTMLInputElement>) {
+  function onChangeZipCode(e: React.ChangeEvent<HTMLInputElement>): void {
     e.preventDefault();
     zipCodeSet(e.target.value);
 
@@ -322,7 +319,7 @@ function CreateOrder(props: Props) {
     isFormValidated();
   }
 
-  function onChangeOrderType(e: React.ChangeEvent<HTMLSelectElement>) {
+  function onChangeOrderType(e: React.ChangeEvent<HTMLSelectElement>): void {
     e.preventDefault();
     orderTypeSet(e.target.value);
 
@@ -334,7 +331,7 @@ function CreateOrder(props: Props) {
     isFormValidated();
   }
 
-  function onChangeOrderStatus(e: React.ChangeEvent<HTMLSelectElement>) {
+  function onChangeOrderStatus(e: React.ChangeEvent<HTMLSelectElement>): void {
     e.preventDefault();
     orderStatusSet(e.target.value);
 
@@ -346,7 +343,7 @@ function CreateOrder(props: Props) {
     isFormValidated();
   }
 
-  function onClickPlus(e: React.MouseEvent) {
+  function onClickPlus(e: React.MouseEvent): void {
     e.preventDefault();
     quantitySet(quantity + 1);
 
@@ -356,7 +353,7 @@ function CreateOrder(props: Props) {
     isFormValidated();
   }
 
-  function onClickMinus(e: React.MouseEvent) {
+  function onClickMinus(e: React.MouseEvent): void {
     e.preventDefault();
     quantitySet(quantity - 1);
 
@@ -366,7 +363,7 @@ function CreateOrder(props: Props) {
     isFormValidated();
   }
 
-  function onChangePrice(e: React.ChangeEvent<HTMLSelectElement>) {
+  function onChangePrice(e: React.ChangeEvent<HTMLSelectElement>): void {
     e.preventDefault();
     priceSet(e.target.value);
 
@@ -376,18 +373,18 @@ function CreateOrder(props: Props) {
     isFormValidated();
   }
 
-  function onPrePaidCheckClick(e: React.ChangeEvent<HTMLInputElement>) {
+  function onPrePaidCheckClick(e: React.ChangeEvent<HTMLInputElement>): void {
     e.preventDefault();
 
     prepaidSet(e.target.checked);
   }
 
-  function onChangeDescription(e: React.ChangeEvent<HTMLTextAreaElement>) {
+  function onChangeDescription(e: React.ChangeEvent<HTMLTextAreaElement>): void {
     e.preventDefault();
     descriptionSet(e.target.value);
   }
 
-  function onChangeTrafficSource(e: React.ChangeEvent<HTMLSelectElement>) {
+  function onChangeTrafficSource(e: React.ChangeEvent<HTMLSelectElement>): void {
     e.preventDefault();
     trafficSourceSet(e.target.value);
     if (e.target.value !== undefined) {
@@ -396,7 +393,7 @@ function CreateOrder(props: Props) {
     isFormValidated();
   }
 
-  function onChangeDeliveryMonth(e: React.ChangeEvent<HTMLSelectElement>) {
+  function onChangeDeliveryMonth(e: React.ChangeEvent<HTMLSelectElement>): void {
     e.preventDefault();
     const newDate = e.target.value;
     deliveryMonthSet(e.target.value);
@@ -409,7 +406,7 @@ function CreateOrder(props: Props) {
     isFormValidated();
   }
 
-  function onChangeDeliveryDay(e: React.ChangeEvent<HTMLSelectElement>) {
+  function onChangeDeliveryDay(e: React.ChangeEvent<HTMLSelectElement>): void {
     e.preventDefault();
     deliveryDaySet(e.target.value);
     if (e.target.value !== 'DD' && e.target.value !== undefined) {
@@ -418,7 +415,7 @@ function CreateOrder(props: Props) {
     isFormValidated();
   }
 
-  function onChangeDeliveryYear(e: React.ChangeEvent<HTMLSelectElement>) {
+  function onChangeDeliveryYear(e: React.ChangeEvent<HTMLSelectElement>): void {
     e.preventDefault();
     deliveryYearSet(e.target.value);
     if (deliveryMonth !== undefined) {
@@ -430,7 +427,7 @@ function CreateOrder(props: Props) {
     isFormValidated();
   }
 
-  function onChangeBeginTime(e: React.ChangeEvent<HTMLSelectElement>) {
+  function onChangeBeginTime(e: React.ChangeEvent<HTMLSelectElement>): void {
     e.preventDefault();
     beginTimeSet(e.target.value);
     if (e.target.value !== 'Select Time') {
@@ -438,7 +435,7 @@ function CreateOrder(props: Props) {
     }
   }
 
-  function onChangeDeliveryMonthEnd(e: React.ChangeEvent<HTMLSelectElement>) {
+  function onChangeDeliveryMonthEnd(e: React.ChangeEvent<HTMLSelectElement>): void {
     e.preventDefault();
     deliveryMonthEndSet(e.target.value);
     if (deliveryYearEnd !== undefined) {
@@ -450,7 +447,7 @@ function CreateOrder(props: Props) {
     isFormValidated();
   }
 
-  function onChangeDeliveryDayEnd(e: React.ChangeEvent<HTMLSelectElement>) {
+  function onChangeDeliveryDayEnd(e: React.ChangeEvent<HTMLSelectElement>): void {
     e.preventDefault();
     deliveryDayEndSet(e.target.value);
     if (e.target.value !== 'DD' && e.target.value !== undefined) {
@@ -459,7 +456,7 @@ function CreateOrder(props: Props) {
     isFormValidated();
   }
 
-  function onChangeEndTime(e: React.ChangeEvent<HTMLSelectElement>) {
+  function onChangeEndTime(e: React.ChangeEvent<HTMLSelectElement>): void {
     e.preventDefault();
     endTimeSet(e.target.value);
     if (e.target.value !== 'Select Time') {
@@ -467,7 +464,7 @@ function CreateOrder(props: Props) {
     }
   }
 
-  function onChangeDeliveryYearEnd(e: React.ChangeEvent<HTMLSelectElement>) {
+  function onChangeDeliveryYearEnd(e: React.ChangeEvent<HTMLSelectElement>): void {
     e.preventDefault();
     deliveryYearEndSet(e.target.value);
     if (deliveryMonthEnd !== undefined) {
@@ -508,7 +505,7 @@ function CreateOrder(props: Props) {
     }
   }
 
-  function insertOrder(e: React.MouseEvent<HTMLElement>) {
+  function insertOrder(e: React.MouseEvent<HTMLElement>): void {
     e.preventDefault();
 
     const orderContent: Order = {
@@ -573,7 +570,7 @@ function CreateOrder(props: Props) {
     }
   }
 
-  function clearFields() {
+  function clearFields(): void {
     nameSet('');
     areaSet('');
     addressSet('');
@@ -762,7 +759,7 @@ function CreateOrder(props: Props) {
             onChange={onPrePaidCheckClick}
           />
         </Form.Group>
-        <Form.Label>Delivery Begin Date</Form.Label>  
+        <Form.Label>Delivery Begin Date</Form.Label>
         <Form.Group>
           <Form.Control
             as='select'
@@ -777,7 +774,6 @@ function CreateOrder(props: Props) {
               }
             )}
           </Form.Control>
-                        
           <Form.Control
             as='select'
             id='addDay'
@@ -828,7 +824,6 @@ function CreateOrder(props: Props) {
                 );
               })}
           </Form.Control>
-                       
           <Form.Control
             as='select'
             id='addYear'
@@ -836,17 +831,17 @@ function CreateOrder(props: Props) {
             onChange={onChangeDeliveryYear}
             style={{ display: 'inline', width: '100px' }}
           >
-            <option value='YYYY'>YYYY</option>       
+            <option value='YYYY'>YYYY</option>
             {years.map((everyYear, index) => {
               const keyIndex = index;
               return (
                 <option key={`everyYear-${keyIndex}`} value={everyYear}>
-                  {everyYear}           
+                  {everyYear}
                 </option>
               );
             })}
           </Form.Control>
-          <Form.Label style={{ marginTop: '10px' }}>Begin Time</Form.Label>  
+          <Form.Label style={{ marginTop: '10px' }}>Begin Time</Form.Label>
           <Form.Control
             as='select'
             id='beginTimeCtl'
@@ -854,19 +849,19 @@ function CreateOrder(props: Props) {
             onChange={onChangeBeginTime}
             style={{ width: '40%' }}
           >
-            <option>Select Time</option>        
+            <option>Select Time</option>
             {times.map((time, index) => {
               const keyIndex = index;
               return (
                 <option key={`time-${keyIndex}`} value={time}>
-                  {time}           
+                  {time}
                 </option>
               );
             })}
           </Form.Control>
         </Form.Group>
         <hr></hr>
-        <Form.Label>Delivery End Date</Form.Label>  
+        <Form.Label>Delivery End Date</Form.Label>
         <Form.Group>
           <Form.Control
             as='select'
@@ -881,7 +876,6 @@ function CreateOrder(props: Props) {
               }
             )}
           </Form.Control>
-                        
           <Form.Control
             as='select'
             id='addDay'
@@ -932,7 +926,6 @@ function CreateOrder(props: Props) {
                 );
               })}
           </Form.Control>
-                       
           <Form.Control
             as='select'
             id='addYear'
@@ -940,17 +933,17 @@ function CreateOrder(props: Props) {
             onChange={onChangeDeliveryYearEnd}
             style={{ display: 'inline', width: '100px' }}
           >
-            <option value='YYYY'>YYYY</option>       
+            <option value='YYYY'>YYYY</option>
             {years.map((everyYear, index) => {
               const keyIndex = index;
               return (
                 <option key={`everyYear-${keyIndex}`} value={everyYear}>
-                  {everyYear}           
+                  {everyYear}
                 </option>
               );
             })}
           </Form.Control>
-          <Form.Label style={{ marginTop: '10px' }}>End Time</Form.Label>  
+          <Form.Label style={{ marginTop: '10px' }}>End Time</Form.Label>
           <Form.Control
             as='select'
             id='endTimeCtl'
@@ -958,12 +951,12 @@ function CreateOrder(props: Props) {
             onChange={onChangeEndTime}
             style={{ width: '40%' }}
           >
-            <option>Select Time</option>        
+            <option>Select Time</option>
             {times.map((time, index) => {
               const keyIndex = index;
               return (
                 <option key={`time-${keyIndex}`} value={time}>
-                  {time}           
+                  {time}
                 </option>
               );
             })}

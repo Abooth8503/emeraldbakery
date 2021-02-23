@@ -86,7 +86,11 @@ const EmeraldContext = React.createContext<ReturnType<typeof useOrders> | null>(
 
 export const useEmeraldContext = () => React.useContext(EmeraldContext)!;
 
-export function EmeraldProvider({ children }: { children: React.ReactNode }) {
+export function EmeraldProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}): JSX.Element {
   return (
     <EmeraldContext.Provider value={useOrders([])}>{children}</EmeraldContext.Provider>
   );
@@ -141,7 +145,7 @@ export function calculateDate(date: string): number {
   return Math.floor(DifferenceInDays);
 }
 
-export function isLeapYear(yearSelected: number) {
+export function isLeapYear(yearSelected: number): boolean {
   const isLeapYearMade = yearSelected % 4 === 0;
   const AndEvenDivisible = yearSelected % 100 !== 0;
   const OrEvenDiv100 = yearSelected % 400 === 0;
@@ -149,7 +153,7 @@ export function isLeapYear(yearSelected: number) {
   const isItEvenLeapYear = (isLeapYearMade && AndEvenDivisible) || OrEvenDiv100;
   return isItEvenLeapYear;
 }
-export function calculateDays(month: string, yearSelected: string) {
+export function calculateDays(month: string, yearSelected: string): number {
   let daysArrayLength = 31;
   if (month === '' || yearSelected === '') {
     return daysArrayLength;
@@ -174,7 +178,7 @@ export function calculateDays(month: string, yearSelected: string) {
   }
   return daysArrayLength;
 }
-export function isValidDate(day: any, month: any, year: any) {
+export function isValidDate(day: any, month: any, year: any): boolean {
   return day <= calculateDays(month, year);
 }
 

@@ -32,7 +32,6 @@ function OrderTypeForm(props: Props) {
   const [uploadFiles, setUploadFiles] = React.useState<Array<File>>([]);
 
   function orderTypeClicked(id: OrderType['Id']) {
-    console.log('id ', id);
     setShowOrderTypes(!showOrderTypes);
     const selectedOrderType = orderTypes.filter((ot) => ot.Id === id);
     setId(selectedOrderType[0].Id);
@@ -42,12 +41,23 @@ function OrderTypeForm(props: Props) {
     } else {
       setDescription(selectedOrderType[0].Description);
     }
-    console.log('image url', selectedOrderType[0].ImageUrl);
-    setImageUrl(selectedOrderType[0].ImageUrl);
+    if (
+      selectedOrderType[0].ImageUrl == '' ||
+      selectedOrderType[0].ImageUrl === undefined ||
+      selectedOrderType[0].ImageUrl === null ||
+      selectedOrderType[0].ImageUrl.length === 0
+    ) {
+      console.log('found no image, using default');
+      setImageUrl(
+        'https://emeraldorderfunctionstor.blob.core.windows.net/emeraldbakery/defaultOrderImage_min.png'
+      );
+    } else {
+      console.log('should be value for imageurl', selectedOrderType[0]);
+      setImageUrl(selectedOrderType[0].ImageUrl);
+    }
   }
 
   function onClickshowOrderTypes(e: React.MouseEvent) {
-    console.log('clicked');
     e.preventDefault();
     setShowOrderTypes(!showOrderTypes);
   }

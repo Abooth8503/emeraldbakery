@@ -1,10 +1,8 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import * as React from 'react';
 import { Card, Col, Row, Image } from 'react-bootstrap';
 import { RouteComponentProps } from 'react-router-dom';
 import { Order, formatDate } from '../Interfaces/EmeraldTypes';
-import cat from '../cat.jpg';
 
 type Props = {
   routeComponentProps: RouteComponentProps;
@@ -12,12 +10,10 @@ type Props = {
   address: string;
 };
 
-function OrderCard(props: Props) {
+function OrderCard(props: Props): JSX.Element {
   function selectOrder(id: number): void {
     props.routeComponentProps.history.push(`/detail`, id);
   }
-
-  console.log('order.imageurl', props.order.ImageUrl);
 
   const mapAddress = `${props.order.Address} ${props.order.City},${props.order.State}`;
 

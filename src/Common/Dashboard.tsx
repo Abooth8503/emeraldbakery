@@ -1,12 +1,7 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { Container, Row, Col, Jumbotron } from 'react-bootstrap';
-import background from '../congruent_pentagon.png';
 import { useEmeraldContext } from '../Interfaces/EmeraldTypes';
-
-const sectionStyle = {
-  backgroundImage: `url(${background})`,
-};
 
 const motivationalQuotes = [
   {
@@ -55,7 +50,7 @@ interface Props {
   userName: string;
 }
 
-function Dashboard(props: Props) {
+function Dashboard(props: Props): JSX.Element {
   const { orders } = useEmeraldContext();
 
   const randNumber = Math.floor(Math.random() * motivationalQuotes.length);
@@ -65,7 +60,7 @@ function Dashboard(props: Props) {
 
   const userNameString = props.userName.split(' ')[0];
   return (
-    <Container fluid style={sectionStyle}>
+    <Container fluid>
       <Row className='justify-content-center h-100' style={{ marginTop: '5px' }}>
         <Col>
           <Jumbotron style={{ backgroundColor: 'white' }}>

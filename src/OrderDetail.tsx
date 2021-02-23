@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import * as React from 'react';
 import {
   Container,
@@ -10,8 +9,6 @@ import {
   ListGroup,
   Button,
 } from 'react-bootstrap';
-// import Calendar from 'react-calendar';
-// import moment from 'moment';
 import { RouteComponentProps } from 'react-router-dom';
 import { useEmeraldContext, formatDate } from './Interfaces/EmeraldTypes';
 import OrderTypeImage from './images/Erotic1.jpg';
@@ -21,11 +18,11 @@ function OrderDetail(props: RouteComponentProps<number>): JSX.Element {
   const { orders } = useEmeraldContext();
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
 
-  function editOrder(id: number) {
+  function editOrder(id: number): void {
     props.history.push(`/create`, id);
   }
 
-  function handleShowDialog() {
+  function handleShowDialog(): void {
     setIsOpen(!isOpen);
   }
 
@@ -34,7 +31,11 @@ function OrderDetail(props: RouteComponentProps<number>): JSX.Element {
   }
 
   const filteredOrderProp = orders.filter((order) => order.Id === props.location.state);
-  console.log('order ', filteredOrderProp);
+  let orderImageUrl = filteredOrderProp[0].ImageUrl;
+  if (orderImageUrl === '' || orderImageUrl === undefined) {
+    orderImageUrl =
+      'https://emeraldorderfunctionstor.blob.core.windows.net/emeraldbakery/defaultOrderImage.png';
+  }
   return (
     <React.Fragment>
       <Container className='text-center' style={{ marginTop: '5px' }}>
@@ -66,11 +67,7 @@ function OrderDetail(props: RouteComponentProps<number>): JSX.Element {
             })}
           </Col>
           <Col className='d-flex align-items-center justify-content-center'>
-            <Image
-              src={filteredOrderProp[0].ImageUrl}
-              thumbnail
-              onClick={handleShowDialog}
-            />
+            <Image src={orderImageUrl} thumbnail onClick={handleShowDialog} />
           </Col>
           {isOpen && (
             <dialog
