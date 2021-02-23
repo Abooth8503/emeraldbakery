@@ -1,23 +1,20 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
-import { Container, Row, Col, Badge, Card, Jumbotron } from 'react-bootstrap';
+import { Container, Row, Col, Badge, Jumbotron } from 'react-bootstrap';
 import FlipMove from 'react-flip-move';
 import { Order } from './Interfaces/EmeraldTypes';
-import background from './congruent_pentagon.png';
 import { useEmeraldContext } from './Interfaces/EmeraldTypes';
 import OrderCard from './Common/OrderCard';
 
 const sectionStyle = {
-  backgroundImage: `url(${background})`,
   marginTop: '5px',
   fontFamily: 'Andika-R',
 };
 
 type Props = RouteComponentProps;
 
-function Orders(props: Props) {
+function Orders(props: Props): JSX.Element {
   const { orders } = useEmeraldContext();
 
   if (orders.length === 0) {

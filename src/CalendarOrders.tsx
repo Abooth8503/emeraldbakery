@@ -27,8 +27,6 @@ function CalendarOrders(props: Props): JSX.Element {
   }): string | string[] | null {
     // Add class to tiles in month view only
     if (view === 'month') {
-      // console.log('date and view', date, view, moment(date).format('MM-DD-YYYY'));
-
       if (
         orders.find(
           (x) =>
@@ -36,7 +34,6 @@ function CalendarOrders(props: Props): JSX.Element {
             moment(date).format('MM-DD-YYYY')
         )
       ) {
-        // console.log('found day!');
         return 'highlight';
       }
       return null;
@@ -79,7 +76,6 @@ function CalendarOrders(props: Props): JSX.Element {
               const currentDate = moment();
 
               if (deliveryDate > currentDate) {
-                console.log('found day greater than today');
                 return upcomingOrder;
               }
             })
@@ -87,7 +83,6 @@ function CalendarOrders(props: Props): JSX.Element {
               const mapAddress = `${order.Address} ${order.City},${order.State}`;
               const encodedAddress = encodeURI(mapAddress);
               const addressToUse = `https://www.google.com/maps/search/?api=1&query=${encodedAddress}`;
-              // console.log('addr', mapAddress, addressToUse);
               return (
                 <OrderCard
                   key={order.Id}
@@ -99,7 +94,6 @@ function CalendarOrders(props: Props): JSX.Element {
             })
         : orders
             .filter((day) => {
-              console.log('day', day.DeliveryDate);
               if (selectedDay) {
                 if (
                   moment(day.DeliveryDate).format('MM-DD-YYYY') ==
@@ -113,7 +107,6 @@ function CalendarOrders(props: Props): JSX.Element {
               const mapAddress = `${order.Address} ${order.City},${order.State}`;
               const encodedAddress = encodeURI(mapAddress);
               const addressToUse = `https://www.google.com/maps/search/?api=1&query=${encodedAddress}`;
-              console.log('addr', mapAddress, addressToUse);
               return (
                 <OrderCard
                   key={order.Id}

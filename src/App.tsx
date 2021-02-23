@@ -14,7 +14,7 @@ import { FcHome, FcGoogle } from 'react-icons/fc';
 import { BiCookie } from 'react-icons/bi';
 import { AiOutlineForm } from 'react-icons/ai';
 import { FcCalendar } from 'react-icons/fc';
-import { FaMap, FaClipboardList } from 'react-icons/fa';
+import { FaClipboardList } from 'react-icons/fa';
 import GMap from './Gmap';
 import OrderDetail from './OrderDetail';
 import { GoogleSignInComponent } from './GoogleSignInComponent';
@@ -49,17 +49,16 @@ const logoutBtnStyles = {
   marginLeft: '5px',
 } as React.CSSProperties;
 
-function App() {
+function App(): JSX.Element {
   const [googleAccessToken, setGoogleAccessToken] = useState<string>('');
   const [loggedInUserEmail, setLoggedInUserEmail] = useState<string>('');
   const [loggedInUserName, setLoggedInUserName] = useState<string>('');
   const [profileImage, setProfileImage] = useState<string>('');
 
-  const componentToDisplay: any = (
+  const componentToDisplay: JSX.Element = (
     <GoogleSignInComponent
       loginSuccess={(response: GoogleLoginResponse | GoogleLoginResponseOffline) => {
         if ('tokenId' in response) {
-          console.log('response: ', response);
           setLoggedInUserEmail(response.profileObj.email);
           setLoggedInUserName(response.profileObj.name);
           setProfileImage(response.profileObj.imageUrl);
@@ -69,11 +68,9 @@ function App() {
     />
   );
 
-  const logoutSuccess = () => {
+  const logoutSuccess = (): void => {
     setGoogleAccessToken('');
   };
-
-  console.log('public url', process.env.PUBLIC_URL);
 
   return (
     <React.Fragment>
@@ -113,10 +110,10 @@ function App() {
                 <BiCookie style={{ marginRight: '5px' }} />
                 Orders
               </a>
-              <a id='orders' className='menu-item' href={process.env.PUBLIC_URL + '/map'}>
+              {/* <a id='orders' className='menu-item' href={process.env.PUBLIC_URL + '/map'}>
                 <FaMap style={{ marginRight: '5px' }} />
                 Map
-              </a>
+              </a> */}
               <hr />
               <a
                 id='ordertypes'
@@ -156,7 +153,7 @@ function App() {
                 <Route
                   exact
                   path='/ordertypes'
-                  render={(props) => <OrderTypeForm user={loggedInUserEmail} />}
+                  render={() => <OrderTypeForm user={loggedInUserEmail} />}
                 />
                 <Route component={FourOhFour} />
               </Switch>
