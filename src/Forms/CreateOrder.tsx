@@ -130,6 +130,7 @@ function CreateOrder(props: Props): JSX.Element {
   const [isSubmitDisabled, setIsSubmitDisabled] = React.useState<boolean>(true);
   // other
   const [isOrderSubmitted, setOrderSubmitted] = React.useState<boolean>(false);
+  const [filteredBeginTime, setFilteredBeginTime] = React.useState<string>('');
 
   const {
     ready,
@@ -213,16 +214,6 @@ function CreateOrder(props: Props): JSX.Element {
       citySet(address[1]);
       stateSet(address[2]);
     }
-
-    // Get latitude and longitude via utility functions
-    getGeocode({ address: description })
-      .then((results) => getLatLng(results[0]))
-      .then(({ lat, lng }) => {
-        console.log('📍 Coordinates: ', { lat, lng });
-      })
-      .catch((error) => {
-        console.log('😱 Error: ', error);
-      });
 
     // Get Zip code from address.
     getGeocode({ address: description })
@@ -397,6 +388,7 @@ function CreateOrder(props: Props): JSX.Element {
     e.preventDefault();
     const newDate = e.target.value;
     deliveryMonthSet(e.target.value);
+    deliveryMonthEndSet(e.target.value);
     if (deliveryYear !== undefined) {
       daysLengthSet(calculateDays(newDate, deliveryYear));
     }
@@ -409,6 +401,7 @@ function CreateOrder(props: Props): JSX.Element {
   function onChangeDeliveryDay(e: React.ChangeEvent<HTMLSelectElement>): void {
     e.preventDefault();
     deliveryDaySet(e.target.value);
+    deliveryDayEndSet(e.target.value);
     if (e.target.value !== 'DD' && e.target.value !== undefined) {
       setDeliveryDayValidated(true);
     }
@@ -418,6 +411,7 @@ function CreateOrder(props: Props): JSX.Element {
   function onChangeDeliveryYear(e: React.ChangeEvent<HTMLSelectElement>): void {
     e.preventDefault();
     deliveryYearSet(e.target.value);
+    deliveryYearEndSet(e.target.value);
     if (deliveryMonth !== undefined) {
       daysLengthSet(calculateDays(deliveryMonth, e.target.value));
     }
@@ -430,6 +424,12 @@ function CreateOrder(props: Props): JSX.Element {
   function onChangeBeginTime(e: React.ChangeEvent<HTMLSelectElement>): void {
     e.preventDefault();
     beginTimeSet(e.target.value);
+    const beginTime: string = e.target.value.toString();
+    if (beginTime !== 'Select a Time') {
+      setFilteredBeginTime(beginTime);
+    } else {
+      setFilteredBeginTime('');
+    }
     if (e.target.value !== 'Select Time') {
       setBeginTimeValidated(true);
     }
@@ -779,7 +779,7 @@ function CreateOrder(props: Props): JSX.Element {
             id='addDay'
             value={deliveryDay}
             onChange={onChangeDeliveryDay}
-            style={{ width: '78px', display: 'inline' }}
+            style={{ width: '78px', display: 'inline', marginLeft: '5px' }}
           >
             <option value='DD'>DD</option>
             {[
@@ -829,7 +829,7 @@ function CreateOrder(props: Props): JSX.Element {
             id='addYear'
             value={deliveryYear}
             onChange={onChangeDeliveryYear}
-            style={{ display: 'inline', width: '100px' }}
+            style={{ display: 'inline', width: '100px', marginLeft: '5px' }}
           >
             <option value='YYYY'>YYYY</option>
             {years.map((everyYear, index) => {
@@ -841,6 +841,7 @@ function CreateOrder(props: Props): JSX.Element {
               );
             })}
           </Form.Control>
+          <br></br>
           <Form.Label style={{ marginTop: '10px' }}>Begin Time</Form.Label>
           <Form.Control
             as='select'
@@ -881,7 +882,7 @@ function CreateOrder(props: Props): JSX.Element {
             id='addDay'
             value={deliveryDayEnd}
             onChange={onChangeDeliveryDayEnd}
-            style={{ width: '78px', display: 'inline' }}
+            style={{ width: '78px', display: 'inline', marginLeft: '5px' }}
           >
             <option value='DD'>DD</option>
             {[
@@ -931,7 +932,7 @@ function CreateOrder(props: Props): JSX.Element {
             id='addYear'
             value={deliveryYearEnd}
             onChange={onChangeDeliveryYearEnd}
-            style={{ display: 'inline', width: '100px' }}
+            style={{ display: 'inline', width: '100px', marginLeft: '5px' }}
           >
             <option value='YYYY'>YYYY</option>
             {years.map((everyYear, index) => {
@@ -943,6 +944,7 @@ function CreateOrder(props: Props): JSX.Element {
               );
             })}
           </Form.Control>
+          <br></br>
           <Form.Label style={{ marginTop: '10px' }}>End Time</Form.Label>
           <Form.Control
             as='select'
@@ -952,6 +954,19 @@ function CreateOrder(props: Props): JSX.Element {
             style={{ width: '40%' }}
           >
             <option>Select Time</option>
+            {filteredBeginTime.length > 0
+              ? times
+                  .filter((time) => time > filteredBeginTime)
+                  .map((time, index) => {
+                    const keyIndex = index;
+                    return (
+                      <option key={`time-${keyIndex}`} value={time}>
+                        {time}
+                      </option>
+                    );
+                  })
+              : null}
+
             {times.map((time, index) => {
               const keyIndex = index;
               return (
