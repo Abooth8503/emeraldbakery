@@ -51,7 +51,7 @@ function GMap(): JSX.Element {
     });
   };
 
-  function addMarker(location: google.maps.LatLngLiteral, map: google.maps.Map) {
+  function addMarker(location: google.maps.LatLngLiteral, map: google.maps.Map): void {
     // Add the marker at the clicked location, and add the next-available label
     // from the array of alphabetical characters.
     new google.maps.Marker({
@@ -62,7 +62,7 @@ function GMap(): JSX.Element {
     });
   }
 
-  async function setMarkers(markerOrders: Order[]) {
+  async function setMarkers(markerOrders: Order[]): Promise<void> {
     console.log('setMarkers call just made');
     return markerOrders.forEach(async (order) => {
       const address = `${order.Address}, ${order.City}, ${order.State} ${order.ZipCode}`;

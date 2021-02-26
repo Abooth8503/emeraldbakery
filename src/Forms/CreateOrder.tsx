@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useEffect, useLayoutEffect } from 'react';
+import { useEffect } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import { Container, Jumbotron, Form, Button, Accordion, Card } from 'react-bootstrap';
 import moment from 'moment';
@@ -214,16 +214,6 @@ function CreateOrder(props: Props): JSX.Element {
       citySet(address[1]);
       stateSet(address[2]);
     }
-
-    // Get latitude and longitude via utility functions
-    getGeocode({ address: description })
-      .then((results) => getLatLng(results[0]))
-      .then(({ lat, lng }) => {
-        console.log('📍 Coordinates: ', { lat, lng });
-      })
-      .catch((error) => {
-        console.log('😱 Error: ', error);
-      });
 
     // Get Zip code from address.
     getGeocode({ address: description })
