@@ -206,7 +206,7 @@ function App(): JSX.Element {
         )}
       {googleAccessToken ? null : componentToDisplay}
 
-      {googleAccessToken === '' &&
+      {googleAccessToken &&
       !(
         loggedInUserEmail === 'azrael7@gmail.com' ||
         loggedInUserEmail === 'abooth8503@gmail.com' ||
