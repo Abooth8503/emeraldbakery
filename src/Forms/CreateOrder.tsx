@@ -3,14 +3,15 @@ import { useEffect } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import { Container, Jumbotron, Form, Button, Accordion, Card } from 'react-bootstrap';
 import moment from 'moment';
-import usePlacesAutocomplete, {
-  getGeocode,
-  getLatLng,
-  getZipCode,
-} from 'use-places-autocomplete';
+import usePlacesAutocomplete, { getGeocode, getZipCode } from 'use-places-autocomplete';
 import useOnclickOutside from 'react-cool-onclickoutside';
 import '../css/createOrder.css';
-import { calculateDays, Order, useEmeraldContext } from '../Interfaces/EmeraldTypes';
+import {
+  calculateDays,
+  Order,
+  useEmeraldContext,
+  OrderType,
+} from '../Interfaces/EmeraldTypes';
 
 type Props = {
   routeComponentProps: RouteComponentProps;
@@ -145,7 +146,7 @@ function CreateOrder(props: Props): JSX.Element {
     debounce: 300,
   });
 
-  const { orders } = useEmeraldContext();
+  const { orders, orderTypes } = useEmeraldContext();
 
   useEffect(() => {
     if (props.routeComponentProps.location.state !== undefined) {
@@ -592,6 +593,15 @@ function CreateOrder(props: Props): JSX.Element {
     trafficSourceSet('Select Traffic');
   }
 
+  orderTypes.sort((a: OrderType, b: OrderType) => {
+    if (a.Name !== undefined && b.Name !== undefined) {
+      if (a.Name > b.Name) {
+        return 1;
+      }
+    }
+
+    return -1;
+  });
   return (
     <Container>
       <Jumbotron style={{ backgroundColor: 'white', marginTop: '3px' }}>
@@ -690,9 +700,9 @@ function CreateOrder(props: Props): JSX.Element {
           <Form.Label>Order Type</Form.Label>
           <Form.Control as='select' onChange={onChangeOrderType} value={orderType}>
             <option>Select Order Type</option>
-            <option>Erotic</option>
-            <option>Cheetah</option>
-            <option>Other</option>
+            {orderTypes.map((orderType) => {
+              return <option key={orderType.Id}>{orderType.Name}</option>;
+            })}
           </Form.Control>
         </Form.Group>
         <Form.Group>
