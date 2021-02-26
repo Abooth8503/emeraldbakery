@@ -1,27 +1,27 @@
 {
   "files": {
     "main.css": "/emeraldbakery/static/css/main.efbb2fdc.chunk.css",
-    "main.js": "/emeraldbakery/static/js/main.058145b4.chunk.js",
-    "main.js.map": "/emeraldbakery/static/js/main.058145b4.chunk.js.map",
+    "main.js": "/emeraldbakery/static/js/main.3066f26e.chunk.js",
+    "main.js.map": "/emeraldbakery/static/js/main.3066f26e.chunk.js.map",
     "runtime-main.js": "/emeraldbakery/static/js/runtime-main.52bc69c7.js",
     "runtime-main.js.map": "/emeraldbakery/static/js/runtime-main.52bc69c7.js.map",
     "static/css/2.8cebfa1f.chunk.css": "/emeraldbakery/static/css/2.8cebfa1f.chunk.css",
-    "static/js/2.e46862c6.chunk.js": "/emeraldbakery/static/js/2.e46862c6.chunk.js",
-    "static/js/2.e46862c6.chunk.js.map": "/emeraldbakery/static/js/2.e46862c6.chunk.js.map",
+    "static/js/2.cc8e6b20.chunk.js": "/emeraldbakery/static/js/2.cc8e6b20.chunk.js",
+    "static/js/2.cc8e6b20.chunk.js.map": "/emeraldbakery/static/js/2.cc8e6b20.chunk.js.map",
     "static/js/3.36290fde.chunk.js": "/emeraldbakery/static/js/3.36290fde.chunk.js",
     "static/js/3.36290fde.chunk.js.map": "/emeraldbakery/static/js/3.36290fde.chunk.js.map",
     "index.html": "/emeraldbakery/index.html",
     "static/css/2.8cebfa1f.chunk.css.map": "/emeraldbakery/static/css/2.8cebfa1f.chunk.css.map",
     "static/css/main.efbb2fdc.chunk.css.map": "/emeraldbakery/static/css/main.efbb2fdc.chunk.css.map",
-    "static/js/2.e46862c6.chunk.js.LICENSE.txt": "/emeraldbakery/static/js/2.e46862c6.chunk.js.LICENSE.txt",
+    "static/js/2.cc8e6b20.chunk.js.LICENSE.txt": "/emeraldbakery/static/js/2.cc8e6b20.chunk.js.LICENSE.txt",
     "static/media/index.css": "/emeraldbakery/static/media/congruent_pentagon.36f8acab.png",
     "static/media/Erotic1.5f2fe68f.jpg": "/emeraldbakery/static/media/Erotic1.5f2fe68f.jpg"
   },
   "entrypoints": [
     "static/js/runtime-main.52bc69c7.js",
     "static/css/2.8cebfa1f.chunk.css",
-    "static/js/2.e46862c6.chunk.js",
+    "static/js/2.cc8e6b20.chunk.js",
     "static/css/main.efbb2fdc.chunk.css",
-    "static/js/main.058145b4.chunk.js"
+    "static/js/main.3066f26e.chunk.js"
   ]
 }
