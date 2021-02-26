@@ -13,10 +13,7 @@ function GMap(): JSX.Element {
   let googleMap: google.maps.Map | undefined = undefined;
 
   useEffect(() => {
-    const googleMapScript = document.createElement('script');
-    googleMapScript.src = `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE}&libraries=places`;
-    window.document.body.appendChild(googleMapScript);
-
+    const googleMapScript = document.getElementById('googlescript');
     async function fetchEmeraldOrders(): Promise<void> {
       try {
         const getOrders = new Request(
@@ -32,10 +29,11 @@ function GMap(): JSX.Element {
           console.log('data is ', data);
           setOrdersMap(data);
 
-          googleMapScript.addEventListener('load', () => {
+          if (googleMapScript !== null) {
+            console.log('found google map script');
             googleMap = initGoogleMap();
             setMarkers(data);
-          });
+          }
         }
       } catch (error) {
         console.log(error);

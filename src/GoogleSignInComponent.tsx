@@ -4,7 +4,6 @@ import {
   GoogleLoginResponse,
   GoogleLoginResponseOffline,
 } from 'react-google-login';
-import { BiFontSize } from 'react-icons/bi';
 
 interface GoogleSignInComponentProps {
   loginSuccess: (response: GoogleLoginResponse | GoogleLoginResponseOffline) => void;
@@ -21,7 +20,9 @@ export const GoogleSignInComponent: FunctionComponent<GoogleSignInComponentProps
         className='h3 mb-3 font-weight-normal'
         style={{ fontFamily: 'AmaticSC-Bold', fontSize: 'xxx-large' }}
       >
-        Welcome to At the Booth Bakery.
+        Welcome to <br />
+        <span style={{ color: 'forestgreen', fontStyle: 'italic' }}>At the Booth</span>
+        <br></br> Bakery.
       </h1>
       {loginFailed && (
         <div style={{ fontSize: 'larger' }}>Could not sign you in! Try again.</div>

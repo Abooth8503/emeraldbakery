@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useEffect } from 'react';
+import { useEffect, useLayoutEffect } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import { Container, Jumbotron, Form, Button, Accordion, Card } from 'react-bootstrap';
 import moment from 'moment';
@@ -397,6 +397,7 @@ function CreateOrder(props: Props): JSX.Element {
     e.preventDefault();
     const newDate = e.target.value;
     deliveryMonthSet(e.target.value);
+    deliveryMonthEndSet(e.target.value);
     if (deliveryYear !== undefined) {
       daysLengthSet(calculateDays(newDate, deliveryYear));
     }
@@ -409,6 +410,7 @@ function CreateOrder(props: Props): JSX.Element {
   function onChangeDeliveryDay(e: React.ChangeEvent<HTMLSelectElement>): void {
     e.preventDefault();
     deliveryDaySet(e.target.value);
+    deliveryDayEndSet(e.target.value);
     if (e.target.value !== 'DD' && e.target.value !== undefined) {
       setDeliveryDayValidated(true);
     }
@@ -418,6 +420,7 @@ function CreateOrder(props: Props): JSX.Element {
   function onChangeDeliveryYear(e: React.ChangeEvent<HTMLSelectElement>): void {
     e.preventDefault();
     deliveryYearSet(e.target.value);
+    deliveryYearEndSet(e.target.value);
     if (deliveryMonth !== undefined) {
       daysLengthSet(calculateDays(deliveryMonth, e.target.value));
     }
@@ -430,6 +433,8 @@ function CreateOrder(props: Props): JSX.Element {
   function onChangeBeginTime(e: React.ChangeEvent<HTMLSelectElement>): void {
     e.preventDefault();
     beginTimeSet(e.target.value);
+    const newTimesFilter = times.filter((time) => time > e.target.value);
+    console.log('new times filter', newTimesFilter);
     if (e.target.value !== 'Select Time') {
       setBeginTimeValidated(true);
     }
@@ -779,7 +784,7 @@ function CreateOrder(props: Props): JSX.Element {
             id='addDay'
             value={deliveryDay}
             onChange={onChangeDeliveryDay}
-            style={{ width: '78px', display: 'inline' }}
+            style={{ width: '78px', display: 'inline', marginLeft: '5px' }}
           >
             <option value='DD'>DD</option>
             {[
@@ -829,7 +834,7 @@ function CreateOrder(props: Props): JSX.Element {
             id='addYear'
             value={deliveryYear}
             onChange={onChangeDeliveryYear}
-            style={{ display: 'inline', width: '100px' }}
+            style={{ display: 'inline', width: '100px', marginLeft: '5px' }}
           >
             <option value='YYYY'>YYYY</option>
             {years.map((everyYear, index) => {
@@ -841,6 +846,7 @@ function CreateOrder(props: Props): JSX.Element {
               );
             })}
           </Form.Control>
+          <br></br>
           <Form.Label style={{ marginTop: '10px' }}>Begin Time</Form.Label>
           <Form.Control
             as='select'
@@ -881,7 +887,7 @@ function CreateOrder(props: Props): JSX.Element {
             id='addDay'
             value={deliveryDayEnd}
             onChange={onChangeDeliveryDayEnd}
-            style={{ width: '78px', display: 'inline' }}
+            style={{ width: '78px', display: 'inline', marginLeft: '5px' }}
           >
             <option value='DD'>DD</option>
             {[
@@ -931,7 +937,7 @@ function CreateOrder(props: Props): JSX.Element {
             id='addYear'
             value={deliveryYearEnd}
             onChange={onChangeDeliveryYearEnd}
-            style={{ display: 'inline', width: '100px' }}
+            style={{ display: 'inline', width: '100px', marginLeft: '5px' }}
           >
             <option value='YYYY'>YYYY</option>
             {years.map((everyYear, index) => {
@@ -943,6 +949,7 @@ function CreateOrder(props: Props): JSX.Element {
               );
             })}
           </Form.Control>
+          <br></br>
           <Form.Label style={{ marginTop: '10px' }}>End Time</Form.Label>
           <Form.Control
             as='select'
