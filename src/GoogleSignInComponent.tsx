@@ -21,7 +21,7 @@ export const GoogleSignInComponent: FunctionComponent<GoogleSignInComponentProps
         className='h3 mb-3 font-weight-normal'
         style={{ fontFamily: 'AmaticSC-Bold', fontSize: 'xxx-large' }}
       >
-        Welcome to Emerald Bakery.
+        Welcome to At the Booth Bakery.
       </h1>
       {loginFailed && (
         <div style={{ fontSize: 'larger' }}>Could not sign you in! Try again.</div>
