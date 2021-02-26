@@ -14,7 +14,7 @@ import { FcHome, FcGoogle } from 'react-icons/fc';
 import { BiCookie } from 'react-icons/bi';
 import { AiOutlineForm } from 'react-icons/ai';
 import { FcCalendar } from 'react-icons/fc';
-import { FaClipboardList } from 'react-icons/fa';
+import { FaMap, FaClipboardList } from 'react-icons/fa';
 import GMap from './Gmap';
 import OrderDetail from './OrderDetail';
 import { GoogleSignInComponent } from './GoogleSignInComponent';
@@ -110,10 +110,10 @@ function App(): JSX.Element {
                 <BiCookie style={{ marginRight: '5px' }} />
                 Orders
               </a>
-              {/* <a id='orders' className='menu-item' href={process.env.PUBLIC_URL + '/map'}>
+              <a id='orders' className='menu-item' href={process.env.PUBLIC_URL + '/map'}>
                 <FaMap style={{ marginRight: '5px' }} />
                 Map
-              </a> */}
+              </a>
               <hr />
               <a
                 id='ordertypes'

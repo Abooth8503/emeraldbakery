@@ -1,32 +1,48 @@
 /// <reference types="google.maps" />
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { getGeocode, getLatLng } from 'use-places-autocomplete';
-import { useEmeraldContext } from './Interfaces/EmeraldTypes';
+import { Order, emeraldGet } from './Interfaces/EmeraldTypes';
+
+const labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+let labelIndex = 0;
 
 function GMap(): JSX.Element {
   const mapRef: HTMLDivElement | null = null;
   const googleMapRef = React.useRef<HTMLDivElement | null>(mapRef);
-  const { orders } = useEmeraldContext();
+  const [ordersMap, setOrdersMap] = useState<Order[]>();
   let googleMap: google.maps.Map | undefined = undefined;
 
-  // list of icons
-  const iconList = {
-    icon1:
-      'https://cdn1.iconfinder.com/data/icons/Map-Markers-Icons-Demo-PNG/256/Map-Marker-Flag--Right-Chartreuse.png',
-    icon2:
-      'https://cdn2.iconfinder.com/data/icons/IconsLandVistaMapMarkersIconsDemo/256/MapMarker_Marker_Outside_Chartreuse.png',
-    icon3:
-      'https://cdn1.iconfinder.com/data/icons/Map-Markers-Icons-Demo-PNG/256/Map-Marker-Ball-Right-Azure.png',
-    icon4:
-      'https://cdn1.iconfinder.com/data/icons/Map-Markers-Icons-Demo-PNG/256/Map-Marker-Marker-Outside-Pink.png',
-  };
-
   useEffect(() => {
-    googleMap = initGoogleMap();
+    const googleMapScript = document.createElement('script');
+    googleMapScript.src = `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE}&libraries=places`;
+    window.document.body.appendChild(googleMapScript);
 
-    setTimeout(() => {
-      setMarkers();
-    }, 6000);
+    async function fetchEmeraldOrders(): Promise<void> {
+      try {
+        const getOrders = new Request(
+          `https://emeraldorderfunction.azurewebsites.net/api/Function1?code=${process.env.REACT_APP_FUNC_KEY}`,
+          {
+            method: 'GET',
+          }
+        );
+
+        const data = await emeraldGet<Order[]>(getOrders);
+
+        if (data.length > 0) {
+          console.log('data is ', data);
+          setOrdersMap(data);
+
+          googleMapScript.addEventListener('load', () => {
+            googleMap = initGoogleMap();
+            setMarkers(data);
+          });
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    fetchEmeraldOrders();
   }, []);
 
   // initialize the google map
@@ -37,59 +53,31 @@ function GMap(): JSX.Element {
     });
   };
 
-  function setMarkers(): void {
-    const bounds = new google.maps.LatLngBounds();
-    console.log('about to create a marker');
-    if (orders.length > 0) {
-      orders.map((order) => {
-        const address = `${order.Address}, ${order.City}, ${order.State} ${order.ZipCode}`;
-        console.log('creating marker', address);
-        const marker = createMarker(address);
-        console.log('marker', marker);
-        if (marker !== null) {
-          console.log('marker 1 ', marker);
-          // const newLatLng = new google.maps.LatLng(
-          //   marker.getPosition()?.lat(),
-          //   marker.getPosition()?.lng(),
-          //   false
-          // );
-          // bounds.extend(newLatLng);
-          if (googleMap !== undefined) {
-            googleMap.fitBounds(bounds); // the map to contain all markers
-          }
-        }
-      });
-    }
+  function addMarker(location: google.maps.LatLngLiteral, map: google.maps.Map) {
+    // Add the marker at the clicked location, and add the next-available label
+    // from the array of alphabetical characters.
+    new google.maps.Marker({
+      animation: google.maps.Animation.DROP,
+      position: location,
+      label: labels[labelIndex++ % labels.length],
+      map: map,
+    });
   }
 
-  // create marker on google map
-  function createMarker(markerObj: string): google.maps.Marker | null {
-    getGeocode({ address: markerObj })
-      .then((results) => {
-        return getLatLng(results[0]);
-      })
-      .then(({ lat, lng }) => {
-        console.log('📍 Coordinates: ', { lat, lng });
+  async function setMarkers(markerOrders: Order[]) {
+    console.log('setMarkers call just made');
+    return markerOrders.forEach(async (order) => {
+      const address = `${order.Address}, ${order.City}, ${order.State} ${order.ZipCode}`;
+      console.log('creating marker', address);
 
-        return new google.maps.Marker({
-          position: { lat: lat, lng: lng },
-          map: googleMap,
-          icon: {
-            url: iconList.icon1,
-            // set marker width and height
-            scaledSize: new google.maps.Size(50, 50),
-          },
-          title: 'Emerald Day',
-        });
-      })
-      .catch((error) => {
-        console.log('😱 Error: ', error);
-      });
+      const results = await getGeocode({ address });
+      const { lat, lng } = await getLatLng(results[0]);
 
-    return null;
+      if (googleMap !== undefined) {
+        addMarker({ lat, lng }, googleMap);
+      }
+    });
   }
-
-  console.log('orders', orders);
 
   return <div ref={googleMapRef} style={{ width: 600, height: '100%' }} />;
 }
