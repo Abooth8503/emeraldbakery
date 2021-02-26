@@ -130,6 +130,7 @@ function CreateOrder(props: Props): JSX.Element {
   const [isSubmitDisabled, setIsSubmitDisabled] = React.useState<boolean>(true);
   // other
   const [isOrderSubmitted, setOrderSubmitted] = React.useState<boolean>(false);
+  const [filteredBeginTime, setFilteredBeginTime] = React.useState<string>('');
 
   const {
     ready,
@@ -433,8 +434,12 @@ function CreateOrder(props: Props): JSX.Element {
   function onChangeBeginTime(e: React.ChangeEvent<HTMLSelectElement>): void {
     e.preventDefault();
     beginTimeSet(e.target.value);
-    const newTimesFilter = times.filter((time) => time > e.target.value);
-    console.log('new times filter', newTimesFilter);
+    const beginTime: string = e.target.value.toString();
+    if (beginTime !== 'Select a Time') {
+      setFilteredBeginTime(beginTime);
+    } else {
+      setFilteredBeginTime('');
+    }
     if (e.target.value !== 'Select Time') {
       setBeginTimeValidated(true);
     }
@@ -959,6 +964,19 @@ function CreateOrder(props: Props): JSX.Element {
             style={{ width: '40%' }}
           >
             <option>Select Time</option>
+            {filteredBeginTime.length > 0
+              ? times
+                  .filter((time) => time > filteredBeginTime)
+                  .map((time, index) => {
+                    const keyIndex = index;
+                    return (
+                      <option key={`time-${keyIndex}`} value={time}>
+                        {time}
+                      </option>
+                    );
+                  })
+              : null}
+
             {times.map((time, index) => {
               const keyIndex = index;
               return (
