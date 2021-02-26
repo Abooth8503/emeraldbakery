@@ -32,9 +32,9 @@ function OrderDetail(props: RouteComponentProps<number>): JSX.Element {
 
   const filteredOrderProp = orders.filter((order) => order.Id === props.location.state);
   let orderImageUrl = filteredOrderProp[0].ImageUrl;
-  if (orderImageUrl === '' || orderImageUrl === undefined) {
+  if (orderImageUrl === 'NONE' || orderImageUrl === undefined || orderImageUrl === '') {
     orderImageUrl =
-      'https://emeraldorderfunctionstor.blob.core.windows.net/emeraldbakery/defaultOrderImage.png';
+      'https://emeraldorderfunctionstor.blob.core.windows.net/emeraldbakery/defaultOrderImage_min.png';
   }
   return (
     <React.Fragment>
