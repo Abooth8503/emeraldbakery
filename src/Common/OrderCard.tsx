@@ -15,8 +15,19 @@ function OrderCard(props: Props): JSX.Element {
     props.routeComponentProps.history.push(`/detail`, id);
   }
 
-  const mapAddress = `${props.order.Address} ${props.order.City},${props.order.State}`;
+  let OrderImageUrl = '';
 
+  const mapAddress = `${props.order.Address} ${props.order.City},${props.order.State}`;
+  console.log('order', props.order);
+  if (props.order.ImageUrl === 'NONE') {
+    console.log('found none');
+    OrderImageUrl =
+      'https://emeraldorderfunctionstor.blob.core.windows.net/emeraldbakery/defaultOrderImage_min.png';
+  } else {
+    if (props.order.ImageUrl !== undefined) {
+      OrderImageUrl = props.order.ImageUrl;
+    }
+  }
   return (
     <Card
       key={props.order.Id}
@@ -32,7 +43,7 @@ function OrderCard(props: Props): JSX.Element {
     >
       <Row>
         <Col style={{ maxWidth: '108px' }}>
-          <Image src={props.order.ImageUrl} thumbnail />
+          <Image src={OrderImageUrl} thumbnail />
         </Col>
         <Col>
           <Card.Title>
