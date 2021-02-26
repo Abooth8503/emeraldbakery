@@ -48,6 +48,12 @@ export interface match<P> {
   url: string;
 }
 
+export async function emeraldGet<T>(request: RequestInfo): Promise<T> {
+  const response = await fetch(request);
+  const body = await response.json();
+  return body;
+}
+
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 const useOrders = (initial: Order[] = [], emeraldOrderTypes: OrderType[] = []) => {
   const [orders, setOrders] = React.useState<Order[]>(initial);
@@ -56,22 +62,52 @@ const useOrders = (initial: Order[] = [], emeraldOrderTypes: OrderType[] = []) =
   const [newOrder, setNewOrder] = React.useState<string>('');
   useEffect(() => {
     // fetch(`http://localhost:7071/api/Function1`)
-    fetch(
-      `https://emeraldorderfunction.azurewebsites.net/api/Function1?code=${process.env.REACT_APP_FUNC_KEY}`
-    )
-      .then((response) => response.json()) // parse JSON from request
-      .then((resultData) => {
-        setOrders(resultData);
-      });
 
-    fetch(
-      `https://emeraldordertype.azurewebsites.net/api/Function1?code=${process.env.REACT_APP_ORDERTYPE_FUNC_KEY}`
-    )
-      .then((response) => response.json()) // parse JSON from request
-      .then((resultData) => {
-        setOrderType(resultData);
-      });
+    fetchEmeraldOrders();
+    fetchEmeraldOrderTypes();
   }, []);
+
+  async function fetchEmeraldOrders(): Promise<void> {
+    try {
+      const getOrders = new Request(
+        `https://emeraldorderfunction.azurewebsites.net/api/Function1?code=${process.env.REACT_APP_FUNC_KEY}`,
+        {
+          method: 'GET',
+        }
+      );
+
+      const data = await emeraldGet<Order[]>(getOrders);
+
+      setOrders(data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function fetchEmeraldOrderTypes(): Promise<void> {
+    try {
+      const getOrderTypes = new Request(
+        `https://emeraldordertype.azurewebsites.net/api/Function1?code=${process.env.REACT_APP_ORDERTYPE_FUNC_KEY}`,
+        {
+          method: 'GET',
+        }
+      );
+
+      const data = await emeraldGet<Order[]>(getOrderTypes);
+
+      setOrderType(data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  function getEmeraldOrders(): Promise<Order[]> {
+    return new Promise((resolve) => {
+      if (orders.length > 0) {
+        resolve(orders);
+      }
+    });
+  }
 
   return {
     orders,
@@ -79,6 +115,7 @@ const useOrders = (initial: Order[] = [], emeraldOrderTypes: OrderType[] = []) =
     newOrder,
     setNewOrder,
     setOrders,
+    getEmeraldOrders,
   };
 };
 
