@@ -365,12 +365,6 @@ function CreateOrder(props: Props): JSX.Element {
     isFormValidated();
   }
 
-  function onPrePaidCheckClick(e: React.ChangeEvent<HTMLInputElement>): void {
-    e.preventDefault();
-
-    prepaidSet(e.target.checked);
-  }
-
   function onChangeDescription(e: React.ChangeEvent<HTMLTextAreaElement>): void {
     e.preventDefault();
     descriptionSet(e.target.value);
@@ -765,8 +759,8 @@ function CreateOrder(props: Props): JSX.Element {
           <Form.Check
             type='checkbox'
             label='PrePaid'
-            checked={prepaid}
-            onChange={onPrePaidCheckClick}
+            defaultChecked={prepaid}
+            onChange={() => prepaidSet(!prepaid)}
           />
         </Form.Group>
         <Form.Label>Delivery Begin Date</Form.Label>
