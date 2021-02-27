@@ -52,16 +52,24 @@ function OrderDetail(props: RouteComponentProps<number>): JSX.Element {
                   className='d-flex align-items-center justify-content-center'
                   key={order.Id}
                   style={{
-                    height: '233px',
+                    height: '242px',
                     marginTop: '5px',
+                    padding: '10px',
                   }}
                 >
                   <Card.Header style={{ fontSize: 'larger', fontWeight: 'bolder' }}>
                     {`${order.Name}'s Order`}
                   </Card.Header>
-                  <Card.Text>Order Type: {order.OrderType}</Card.Text>
-                  <Card.Text>Quantity: {order.Quantity}</Card.Text>
-                  <Button onClick={() => editOrder(order.Id)}>Edit</Button>
+                  <Card.Text>
+                    Order Type:{' '}
+                    <div style={{ fontStyle: 'italic' }}>{order.OrderType}</div>
+                  </Card.Text>
+                  <Card.Text style={{ marginBottom: '5px' }}>
+                    Quantity: <span style={{ fontWeight: 'bold' }}>{order.Quantity}</span>
+                  </Card.Text>
+                  <Button size='sm' onClick={() => editOrder(order.Id)}>
+                    Edit
+                  </Button>
                 </Card>
               );
             })}
@@ -78,7 +86,7 @@ function OrderDetail(props: RouteComponentProps<number>): JSX.Element {
             >
               <img
                 className='image'
-                src={OrderTypeImage}
+                src={orderImageUrl}
                 onClick={handleShowDialog}
                 alt='no image'
               />

@@ -4,6 +4,7 @@ import {
   GoogleLoginResponse,
   GoogleLoginResponseOffline,
 } from 'react-google-login';
+import video1 from './videos/AtTheBoothHeading.mp4';
 
 interface GoogleSignInComponentProps {
   loginSuccess: (response: GoogleLoginResponse | GoogleLoginResponseOffline) => void;
@@ -21,12 +22,14 @@ export const GoogleSignInComponent: FunctionComponent<GoogleSignInComponentProps
         style={{ fontFamily: 'AmaticSC-Bold', fontSize: 'xxx-large' }}
       >
         Welcome to <br />
-        <span style={{ color: 'forestgreen', fontStyle: 'italic' }}>At the Booth</span>
-        <br></br> Bakery.
+        {/* <span style={{ color: 'forestgreen', fontStyle: 'italic' }}>At the Booth</span>
+        <br></br> Bakery. */}
       </h1>
       {loginFailed && (
         <div style={{ fontSize: 'larger' }}>Could not sign you in! Try again.</div>
       )}
+      <video src={video1} width='100%' height='400' autoPlay loop muted />
+      <source src={video1} type='video/mp4' />
       <p style={{ fontSize: 'larger' }}>Sign In</p>
       <GoogleLogin
         clientId={`${process.env.REACT_APP_GOOGLE_AUTH_CLIENT_ID}`}
