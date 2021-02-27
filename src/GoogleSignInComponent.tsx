@@ -16,10 +16,14 @@ export const GoogleSignInComponent: FunctionComponent<GoogleSignInComponentProps
   const [loginFailed, setLoginFailed] = useState<boolean>();
 
   return (
-    <div className='text-center mb-4' style={{ marginTop: '230px' }}>
+    <div className='text-center mb-4' style={{ marginTop: '10px' }}>
       <h1
-        className='h3 mb-3 font-weight-normal'
-        style={{ fontFamily: 'AmaticSC-Bold', fontSize: 'xxx-larger' }}
+        style={{
+          fontFamily: 'AmaticSC-Bold',
+          fontSize: '114px',
+          color: 'violet',
+          WebkitTextStroke: '2px black',
+        }}
       >
         Welcome
       </h1>
