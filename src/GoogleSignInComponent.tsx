@@ -19,11 +19,9 @@ export const GoogleSignInComponent: FunctionComponent<GoogleSignInComponentProps
     <div className='text-center mb-4' style={{ marginTop: '230px' }}>
       <h1
         className='h3 mb-3 font-weight-normal'
-        style={{ fontFamily: 'AmaticSC-Bold', fontSize: 'xxx-large' }}
+        style={{ fontFamily: 'AmaticSC-Bold', fontSize: 'xxx-larger' }}
       >
-        Welcome to <br />
-        {/* <span style={{ color: 'forestgreen', fontStyle: 'italic' }}>At the Booth</span>
-        <br></br> Bakery. */}
+        Welcome
       </h1>
       {loginFailed && (
         <div style={{ fontSize: 'larger' }}>Could not sign you in! Try again.</div>
