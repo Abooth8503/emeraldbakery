@@ -488,12 +488,16 @@ function CreateOrder(props: Props): JSX.Element {
       User: props.user === undefined ? ' ' : props.user,
       CreatedBy: props.user === undefined ? ' ' : props.user,
       ImageUrl: '',
-      OrderImageUrl: '',
+      OrderImageUrl: imageUrl,
     };
 
     console.log('payload', orderContent);
 
     const payload = new FormData();
+
+    uploadFiles.forEach((file) => {
+      payload.append('file', file);
+    });
 
     payload.append('orderContent', JSON.stringify(orderContent));
 
