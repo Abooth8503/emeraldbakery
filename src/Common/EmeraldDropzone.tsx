@@ -34,7 +34,10 @@ function EmeraldDropzone(props: Props): React.ReactElement {
     // fire function uploadDoc from props
     props.uploadDoc(acceptedFiles, set(false));
   }, []);
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop,
+    accept: '.jpeg,.png',
+  });
 
   function ClickUpload(e: React.MouseEvent): void {
     e.preventDefault();

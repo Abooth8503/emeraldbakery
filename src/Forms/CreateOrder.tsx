@@ -5,6 +5,8 @@ import { Container, Jumbotron, Form, Button, Accordion, Card } from 'react-boots
 import moment from 'moment';
 import usePlacesAutocomplete, { getGeocode, getZipCode } from 'use-places-autocomplete';
 import useOnclickOutside from 'react-cool-onclickoutside';
+import { FaCheck } from 'react-icons/fa';
+import EmeraldDropzone from '../Common/EmeraldDropzone';
 import '../css/createOrder.css';
 import {
   calculateDays,
@@ -95,11 +97,6 @@ function CreateOrder(props: Props): JSX.Element {
   const [endTime, endTimeSet] = React.useState<string | undefined>(undefined);
   // validation state
   const [nameValidated, setNameValidated] = React.useState<boolean>(false);
-  const [areaValidated, setAreaValidated] = React.useState<boolean>(false);
-  const [addressValidated, setAddressValidated] = React.useState<boolean>(false);
-  const [cityValidated, setCityValidated] = React.useState<boolean>(false);
-  const [stateValidated, setStateValidated] = React.useState<boolean>(false);
-  const [zipCodeValidated, setZipCodeValidated] = React.useState<boolean>(false);
   const [orderTypeValidated, setOrderTypeValidated] = React.useState<boolean>(false);
   const [orderStatusValidated, setOrderStatusValidated] = React.useState<boolean>(false);
   const [quantityValidated, setQuantityValidated] = React.useState<boolean>(false);
@@ -132,6 +129,8 @@ function CreateOrder(props: Props): JSX.Element {
   // other
   const [isOrderSubmitted, setOrderSubmitted] = React.useState<boolean>(false);
   const [filteredBeginTime, setFilteredBeginTime] = React.useState<string>('');
+  const [uploadFiles, setUploadFiles] = React.useState<Array<File>>([]);
+  const [imageUrl, setImageUrl] = React.useState<string | undefined>(undefined);
 
   const {
     ready,
@@ -254,61 +253,26 @@ function CreateOrder(props: Props): JSX.Element {
   function onChangeArea(e: React.ChangeEvent<HTMLInputElement>): void {
     e.preventDefault();
     areaSet(e.target.value);
-
-    if (area !== undefined) {
-      if (area?.length > 0) {
-        setAreaValidated(true);
-      }
-    }
-    isFormValidated();
   }
 
   function onChangeAddress(e: React.ChangeEvent<HTMLInputElement>): void {
     e.preventDefault();
     addressSet(e.target.value);
-
-    if (address !== undefined) {
-      if (address?.length > 0) {
-        setAddressValidated(true);
-      }
-    }
-    isFormValidated();
   }
 
   function onChangeCity(e: React.ChangeEvent<HTMLInputElement>): void {
     e.preventDefault();
     citySet(e.target.value);
-
-    if (city !== undefined) {
-      if (city?.length > 0) {
-        setCityValidated(true);
-      }
-    }
-    isFormValidated();
   }
 
   function onChangeState(e: React.ChangeEvent<HTMLInputElement>): void {
     e.preventDefault();
     stateSet(e.target.value);
-
-    if (state !== undefined) {
-      if (state?.length > 0) {
-        setStateValidated(true);
-      }
-    }
-    isFormValidated();
   }
 
   function onChangeZipCode(e: React.ChangeEvent<HTMLInputElement>): void {
     e.preventDefault();
     zipCodeSet(e.target.value);
-
-    if (zipCode !== undefined) {
-      if (zipCode?.length > 0) {
-        setZipCodeValidated(true);
-      }
-    }
-    isFormValidated();
   }
 
   function onChangeOrderType(e: React.ChangeEvent<HTMLSelectElement>): void {
@@ -474,11 +438,6 @@ function CreateOrder(props: Props): JSX.Element {
   function isFormValidated(): void {
     if (
       nameValidated &&
-      areaValidated &&
-      addressValidated &&
-      cityValidated &&
-      stateValidated &&
-      zipCodeValidated &&
       orderTypeValidated &&
       orderStatusValidated &&
       quantityValidated &&
@@ -508,27 +467,28 @@ function CreateOrder(props: Props): JSX.Element {
         props.routeComponentProps.location.state === undefined
           ? 0
           : Number(props.routeComponentProps.location.state),
-      Name: name,
-      Area: area,
-      Address: address,
-      City: city,
-      State: state,
-      ZipCode: zipCode,
-      OrderType: orderType,
-      OrderStatus: orderStatus,
+      Name: name === undefined ? ' ' : name,
+      Area: area === undefined ? ' ' : area,
+      Address: address === undefined ? ' ' : address,
+      City: city === undefined ? ' ' : city,
+      State: state === undefined ? ' ' : state,
+      ZipCode: zipCode === undefined ? ' ' : zipCode,
+      OrderType: orderType === undefined ? ' ' : orderType,
+      OrderStatus: orderStatus === undefined ? ' ' : orderStatus,
       Quantity: quantity,
-      Price: price,
-      Description: description,
+      Price: price === undefined ? ' ' : price,
+      Description: description === undefined ? ' ' : description,
       DeliveryDate: new Date(`${deliveryMonth}/${deliveryDay}/${deliveryYear}`),
       DeliveryDateEnd: new Date(
         `${deliveryMonthEnd}/${deliveryDayEnd}/${deliveryYearEnd}`
       ),
       OrderDate: new Date(),
       PrePaid: false,
-      TrafficSource: trafficSource,
-      User: props.user,
-      CreatedBy: props.user,
+      TrafficSource: trafficSource === undefined ? ' ' : trafficSource,
+      User: props.user === undefined ? ' ' : props.user,
+      CreatedBy: props.user === undefined ? ' ' : props.user,
       ImageUrl: '',
+      OrderImageUrl: '',
     };
 
     console.log('payload', orderContent);
@@ -587,6 +547,12 @@ function CreateOrder(props: Props): JSX.Element {
     trafficSourceSet('Select Traffic');
   }
 
+  function GetUploadImage(files: Array<File>): void {
+    setUploadFiles(files);
+    const imageUrlAzure = `https://emeraldorderfunctionstor.blob.core.windows.net/emeraldbakery/${files[0].name}`;
+    setImageUrl(imageUrlAzure);
+  }
+
   orderTypes.sort((a: OrderType, b: OrderType) => {
     if (a.Name !== undefined && b.Name !== undefined) {
       if (a.Name > b.Name) {
@@ -619,6 +585,31 @@ function CreateOrder(props: Props): JSX.Element {
             value={name}
           />
         </Form.Group>
+
+        <Form.Group>
+          <Form.Label>Upload Image</Form.Label>
+          <EmeraldDropzone uploadDoc={GetUploadImage} />
+          {uploadFiles !== undefined ? (
+            <ul style={{ listStyleType: 'none', paddingLeft: '0px', marginTop: '0px' }}>
+              {uploadFiles.map((file: File) => (
+                <li key={file.name}>
+                  <FaCheck color='green' size={22} style={{ marginTop: '10px' }} />
+                  <span
+                    style={{
+                      color: '#005ea2',
+                      marginTop: '10px',
+                      verticalAlign: 'bottom',
+                    }}
+                    data-testid='uploadfilename'
+                  >
+                    {file.name}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          ) : null}
+        </Form.Group>
+
         <Form.Group>
           <Form.Label>Area</Form.Label>
           <Form.Control
