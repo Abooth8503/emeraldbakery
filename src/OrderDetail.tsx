@@ -31,11 +31,16 @@ function OrderDetail(props: RouteComponentProps<number>): JSX.Element {
   }
 
   const filteredOrderProp = orders.filter((order) => order.Id === props.location.state);
-  let orderImageUrl = filteredOrderProp[0].ImageUrl;
+  let orderImageUrl = filteredOrderProp[0].OrderImageUrl;
   if (orderImageUrl === 'NONE' || orderImageUrl === undefined || orderImageUrl === '') {
     orderImageUrl =
       'https://emeraldorderfunctionstor.blob.core.windows.net/emeraldbakery/defaultOrderImage_min.png';
+  } else {
+    if (orderImageUrl !== undefined) {
+      orderImageUrl = filteredOrderProp[0].OrderImageUrl;
+    }
   }
+
   return (
     <React.Fragment>
       <Container className='text-center' style={{ marginTop: '5px' }}>

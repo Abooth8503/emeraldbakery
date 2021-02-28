@@ -24,6 +24,7 @@ export interface Order {
   User: string | undefined;
   CreatedBy: string | undefined;
   ImageUrl: string | undefined;
+  OrderImageUrl: string | undefined;
 }
 
 export interface OrderType {
