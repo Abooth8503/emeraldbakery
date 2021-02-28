@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/emeraldbakery/static/css/main.82f07cd4.chunk.css",
+    "main.css": "/emeraldbakery/static/css/main.d775c7c5.chunk.css",
     "main.js": "/emeraldbakery/static/js/main.ba3f278c.chunk.js",
     "main.js.map": "/emeraldbakery/static/js/main.ba3f278c.chunk.js.map",
     "runtime-main.js": "/emeraldbakery/static/js/runtime-main.52bc69c7.js",
@@ -12,16 +12,16 @@
     "static/js/3.36290fde.chunk.js.map": "/emeraldbakery/static/js/3.36290fde.chunk.js.map",
     "index.html": "/emeraldbakery/index.html",
     "static/css/2.8cebfa1f.chunk.css.map": "/emeraldbakery/static/css/2.8cebfa1f.chunk.css.map",
-    "static/css/main.82f07cd4.chunk.css.map": "/emeraldbakery/static/css/main.82f07cd4.chunk.css.map",
+    "static/css/main.d775c7c5.chunk.css.map": "/emeraldbakery/static/css/main.d775c7c5.chunk.css.map",
     "static/js/2.cc8e6b20.chunk.js.LICENSE.txt": "/emeraldbakery/static/js/2.cc8e6b20.chunk.js.LICENSE.txt",
-    "static/media/index.css": "/emeraldbakery/static/media/colorful-sweeties-donuts-pattern-composition.57bb2656.jpg",
+    "static/media/index.css": "/emeraldbakery/static/media/colorful-sweeties-donuts-pattern-composition.adb6e2e3.jpg",
     "static/media/AtTheBoothHeading.bb8687eb.mp4": "/emeraldbakery/static/media/AtTheBoothHeading.bb8687eb.mp4"
   },
   "entrypoints": [
     "static/js/runtime-main.52bc69c7.js",
     "static/css/2.8cebfa1f.chunk.css",
     "static/js/2.cc8e6b20.chunk.js",
-    "static/css/main.82f07cd4.chunk.css",
+    "static/css/main.d775c7c5.chunk.css",
     "static/js/main.ba3f278c.chunk.js"
   ]
 }
