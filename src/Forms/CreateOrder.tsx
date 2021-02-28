@@ -488,7 +488,7 @@ function CreateOrder(props: Props): JSX.Element {
       User: props.user === undefined ? ' ' : props.user,
       CreatedBy: props.user === undefined ? ' ' : props.user,
       ImageUrl: '',
-      OrderImageUrl: imageUrl,
+      OrderImageUrl: imageUrl === undefined ? ' ': imageUrl,
     };
 
     console.log('payload', orderContent);
@@ -549,6 +549,7 @@ function CreateOrder(props: Props): JSX.Element {
     beginTimeSet('Select Time');
     endTimeSet('Select Time');
     trafficSourceSet('Select Traffic');
+    setUploadFiles([]);
   }
 
   function GetUploadImage(files: Array<File>): void {

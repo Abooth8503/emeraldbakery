@@ -19,13 +19,17 @@ function OrderCard(props: Props): JSX.Element {
 
   const mapAddress = `${props.order.Address} ${props.order.City},${props.order.State}`;
   console.log('order', props.order);
-  if (props.order.ImageUrl === 'NONE') {
+  if (
+    props.order.OrderImageUrl === 'NONE' ||
+    props.order.OrderImageUrl === null ||
+    props.order.OrderImageUrl === undefined
+  ) {
     console.log('found none');
     OrderImageUrl =
       'https://emeraldorderfunctionstor.blob.core.windows.net/emeraldbakery/defaultOrderImage_min.png';
   } else {
-    if (props.order.ImageUrl !== undefined) {
-      OrderImageUrl = props.order.ImageUrl;
+    if (props.order.OrderImageUrl !== undefined) {
+      OrderImageUrl = props.order.OrderImageUrl;
     }
   }
   return (
