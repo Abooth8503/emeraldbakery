@@ -2,7 +2,6 @@ import * as React from 'react';
 import { useState } from 'react';
 import { Switch, Route, Link, BrowserRouter } from 'react-router-dom';
 import { Image } from 'react-bootstrap';
-import { slide as Menu } from 'react-burger-menu';
 import { GoogleLoginResponse, GoogleLoginResponseOffline } from 'react-google-login';
 import { EmeraldProvider } from './Interfaces/EmeraldTypes';
 import Dashboard from './Common/Dashboard';
@@ -10,16 +9,13 @@ import Orders from './Orders';
 import CreateOrder from './Forms/CreateOrder';
 import CalendarOrders from './CalendarOrders';
 import './css/burgerMenu.css';
-import { FcHome, FcGoogle } from 'react-icons/fc';
-import { BiCookie } from 'react-icons/bi';
-import { AiOutlineForm } from 'react-icons/ai';
-import { FcCalendar } from 'react-icons/fc';
-import { FaMap, FaClipboardList } from 'react-icons/fa';
+import { FcGoogle } from 'react-icons/fc';
 import GMap from './Gmap';
 import OrderDetail from './OrderDetail';
 import { GoogleSignInComponent } from './GoogleSignInComponent';
 import { GoogleLogout } from 'react-google-login';
 import OrderTypeForm from './Admin/OrderTypeForm';
+import Nav from './Nav';
 
 // Used when a user hits a route not defined below
 const FourOhFour = (): JSX.Element => (
@@ -72,6 +68,7 @@ function App(): JSX.Element {
     setGoogleAccessToken('');
   };
 
+  console.log('public url', process.env.PUBLIC_URL, process.env.NODE_ENV);
   return (
     <React.Fragment>
       {googleAccessToken &&
@@ -81,82 +78,51 @@ function App(): JSX.Element {
           loggedInUserEmail === 'dlbooth64@gmail.com' ||
           loggedInUserEmail === 'frank.pigeonjr@gmail.com') && (
           <EmeraldProvider>
-            <Menu>
-              <a id='home' className='menu-item' href={process.env.PUBLIC_URL + '/'}>
-                <FcHome style={{ marginRight: '5px', verticalAlign: 'middle' }} />
-                Home
-              </a>
-              <a
-                id='calendar'
-                className='menu-item'
-                href={process.env.PUBLIC_URL + '/calendar'}
-              >
-                <FcCalendar style={{ marginRight: '5px' }} />
-                Calendar
-              </a>
-              <a
-                id='create'
-                className='menu-item'
-                href={process.env.PUBLIC_URL + '/create'}
-              >
-                <AiOutlineForm style={{ marginRight: '5px' }} />
-                Create Order
-              </a>
-              <a
-                id='orders'
-                className='menu-item'
-                href={process.env.PUBLIC_URL + '/orders'}
-              >
-                <BiCookie style={{ marginRight: '5px' }} />
-                Orders
-              </a>
-              <a id='orders' className='menu-item' href={process.env.PUBLIC_URL + '/map'}>
-                <FaMap style={{ marginRight: '5px' }} />
-                Map
-              </a>
-              <hr />
-              <a
-                id='ordertypes'
-                className='menu-item'
-                href={process.env.PUBLIC_URL + '/ordertypes'}
-              >
-                <FaClipboardList style={{ marginRight: '5px' }} />
-                Order Types
-              </a>
-            </Menu>
             <BrowserRouter basename={process.env.PUBLIC_URL}>
-              <Switch>
-                <Route
-                  exact
-                  path='/'
-                  render={() => <Dashboard userName={loggedInUserName} />}
-                />
-                <Route exact path='/orders' render={(props) => <Orders {...props} />} />
-                <Route
-                  exact
-                  path='/create'
-                  render={(props) => (
-                    <CreateOrder user={loggedInUserEmail} routeComponentProps={props} />
-                  )}
-                />
-                <Route
-                  exact
-                  path='/calendar'
-                  render={(props) => <CalendarOrders {...props} />}
-                />
-                <Route exact path='/map' render={() => <GMap />} />
-                <Route
-                  exact
-                  path='/detail'
-                  render={(props) => <OrderDetail {...props} />}
-                />
-                <Route
-                  exact
-                  path='/ordertypes'
-                  render={() => <OrderTypeForm user={loggedInUserEmail} />}
-                />
-                <Route component={FourOhFour} />
-              </Switch>
+              <div className='App' id='outer-container' style={{ height: '100%' }}>
+                <Nav outerContainerId={'outer-container'} pageWrapId={'page-wrap'}></Nav>
+                <div id='page-wrap'>
+                  <Switch>
+                    <Route
+                      exact
+                      path='/'
+                      render={() => <Dashboard userName={loggedInUserName} />}
+                    />
+                    <Route
+                      exact
+                      path='/orders'
+                      render={(props) => <Orders {...props} />}
+                    />
+                    <Route
+                      exact
+                      path='/create'
+                      render={(props) => (
+                        <CreateOrder
+                          user={loggedInUserEmail}
+                          routeComponentProps={props}
+                        />
+                      )}
+                    />
+                    <Route
+                      exact
+                      path='/calendar'
+                      render={(props) => <CalendarOrders {...props} />}
+                    />
+                    <Route exact path='/map' render={() => <GMap />} />
+                    <Route
+                      exact
+                      path='/detail'
+                      render={(props) => <OrderDetail {...props} />}
+                    />
+                    <Route
+                      exact
+                      path='/ordertypes'
+                      render={() => <OrderTypeForm user={loggedInUserEmail} />}
+                    />
+                    <Route component={FourOhFour} />
+                  </Switch>
+                </div>
+              </div>
             </BrowserRouter>
             {loggedInUserName ? (
               <div
