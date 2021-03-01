@@ -26,7 +26,6 @@ const Nav = (props: Props): JSX.Element => {
     setIsOpen(false);
   }
 
-  const publicUrl = process.env.NODE_ENV === 'development' ? '' : process.env.PUBLIC_URL;
   return (
     <Menu
       isOpen={isOpen}
@@ -35,7 +34,7 @@ const Nav = (props: Props): JSX.Element => {
       outerContainerId={props.outerContainerId}
     >
       <Link
-        to={publicUrl + '/'}
+        to='/'
         className='menu-item'
         onClick={() => {
           closeMenu();
@@ -45,7 +44,7 @@ const Nav = (props: Props): JSX.Element => {
         Home
       </Link>
       <Link
-        to={publicUrl + '/calendar'}
+        to='/calendar'
         className='menu-item'
         onClick={() => {
           closeMenu();
@@ -55,7 +54,7 @@ const Nav = (props: Props): JSX.Element => {
         Calendar
       </Link>
       <Link
-        to={publicUrl + '/create'}
+        to='/create'
         className='menu-item'
         onClick={() => {
           closeMenu();
@@ -65,7 +64,7 @@ const Nav = (props: Props): JSX.Element => {
         Create Order
       </Link>
       <Link
-        to={publicUrl + '/orders'}
+        to='/orders'
         className='menu-item'
         onClick={() => {
           closeMenu();
@@ -75,7 +74,7 @@ const Nav = (props: Props): JSX.Element => {
         Orders
       </Link>
       <Link
-        to={publicUrl + '/map'}
+        to='/map'
         className='menu-item'
         onClick={() => {
           closeMenu();
@@ -86,7 +85,7 @@ const Nav = (props: Props): JSX.Element => {
       </Link>
       <hr />
       <Link
-        to={publicUrl + '/ordertypes'}
+        to='/ordertypes'
         className='menu-item'
         onClick={() => {
           closeMenu();
