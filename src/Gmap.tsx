@@ -26,11 +26,9 @@ function GMap(): JSX.Element {
         const data = await emeraldGet<Order[]>(getOrders);
 
         if (data.length > 0) {
-          console.log('data is ', data);
           setOrdersMap(data);
 
           if (googleMapScript !== null) {
-            console.log('found google map script');
             googleMap = initGoogleMap();
             setMarkers(data);
           }
@@ -66,7 +64,6 @@ function GMap(): JSX.Element {
     console.log('setMarkers call just made');
     return markerOrders.forEach(async (order) => {
       const address = `${order.Address}, ${order.City}, ${order.State} ${order.ZipCode}`;
-      console.log('creating marker', address);
 
       const results = await getGeocode({ address });
       const { lat, lng } = await getLatLng(results[0]);
@@ -77,7 +74,12 @@ function GMap(): JSX.Element {
     });
   }
 
-  return <div ref={googleMapRef} style={{ width: 600, height: '100%' }} />;
+  return (
+    <div
+      ref={googleMapRef}
+      style={{ width: 600, height: '100%', position: 'absolute' }}
+    />
+  );
 }
 
 export default GMap;

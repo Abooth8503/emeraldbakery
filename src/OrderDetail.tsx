@@ -11,7 +11,6 @@ import {
 } from 'react-bootstrap';
 import { RouteComponentProps } from 'react-router-dom';
 import { useEmeraldContext, formatDate } from './Interfaces/EmeraldTypes';
-import OrderTypeImage from './images/Erotic1.jpg';
 import './css/orderDetail.css';
 
 function OrderDetail(props: RouteComponentProps<number>): JSX.Element {
