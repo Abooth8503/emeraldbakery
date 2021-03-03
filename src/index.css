@@ -27,6 +27,7 @@ code {
   border-width: medium;
   font-family: 'Andika-R';
   scroll-behavior: smooth !important;
+  -webkit-overflow-scrolling: touch;
 }
 
 @font-face {
