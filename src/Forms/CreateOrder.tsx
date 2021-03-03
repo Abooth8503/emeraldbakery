@@ -181,6 +181,21 @@ function CreateOrder(props: Props): JSX.Element {
 
         trafficSourceSet(filteredEditOrder[0].TrafficSource);
         descriptionSet(filteredEditOrder[0].Description);
+        if (
+          filteredEditOrder[0].OrderImageUrl !== null ||
+          filteredEditOrder[0].OrderImageUrl !== undefined
+        ) {
+          setImageUrl(filteredEditOrder[0].OrderImageUrl);
+          const path = filteredEditOrder[0].OrderImageUrl;
+          if (path !== undefined) {
+            const fileName = path.replace(/^.*[\\/]/, '');
+            const newFileArray = [];
+
+            const f = new File([''], fileName);
+            newFileArray.push(f);
+            setUploadFiles(newFileArray);
+          }
+        }
       }
     }
   }, []);
@@ -488,7 +503,7 @@ function CreateOrder(props: Props): JSX.Element {
       User: props.user === undefined ? ' ' : props.user,
       CreatedBy: props.user === undefined ? ' ' : props.user,
       ImageUrl: '',
-      OrderImageUrl: imageUrl === undefined ? ' ': imageUrl,
+      OrderImageUrl: imageUrl === undefined ? ' ' : imageUrl,
     };
 
     console.log('payload', orderContent);
