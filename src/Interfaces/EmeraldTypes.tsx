@@ -160,7 +160,7 @@ export function formatDate(
   const monthIndex = dateF.getMonth();
   const year = dateF.getFullYear();
   const time = dateF.toLocaleTimeString();
-  if (withTime) return `${monthIndex}/${day}/${year} ${time}`;
+  if (withTime) return `${monthIndex + 1}/${day}/${year} ${time}`;
   if (withSlashes) return `${monthIndex + 1}/${day}/${year}`;
 
   return `${day} ${monthNames[monthIndex]} ${year}`;
