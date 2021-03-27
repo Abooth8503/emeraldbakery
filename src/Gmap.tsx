@@ -66,11 +66,28 @@ function GMap(): JSX.Element {
   ): void {
     // Add the marker at the clicked location, and add the next-available label
     // from the array of alphabetical characters.
-    new google.maps.Marker({
+    const newMarker = new google.maps.Marker({
       animation: google.maps.Animation.DROP,
       position: location,
       label: `${labels[labelIndex++ % labels.length]} ${order.Name}`,
       map: map,
+    });
+
+    const mapAddress = `${order.Address} ${order.City},${order.State}`;
+    const encodedAddress = encodeURI(mapAddress);
+    const addressToUse = `https://www.google.com/maps/search/?api=1&query=${encodedAddress}`;
+
+    const contentString = `<h3>
+        <a href='${addressToUse}'>${order.Address}</a>
+      </h3>
+    `;
+
+    const infowindow = new google.maps.InfoWindow({
+      content: contentString,
+    });
+
+    newMarker.addListener('click', () => {
+      infowindow.open(map, newMarker);
     });
   }
 
