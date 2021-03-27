@@ -35,6 +35,7 @@ function GMap(): JSX.Element {
               return day;
             }
           });
+          console.log('current day orders', currentDayOrders);
           setOrdersMap(currentDayOrders);
 
           if (googleMapScript !== null) {
@@ -58,13 +59,17 @@ function GMap(): JSX.Element {
     });
   };
 
-  function addMarker(location: google.maps.LatLngLiteral, map: google.maps.Map): void {
+  function addMarker(
+    location: google.maps.LatLngLiteral,
+    map: google.maps.Map,
+    order: Order
+  ): void {
     // Add the marker at the clicked location, and add the next-available label
     // from the array of alphabetical characters.
     new google.maps.Marker({
       animation: google.maps.Animation.DROP,
       position: location,
-      label: labels[labelIndex++ % labels.length],
+      label: `${labels[labelIndex++ % labels.length]} ${order.Name}`,
       map: map,
     });
   }
@@ -78,7 +83,7 @@ function GMap(): JSX.Element {
       const { lat, lng } = await getLatLng(results[0]);
 
       if (googleMap !== undefined) {
-        addMarker({ lat, lng }, googleMap);
+        addMarker({ lat, lng }, googleMap, order);
       }
     });
   }
