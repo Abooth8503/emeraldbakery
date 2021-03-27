@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { getGeocode, getLatLng } from 'use-places-autocomplete';
 import { Order, emeraldGet } from './Interfaces/EmeraldTypes';
+import moment from 'moment';
 
 const labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 let labelIndex = 0;
@@ -26,11 +27,20 @@ function GMap(): JSX.Element {
         const data = await emeraldGet<Order[]>(getOrders);
 
         if (data.length > 0) {
-          setOrdersMap(data);
+          const currentDayOrders = data.filter((day) => {
+            if (
+              moment(day.DeliveryDate).format('MM-DD-YYYY') ==
+              moment(new Date()).format('MM-DD-YYYY')
+            ) {
+              return day;
+            }
+          });
+          console.log('current day orders', currentDayOrders);
+          setOrdersMap(currentDayOrders);
 
           if (googleMapScript !== null) {
             googleMap = initGoogleMap();
-            setMarkers(data);
+            setMarkers(currentDayOrders);
           }
         }
       } catch (error) {
@@ -49,13 +59,17 @@ function GMap(): JSX.Element {
     });
   };
 
-  function addMarker(location: google.maps.LatLngLiteral, map: google.maps.Map): void {
+  function addMarker(
+    location: google.maps.LatLngLiteral,
+    map: google.maps.Map,
+    order: Order
+  ): void {
     // Add the marker at the clicked location, and add the next-available label
     // from the array of alphabetical characters.
     new google.maps.Marker({
       animation: google.maps.Animation.DROP,
       position: location,
-      label: labels[labelIndex++ % labels.length],
+      label: `${labels[labelIndex++ % labels.length]} ${order.Name}`,
       map: map,
     });
   }
@@ -69,7 +83,7 @@ function GMap(): JSX.Element {
       const { lat, lng } = await getLatLng(results[0]);
 
       if (googleMap !== undefined) {
-        addMarker({ lat, lng }, googleMap);
+        addMarker({ lat, lng }, googleMap, order);
       }
     });
   }
