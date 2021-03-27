@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { getGeocode, getLatLng } from 'use-places-autocomplete';
 import { Order, emeraldGet } from './Interfaces/EmeraldTypes';
+import moment from 'moment';
 
 const labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 let labelIndex = 0;
@@ -26,11 +27,19 @@ function GMap(): JSX.Element {
         const data = await emeraldGet<Order[]>(getOrders);
 
         if (data.length > 0) {
-          setOrdersMap(data);
+          const currentDayOrders = data.filter((day) => {
+            if (
+              moment(day.DeliveryDate).format('MM-DD-YYYY') ==
+              moment(new Date()).format('MM-DD-YYYY')
+            ) {
+              return day;
+            }
+          });
+          setOrdersMap(currentDayOrders);
 
           if (googleMapScript !== null) {
             googleMap = initGoogleMap();
-            setMarkers(data);
+            setMarkers(currentDayOrders);
           }
         }
       } catch (error) {
