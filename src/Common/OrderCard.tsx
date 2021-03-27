@@ -53,7 +53,11 @@ function OrderCard(props: Props): JSX.Element {
           <Card.Title>
             {props.order.Name}{' '}
             <span style={{ fontSize: 'small', verticalAlign: 'baseline' }}>
-              ({`${formatDate(props.order.DeliveryDate, false, true)}`})
+              ({`${formatDate(props.order.DeliveryDate, true, true)}`})
+            </span>
+            <br></br> to:
+            <span style={{ fontSize: 'small', verticalAlign: 'baseline' }}>
+              ({`${formatDate(props.order.DeliveryDateEnd, true, true)}`})
             </span>
           </Card.Title>
           <Card.Text>
