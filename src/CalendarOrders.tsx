@@ -118,6 +118,13 @@ function CalendarOrders(props: Props): JSX.Element {
                 }
               }
             })
+            .sort((a: Order, b: Order) => {
+              if (a.DeliveryDate > b.DeliveryDate) {
+                return 1;
+              }
+
+              return -1;
+            })
             .map((order: Order) => {
               const mapAddress = `${order.Address} ${order.City},${order.State}`;
               const encodedAddress = encodeURI(mapAddress);
