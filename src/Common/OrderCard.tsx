@@ -32,6 +32,8 @@ function OrderCard(props: Props): JSX.Element {
       OrderImageUrl = props.order.OrderImageUrl;
     }
   }
+  const beginDeliveryDate = new Date(props.order.DeliveryDate);
+  const endDeliveryDate = new Date(props.order.DeliveryDateEnd);
   return (
     <Card
       key={props.order.Id}
@@ -46,18 +48,19 @@ function OrderCard(props: Props): JSX.Element {
       onClick={() => selectOrder(props.order.Id)}
     >
       <Row>
-        <Col style={{ maxWidth: '108px' }}>
-          <Image src={OrderImageUrl} thumbnail />
+        <Col>
+          <Card.Img as={Image} src={OrderImageUrl} fluid={true} />
         </Col>
         <Col>
           <Card.Title>
-            {props.order.Name}{' '}
+            {props.order.Name}
+            <br />
             <span style={{ fontSize: 'small', verticalAlign: 'baseline' }}>
-              ({`${formatDate(props.order.DeliveryDate, true, true)}`})
+              {`${beginDeliveryDate.toLocaleTimeString('en-US')}`}
             </span>
-            <br></br> to:
+            <span style={{ fontSize: 'initial' }}> to </span>
             <span style={{ fontSize: 'small', verticalAlign: 'baseline' }}>
-              ({`${formatDate(props.order.DeliveryDateEnd, true, true)}`})
+              {`${endDeliveryDate.toLocaleTimeString('en-US')}`}
             </span>
           </Card.Title>
           <Card.Text>

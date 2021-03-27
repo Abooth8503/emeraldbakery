@@ -486,16 +486,18 @@ function CreateOrder(props: Props): JSX.Element {
       Area: area === undefined ? ' ' : area,
       Address: address === undefined ? ' ' : address,
       City: city === undefined ? ' ' : city,
-      State: state === undefined ? ' ' : state,
+      State: state === undefined ? ' ' : state.trim(),
       ZipCode: zipCode === undefined ? ' ' : zipCode,
       OrderType: orderType === undefined ? ' ' : orderType,
       OrderStatus: orderStatus === undefined ? ' ' : orderStatus,
       Quantity: quantity,
       Price: price === undefined ? ' ' : price,
       Description: description === undefined ? ' ' : description,
-      DeliveryDate: new Date(`${deliveryMonth}/${deliveryDay}/${deliveryYear}`),
+      DeliveryDate: new Date(
+        `${deliveryMonth}/${deliveryDay}/${deliveryYear} ${beginTime}`
+      ),
       DeliveryDateEnd: new Date(
-        `${deliveryMonthEnd}/${deliveryDayEnd}/${deliveryYearEnd}`
+        `${deliveryMonthEnd}/${deliveryDayEnd}/${deliveryYearEnd} ${endTime}`
       ),
       OrderDate: new Date(),
       PrePaid: false,
@@ -582,6 +584,7 @@ function CreateOrder(props: Props): JSX.Element {
 
     return -1;
   });
+
   return (
     <Container>
       <Jumbotron style={{ backgroundColor: 'white', marginTop: '3px' }}>
