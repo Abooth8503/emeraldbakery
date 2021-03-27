@@ -66,6 +66,17 @@ function CalendarOrders(props: Props): JSX.Element {
         <Col>
           <p className='text-left'>
             <u>Upcoming</u>
+            Count:{' '}
+            {
+              orders.filter((upcomingOrder) => {
+                const deliveryDate = moment(upcomingOrder.DeliveryDate);
+                const currentDate = moment();
+
+                if (deliveryDate > currentDate) {
+                  return upcomingOrder;
+                }
+              }).length
+            }
           </p>
         </Col>
       </Row>
