@@ -46,6 +46,77 @@ function CalendarOrders(props: Props): JSX.Element {
     return;
   }
 
+  function insertOrder(e: React.MouseEvent<HTMLElement>): void {
+    e.preventDefault();
+
+    // const orderContent: Order = {
+    //   Id: props.location.state === undefined ? 0 : Number(props.location.state),
+    //   Name: name === undefined ? ' ' : name,
+    //   Area: area === undefined ? ' ' : area,
+    //   Address: address === undefined ? ' ' : address,
+    //   City: city === undefined ? ' ' : city,
+    //   State: state === undefined ? ' ' : state.trim(),
+    //   ZipCode: zipCode === undefined ? ' ' : zipCode,
+    //   OrderType: orderType === undefined ? ' ' : orderType,
+    //   OrderStatus: orderStatus === undefined ? ' ' : orderStatus,
+    //   Quantity: quantity,
+    //   Price: price === undefined ? ' ' : price,
+    //   Description: description === undefined ? ' ' : description,
+    //   DeliveryDate: new Date(
+    //     `${deliveryMonth}/${deliveryDay}/${deliveryYear} ${beginTime}`
+    //   ),
+    //   DeliveryDateEnd: new Date(
+    //     `${deliveryMonthEnd}/${deliveryDayEnd}/${deliveryYearEnd} ${endTime}`
+    //   ),
+    //   OrderDate: new Date(),
+    //   PrePaid: false,
+    //   TrafficSource: trafficSource === undefined ? ' ' : trafficSource,
+    //   User: props.user === undefined ? ' ' : props.user,
+    //   CreatedBy: props.user === undefined ? ' ' : props.user,
+    //   ImageUrl: '',
+    //   OrderImageUrl: imageUrl === undefined ? ' ' : imageUrl,
+    // };
+
+    const orderContent = props.location.state;
+
+    console.log('payload', orderContent);
+
+    const payload = new FormData();
+
+    // uploadFiles.forEach((file) => {
+    //   payload.append('file', file);
+    // });
+
+    payload.append('orderContent', JSON.stringify(orderContent));
+
+    const myInit = {
+      method: 'POST',
+      body: payload,
+    };
+
+    try {
+      // const response = fetch('http://localhost:7071/api/Function1', myInit);
+      const response = fetch(
+        `https://emeraldorderfunction.azurewebsites.net/api/Function1?code=${process.env.REACT_APP_FUNC_KEY}`,
+        myInit
+      );
+      // setOrderSubmitted(true);
+
+      // response.then((resp) => {
+      //   if (resp.status === 200) {
+      //     setTimeout(() => {
+      //       clearFields();
+      //       setOrderSubmitted(false);
+      //     }, 3000);
+      //   } else {
+      //     alert(`There was an error adding a new order. Status code:${resp.status}`);
+      //   }
+      // });
+    } catch (e) {
+      console.log(`catch error on create/edit: ${e}`);
+    }
+  }
+
   if (orders.length < 1) {
     return <div>Loading...</div>;
   }
