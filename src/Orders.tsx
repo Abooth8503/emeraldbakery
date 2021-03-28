@@ -56,6 +56,7 @@ function Orders(props: Props): JSX.Element {
               routeComponentProps={props}
               order={order}
               address={addressToUse}
+              parent='other'
             />
           );
         })}

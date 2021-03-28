@@ -9,6 +9,7 @@ import {
   ListGroup,
   Button,
 } from 'react-bootstrap';
+import { FaMapSigns } from 'react-icons/fa';
 import { RouteComponentProps } from 'react-router-dom';
 import { useEmeraldContext, formatDate } from './Interfaces/EmeraldTypes';
 import './css/orderDetail.css';
@@ -71,11 +72,12 @@ function OrderDetail(props: RouteComponentProps<number>): JSX.Element {
                     {`${order.Name}'s Order`}
                   </Card.Header>
                   <Card.Text>
-                    Order Type:{' '}
+                    <span style={{ fontWeight: 'bold' }}>Order Type:</span>{' '}
                     <div style={{ fontStyle: 'italic' }}>{order.OrderType}</div>
                   </Card.Text>
                   <Card.Text style={{ marginBottom: '5px' }}>
-                    Quantity: <span style={{ fontWeight: 'bold' }}>{order.Quantity}</span>
+                    <span style={{ fontWeight: 'bold' }}>Quantity:</span>{' '}
+                    <span>{order.Quantity}</span>
                   </Card.Text>
                   <Button size='sm' onClick={() => editOrder(order.Id)}>
                     Edit
@@ -107,9 +109,12 @@ function OrderDetail(props: RouteComponentProps<number>): JSX.Element {
           <Col>
             <ListGroup style={{ marginTop: '5px' }}>
               {filteredOrderProp.map((order) => {
+                const beginDeliveryDate = new Date(order.DeliveryDate);
+                const endDeliveryDate = new Date(order.DeliveryDateEnd);
                 const mapAddress = `${order.Address} ${order.City},${order.State}`;
                 const encodedAddress = encodeURI(mapAddress);
                 const addressToUse = `https://www.google.com/maps/search/?api=1&query=${encodedAddress}`;
+                console.log('addr ', addressToUse);
                 return (
                   <React.Fragment key={order.Id}>
                     <ListGroup.Item className='d-flex align-items-center'>
@@ -129,20 +134,46 @@ function OrderDetail(props: RouteComponentProps<number>): JSX.Element {
                       </span>
                     </ListGroup.Item>
                     <ListGroup.Item className='d-flex align-items-center'>
-                      <b>Description:</b>{' '}
-                      <span style={{ marginLeft: '5px' }}>{order.Description}</span>
+                      <b>Delivery Window:</b>{' '}
+                      <span style={{ marginLeft: '5px' }}>
+                        {`${beginDeliveryDate.toLocaleTimeString('en-US', {
+                          timeStyle: 'short',
+                        } as Intl.DateTimeFormatOptions)}`}
+                      </span>
+                      {endDeliveryDate === beginDeliveryDate ? (
+                        <>
+                          <span style={{ marginLeft: '5px' }}> to </span>
+                          <span style={{ marginLeft: '5px' }}>
+                            {`${endDeliveryDate.toLocaleTimeString('en-US', {
+                              timeStyle: 'short',
+                            } as Intl.DateTimeFormatOptions)}`}
+                          </span>
+                        </>
+                      ) : null}
                     </ListGroup.Item>
+
+                    {order.Description !== undefined && order.Description.length > 0 ? (
+                      <ListGroup.Item className='d-flex align-items-center'>
+                        <b>Description:</b>{' '}
+                        <span style={{ marginLeft: '5px' }}>{order.Description}</span>
+                      </ListGroup.Item>
+                    ) : null}
+
                     <ListGroup.Item className='d-flex align-items-center'>
                       <b style={{ marginRight: '5px' }}>Address:</b>{' '}
-                      <span className='text-right' style={{ fontSize: 'small' }}>
-                        <a href={addressToUse}>{mapAddress}</a>
+                      <span style={{ fontSize: 'small' }}>
+                        <FaMapSigns size={22} />
+                        <a
+                          href={addressToUse}
+                          style={{ marginLeft: '5px', fontSize: 'medium' }}
+                        >
+                          {mapAddress}
+                        </a>
                       </span>
                     </ListGroup.Item>
                     <ListGroup.Item className='d-flex align-items-center'>
                       <b style={{ marginRight: '5px' }}>Created By:</b>{' '}
-                      <span className='text-right' style={{ fontSize: 'small' }}>
-                        {order.CreatedBy}
-                      </span>
+                      <span style={{ fontSize: 'medium' }}>{order.CreatedBy}</span>
                     </ListGroup.Item>
                   </React.Fragment>
                 );
