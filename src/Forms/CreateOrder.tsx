@@ -170,14 +170,14 @@ function CreateOrder(props: Props): JSX.Element {
         deliveryMonthSet(deliveryDateStart.format('MM'));
         deliveryDaySet(deliveryDateStart.format('DD'));
         deliveryYearSet(deliveryDateStart.format('YYYY'));
-        beginTimeSet(deliveryDateStart.format('hh:mm a').toUpperCase());
+        beginTimeSet(deliveryDateStart.format('HH:mm a').toUpperCase());
 
         // delivery date end
         const deliveryDateEnd = moment(filteredEditOrder[0].DeliveryDateEnd);
         deliveryMonthEndSet(deliveryDateEnd.format('MM'));
         deliveryDayEndSet(deliveryDateEnd.format('DD'));
         deliveryYearEndSet(deliveryDateEnd.format('YYYY'));
-        endTimeSet(deliveryDateEnd.format('hh:mm a').toUpperCase());
+        endTimeSet(deliveryDateEnd.format('HH:mm a').toUpperCase());
 
         trafficSourceSet(filteredEditOrder[0].TrafficSource);
         descriptionSet(filteredEditOrder[0].Description);

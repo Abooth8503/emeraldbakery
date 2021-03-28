@@ -5,7 +5,7 @@ import Calendar from 'react-calendar';
 import moment from 'moment';
 import 'react-calendar/dist/Calendar.css';
 import './css/reactCalendar.css';
-import { Jumbotron, Container, Row, Col } from 'react-bootstrap';
+import { Jumbotron, Container, Row, Col, Badge } from 'react-bootstrap';
 import OrderCard from './Common/OrderCard';
 import { Order } from './Interfaces/EmeraldTypes';
 import { useEmeraldContext } from './Interfaces/EmeraldTypes';
@@ -65,21 +65,31 @@ function CalendarOrders(props: Props): JSX.Element {
       <Row>
         <Col>
           <p className='text-left'>
-            <u>Upcoming</u>
             <span style={{ marginLeft: '5px' }}>
-              Count:{' '}
-              {
-                orders.filter((day) => {
-                  if (selectedDay) {
-                    if (
-                      moment(day.DeliveryDate).format('MM-DD-YYYY') ==
-                      moment(selectedDay).format('MM-DD-YYYY')
-                    ) {
-                      return day;
-                    }
+              <h5>
+                <span style={{ fontWeight: 'bold' }}>Count:</span>
+                <Badge
+                  style={{
+                    fontSize: 'large',
+                    color: '#007bff',
+                    marginLeft: '5px',
+                    background: 'white',
+                  }}
+                >
+                  {
+                    orders.filter((day) => {
+                      if (selectedDay) {
+                        if (
+                          moment(day.DeliveryDate).format('MM-DD-YYYY') ==
+                          moment(selectedDay).format('MM-DD-YYYY')
+                        ) {
+                          return day;
+                        }
+                      }
+                    }).length
                   }
-                }).length
-              }
+                </Badge>
+              </h5>
             </span>
           </p>
         </Col>
@@ -104,6 +114,7 @@ function CalendarOrders(props: Props): JSX.Element {
                   routeComponentProps={props}
                   order={order}
                   address={addressToUse}
+                  parent='calender'
                 />
               );
             })
@@ -135,6 +146,7 @@ function CalendarOrders(props: Props): JSX.Element {
                   routeComponentProps={props}
                   order={order}
                   address={addressToUse}
+                  parent='calender'
                 />
               );
             })}
