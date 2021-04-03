@@ -14,6 +14,7 @@ import {
   useEmeraldContext,
   OrderType,
 } from '../Interfaces/EmeraldTypes';
+import { BiDownload } from 'react-icons/bi';
 
 type Props = {
   routeComponentProps: RouteComponentProps;
@@ -152,6 +153,8 @@ function CreateOrder(props: Props): JSX.Element {
       const filteredEditOrder = orders.filter(
         (order) => order.Id === props.routeComponentProps.location.state
       );
+      console.log('order selected', filteredEditOrder);
+
       if (filteredEditOrder.length > 0) {
         nameSet(filteredEditOrder[0].Name);
         areaSet(filteredEditOrder[0].Area);
@@ -187,18 +190,49 @@ function CreateOrder(props: Props): JSX.Element {
         ) {
           setImageUrl(filteredEditOrder[0].OrderImageUrl);
           const path = filteredEditOrder[0].OrderImageUrl;
-          if (path !== undefined) {
+          if (path !== undefined && path !== null) {
             const fileName = path.replace(/^.*[\\/]/, '');
-            const newFileArray = [];
-
-            const f = new File([''], fileName);
-            newFileArray.push(f);
-            setUploadFiles(newFileArray);
+            Download(path, fileName);
           }
         }
       }
     }
   }, []);
+
+  async function Download(path: string, fileName: string): Promise<void> {
+    const a = document.createElement('a');
+    a.href = await toDataURL(path, fileName);
+    a.download = fileName;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
+
+  function toDataURL(url: string, fileName: string): Promise<string> {
+    return fetch(url)
+      .then((response) => {
+        return response.blob();
+      })
+      .then((blob) => {
+        console.log('about to get the blob');
+        blobToFile(blob, fileName);
+        return URL.createObjectURL(blob);
+      });
+  }
+
+  function blobToFile(theBlob: Blob, fileName: string): void {
+    const b: any = theBlob;
+    //A Blob() is almost a File() - it's just missing the two properties below which we will add
+    b.lastModifiedDate = new Date();
+    b.name = fileName;
+    const newFileArray = [];
+
+    const f = new File([b], fileName);
+    newFileArray.push(f);
+    console.log('object', f);
+    setUploadFiles(newFileArray);
+    console.log('files', uploadFiles);
+  }
 
   const ref = useOnclickOutside(() => {
     // When user clicks outside of the component, we can dismiss
