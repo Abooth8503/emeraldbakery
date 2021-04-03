@@ -3,6 +3,13 @@ import * as React from 'react';
 import * as H from 'history';
 import { useEffect } from 'react';
 
+//https://stackoverflow.com/questions/56457935/typescript-error-property-x-does-not-exist-on-type-window
+declare global {
+  interface Window {
+    OneSignal: any;
+  }
+}
+
 export interface Order {
   Id: number;
   Name: string | undefined;
