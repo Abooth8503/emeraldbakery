@@ -76,16 +76,22 @@ function CalendarOrders(props: Props): JSX.Element {
                 }}
               >
                 {
-                  orders.filter((day) => {
-                    if (selectedDay) {
-                      if (
-                        moment(day.DeliveryDate).format('MM-DD-YYYY') ==
-                        moment(selectedDay).format('MM-DD-YYYY')
-                      ) {
-                        return day;
+                  orders
+                    .filter((day) => {
+                      if (selectedDay) {
+                        if (
+                          moment(day.DeliveryDate).format('MM-DD-YYYY') ==
+                          moment(selectedDay).format('MM-DD-YYYY')
+                        ) {
+                          return day;
+                        }
                       }
-                    }
-                  }).length
+                    })
+                    .filter(
+                      (statusOrder) =>
+                        statusOrder.OrderStatus !== 'Delivered' &&
+                        statusOrder.OrderStatus !== 'Cancelled'
+                    ).length
                 }
               </Badge>
             </h5>
@@ -102,7 +108,6 @@ function CalendarOrders(props: Props): JSX.Element {
                 return upcomingOrder;
               }
             })
-
             .map((order: Order) => {
               const mapAddress = `${order.Address} ${order.City},${order.State}`;
               const encodedAddress = encodeURI(mapAddress);
@@ -128,7 +133,11 @@ function CalendarOrders(props: Props): JSX.Element {
                 }
               }
             })
-            .filter((statusOrder) => statusOrder.OrderStatus !== 'Delivered')
+            .filter(
+              (statusOrder) =>
+                statusOrder.OrderStatus !== 'Delivered' &&
+                statusOrder.OrderStatus !== 'Cancelled'
+            )
             .sort((a: Order, b: Order) => {
               if (a.DeliveryDate > b.DeliveryDate) {
                 return 1;
