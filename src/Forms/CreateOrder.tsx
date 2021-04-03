@@ -173,14 +173,14 @@ function CreateOrder(props: Props): JSX.Element {
         deliveryMonthSet(deliveryDateStart.format('MM'));
         deliveryDaySet(deliveryDateStart.format('DD'));
         deliveryYearSet(deliveryDateStart.format('YYYY'));
-        beginTimeSet(deliveryDateStart.format('HH:mm a').toUpperCase());
+        beginTimeSet(deliveryDateStart.format('LT'));
 
         // delivery date end
         const deliveryDateEnd = moment(filteredEditOrder[0].DeliveryDateEnd);
         deliveryMonthEndSet(deliveryDateEnd.format('MM'));
         deliveryDayEndSet(deliveryDateEnd.format('DD'));
         deliveryYearEndSet(deliveryDateEnd.format('YYYY'));
-        endTimeSet(deliveryDateEnd.format('HH:mm a').toUpperCase());
+        endTimeSet(deliveryDateEnd.format('LT'));
 
         trafficSourceSet(filteredEditOrder[0].TrafficSource);
         descriptionSet(filteredEditOrder[0].Description);
@@ -432,7 +432,9 @@ function CreateOrder(props: Props): JSX.Element {
 
   function onChangeBeginTime(e: React.ChangeEvent<HTMLSelectElement>): void {
     e.preventDefault();
+
     beginTimeSet(e.target.value);
+
     const beginTime: string = e.target.value.toString();
     if (beginTime !== 'Select a Time') {
       setFilteredBeginTime(beginTime);
@@ -517,30 +519,35 @@ function CreateOrder(props: Props): JSX.Element {
         props.routeComponentProps.location.state === undefined
           ? 0
           : Number(props.routeComponentProps.location.state),
-      Name: name === undefined ? ' ' : name,
-      Area: area === undefined ? ' ' : area,
-      Address: address === undefined ? ' ' : address,
-      City: city === undefined ? ' ' : city,
+      Name: name === undefined ? ' ' : name.trim(),
+      Area: area === undefined ? ' ' : area.trim(),
+      Address: address === undefined ? ' ' : address.trim(),
+      City: city === undefined ? ' ' : city.trim(),
       State: state === undefined ? ' ' : state.trim(),
-      ZipCode: zipCode === undefined ? ' ' : zipCode,
-      OrderType: orderType === undefined ? ' ' : orderType,
-      OrderStatus: orderStatus === undefined ? ' ' : orderStatus,
+      ZipCode: zipCode === undefined ? ' ' : zipCode.trim(),
+      OrderType: orderType === undefined ? ' ' : orderType.trim(),
+      OrderStatus: orderStatus === undefined ? ' ' : orderStatus.trim(),
       Quantity: quantity,
-      Price: price === undefined ? ' ' : price,
-      Description: description === undefined ? ' ' : description,
+      Price: price === undefined ? '0' : price.trim(),
+      Description: description === undefined ? ' ' : description.trim(),
       DeliveryDate: new Date(
-        `${deliveryMonth}/${deliveryDay}/${deliveryYear} ${beginTime}`
+        `${deliveryMonth}/${deliveryDay}/${deliveryYear} ${moment(beginTime, 'hh').format(
+          'LT'
+        )}`
       ),
       DeliveryDateEnd: new Date(
-        `${deliveryMonthEnd}/${deliveryDayEnd}/${deliveryYearEnd} ${endTime}`
+        `${deliveryMonthEnd}/${deliveryDayEnd}/${deliveryYearEnd} ${moment(
+          endTime,
+          'hh'
+        ).format('LT')}`
       ),
       OrderDate: new Date(),
       PrePaid: false,
-      TrafficSource: trafficSource === undefined ? ' ' : trafficSource,
-      User: props.user === undefined ? ' ' : props.user,
-      CreatedBy: props.user === undefined ? ' ' : props.user,
+      TrafficSource: trafficSource === undefined ? ' ' : trafficSource.trim(),
+      User: props.user === undefined ? ' ' : props.user.trim(),
+      CreatedBy: props.user === undefined ? ' ' : props.user.trim(),
       ImageUrl: '',
-      OrderImageUrl: imageUrl === undefined ? ' ' : imageUrl,
+      OrderImageUrl: imageUrl === undefined ? ' ' : imageUrl.trim(),
     };
 
     console.log('payload', orderContent);
@@ -1055,6 +1062,7 @@ function CreateOrder(props: Props): JSX.Element {
             <option>Grocery Facebook Group</option>
             <option>Facebook</option>
             <option>Instagram</option>
+            <option>Friend-Relatives</option>
             <option>Other</option>
           </Form.Control>
         </Form.Group>
