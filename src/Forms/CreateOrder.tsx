@@ -528,7 +528,7 @@ function CreateOrder(props: Props): JSX.Element {
       OrderType: orderType === undefined ? ' ' : orderType.trim(),
       OrderStatus: orderStatus === undefined ? ' ' : orderStatus.trim(),
       Quantity: quantity,
-      Price: price === undefined ? '0' : price.trim(),
+      Price: price === undefined ? '0' : price,
       Description: description === undefined ? ' ' : description.trim(),
       DeliveryDate: new Date(
         `${deliveryMonth}/${deliveryDay}/${deliveryYear} ${moment(beginTime, 'hh').format(
