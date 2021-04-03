@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Switch, Route, Link, BrowserRouter } from 'react-router-dom';
 import { Image } from 'react-bootstrap';
 import { GoogleLoginResponse, GoogleLoginResponseOffline } from 'react-google-login';
@@ -45,11 +45,50 @@ const logoutBtnStyles = {
   marginLeft: '5px',
 } as React.CSSProperties;
 
+
+
 function App(): JSX.Element {
   const [googleAccessToken, setGoogleAccessToken] = useState<string>('');
   const [loggedInUserEmail, setLoggedInUserEmail] = useState<string>('');
   const [loggedInUserName, setLoggedInUserName] = useState<string>('');
   const [profileImage, setProfileImage] = useState<string>('');
+  window.OneSignal = window.OneSignal || [];
+  const OneSignal = window.OneSignal;
+
+  useEffect(() => {
+    OneSignal.push(() => {
+      OneSignal.init(
+        {
+          appId: `${process.env.REACT_APP_ONESIGNAL}`, //STEP 9
+          promptOptions: {
+            slidedown: {
+              enabled: true,
+              actionMessage: "We'd like to show you notifications for the latest Orders.",
+              acceptButtonText: 'Sure!',
+              cancelButtonText: 'No Thanks',
+              categories: {
+                tags: [
+                  {
+                    tag: 'orders',
+                    label: 'BakeryOrders',
+                  },
+                ],
+              },
+            },
+          },
+          welcomeNotification: {
+            title: 'At The Booth Bakery',
+            message: 'Thanks for subscribing!',
+          },
+        },
+        //Automatically subscribe to the new_app_version tag
+        OneSignal.sendTag('new_app_version', 'new_app_version', (tagsSent: any) => {
+          // Callback called when tag has finished sending
+          console.log('new_app_version TAG SENT', tagsSent);
+        })
+      );
+    });
+  }, []);
 
   const componentToDisplay: JSX.Element = (
     <GoogleSignInComponent
