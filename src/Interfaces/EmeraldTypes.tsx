@@ -117,6 +117,7 @@ const useOrders = (initial: Order[] = [], emeraldOrderTypes: OrderType[] = []) =
     setNewOrder,
     setOrders,
     getEmeraldOrders,
+    fetchEmeraldOrders,
   };
 };
 
