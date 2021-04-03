@@ -567,6 +567,7 @@ function CreateOrder(props: Props): JSX.Element {
     endTimeSet('Select Time');
     trafficSourceSet('Select Traffic');
     setUploadFiles([]);
+    descriptionSet('');
   }
 
   function GetUploadImage(files: Array<File>): void {
@@ -720,6 +721,7 @@ function CreateOrder(props: Props): JSX.Element {
             <option>Pending</option>
             <option>Ordered</option>
             <option>Delivered</option>
+            <option>Cancelled</option>
           </Form.Control>
         </Form.Group>
         <Form.Group>
