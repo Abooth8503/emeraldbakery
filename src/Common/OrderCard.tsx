@@ -22,7 +22,6 @@ function OrderCard(props: Props): JSX.Element {
     const path = props.order.OrderImageUrl;
     if (path !== undefined && path !== null) {
       const fileName = path.replace(/^.*[\\/]/, '');
-      console.log('Downloading file here.', fileName);
       Download(path, fileName);
     }
   }, []);
@@ -36,7 +35,7 @@ function OrderCard(props: Props): JSX.Element {
     a.href = await toDataURL(path, fileName);
     a.download = fileName;
     document.body.appendChild(a);
-    a.click();
+    //a.click();
     document.body.removeChild(a);
   }
 
@@ -46,7 +45,6 @@ function OrderCard(props: Props): JSX.Element {
         return response.blob();
       })
       .then((blob) => {
-        console.log('about to get the blob');
         blobToFile(blob, fileName);
         return URL.createObjectURL(blob);
       });
@@ -62,9 +60,7 @@ function OrderCard(props: Props): JSX.Element {
 
     const f = new File([b], fileName);
     newFileArray.push(f);
-    console.log('object', f, newFileArray);
     setUploadFiles(newFileArray);
-    console.log('files', uploadFiles);
   }
 
   function updateBakeryOrder(
@@ -146,7 +142,6 @@ function OrderCard(props: Props): JSX.Element {
     props.order.OrderImageUrl === null ||
     props.order.OrderImageUrl === undefined
   ) {
-    console.log('found none');
     OrderImageUrl =
       'https://emeraldorderfunctionstor.blob.core.windows.net/emeraldbakery/defaultOrderImage_min.png';
   } else {
@@ -156,7 +151,7 @@ function OrderCard(props: Props): JSX.Element {
   }
   const beginDeliveryDate = new Date(props.order.DeliveryDate);
   const endDeliveryDate = new Date(props.order.DeliveryDateEnd);
-  // console.log('order selected', props.order);
+
   return (
     <Card
       key={props.order.Id}
