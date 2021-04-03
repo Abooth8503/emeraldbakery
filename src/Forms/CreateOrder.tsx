@@ -567,7 +567,7 @@ function CreateOrder(props: Props): JSX.Element {
     endTimeSet('Select Time');
     trafficSourceSet('Select Traffic');
     setUploadFiles([]);
-    descriptionSet('');
+    descriptionSet(''); // Added clear description
   }
 
   function GetUploadImage(files: Array<File>): void {
