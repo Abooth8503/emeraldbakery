@@ -45,13 +45,14 @@ const logoutBtnStyles = {
   marginLeft: '5px',
 } as React.CSSProperties;
 
+window.OneSignal = window.OneSignal || [];
+const OneSignal = window.OneSignal;
+
 function App(): JSX.Element {
   const [googleAccessToken, setGoogleAccessToken] = useState<string>('');
   const [loggedInUserEmail, setLoggedInUserEmail] = useState<string>('');
   const [loggedInUserName, setLoggedInUserName] = useState<string>('');
   const [profileImage, setProfileImage] = useState<string>('');
-  window.OneSignal = window.OneSignal || [];
-  const OneSignal = window.OneSignal;
 
   useEffect(() => {
     OneSignal.push(() => {
