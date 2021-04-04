@@ -152,6 +152,11 @@ function CreateOrder(props: Props): JSX.Element {
       const filteredEditOrder = orders.filter(
         (order) => order.Id === props.routeComponentProps.location.state
       );
+      console.log(
+        'edit order',
+        filteredEditOrder,
+        moment(filteredEditOrder[0].DeliveryDate).format('LT')
+      );
 
       if (filteredEditOrder.length > 0) {
         nameSet(filteredEditOrder[0].Name);
@@ -171,14 +176,22 @@ function CreateOrder(props: Props): JSX.Element {
         deliveryMonthSet(deliveryDateStart.format('MM'));
         deliveryDaySet(deliveryDateStart.format('DD'));
         deliveryYearSet(deliveryDateStart.format('YYYY'));
-        beginTimeSet(deliveryDateStart.format('LT'));
+        beginTimeSet(
+          deliveryDateStart.format('LT').toString().length === 7
+            ? `0${deliveryDateStart.format('LT')}`
+            : deliveryDateStart.format('LT')
+        );
 
         // delivery date end
         const deliveryDateEnd = moment(filteredEditOrder[0].DeliveryDateEnd);
         deliveryMonthEndSet(deliveryDateEnd.format('MM'));
         deliveryDayEndSet(deliveryDateEnd.format('DD'));
         deliveryYearEndSet(deliveryDateEnd.format('YYYY'));
-        endTimeSet(deliveryDateEnd.format('LT'));
+        endTimeSet(
+          deliveryDateEnd.format('LT').toString().length === 7
+            ? `0${deliveryDateEnd.format('LT')}`
+            : deliveryDateEnd.format('LT')
+        );
 
         trafficSourceSet(filteredEditOrder[0].TrafficSource);
         descriptionSet(filteredEditOrder[0].Description);
