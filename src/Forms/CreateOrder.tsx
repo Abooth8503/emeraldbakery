@@ -14,7 +14,6 @@ import {
   useEmeraldContext,
   OrderType,
 } from '../Interfaces/EmeraldTypes';
-import { BiDownload } from 'react-icons/bi';
 
 type Props = {
   routeComponentProps: RouteComponentProps;
@@ -153,7 +152,6 @@ function CreateOrder(props: Props): JSX.Element {
       const filteredEditOrder = orders.filter(
         (order) => order.Id === props.routeComponentProps.location.state
       );
-      console.log('order selected', filteredEditOrder);
 
       if (filteredEditOrder.length > 0) {
         nameSet(filteredEditOrder[0].Name);
@@ -204,7 +202,7 @@ function CreateOrder(props: Props): JSX.Element {
     a.href = await toDataURL(path, fileName);
     a.download = fileName;
     document.body.appendChild(a);
-    a.click();
+    // a.click();
     document.body.removeChild(a);
   }
 
@@ -214,7 +212,6 @@ function CreateOrder(props: Props): JSX.Element {
         return response.blob();
       })
       .then((blob) => {
-        console.log('about to get the blob');
         blobToFile(blob, fileName);
         return URL.createObjectURL(blob);
       });
@@ -230,9 +227,7 @@ function CreateOrder(props: Props): JSX.Element {
 
     const f = new File([b], fileName);
     newFileArray.push(f);
-    console.log('object', f);
     setUploadFiles(newFileArray);
-    console.log('files', uploadFiles);
   }
 
   const ref = useOnclickOutside(() => {

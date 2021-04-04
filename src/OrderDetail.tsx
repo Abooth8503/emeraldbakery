@@ -114,7 +114,6 @@ function OrderDetail(props: RouteComponentProps<number>): JSX.Element {
                 const mapAddress = `${order.Address} ${order.City},${order.State}`;
                 const encodedAddress = encodeURI(mapAddress);
                 const addressToUse = `https://www.google.com/maps/search/?api=1&query=${encodedAddress}`;
-                console.log('addr ', addressToUse);
                 return (
                   <React.Fragment key={order.Id}>
                     <ListGroup.Item className='d-flex align-items-center'>

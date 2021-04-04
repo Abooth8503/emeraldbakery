@@ -92,7 +92,6 @@ function GMap(): JSX.Element {
   }
 
   async function setMarkers(markerOrders: Order[]): Promise<void> {
-    console.log('setMarkers call just made');
     return markerOrders.forEach(async (order) => {
       const address = `${order.Address}, ${order.City}, ${order.State} ${order.ZipCode}`;
 
