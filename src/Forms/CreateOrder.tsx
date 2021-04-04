@@ -153,7 +153,10 @@ function CreateOrder(props: Props): JSX.Element {
         (order) => order.Id === props.routeComponentProps.location.state
       );
 
+      console.log('order editing', filteredEditOrder);
+
       if (filteredEditOrder.length > 0) {
+        setIsSubmitDisabled(false);
         nameSet(filteredEditOrder[0].Name);
         areaSet(filteredEditOrder[0].Area);
         addressSet(filteredEditOrder[0].Address);
@@ -168,25 +171,18 @@ function CreateOrder(props: Props): JSX.Element {
 
         // delivery date start
         const deliveryDateStart = moment(filteredEditOrder[0].DeliveryDate);
+        console.log('start time', deliveryDateStart.format('HH:mm A'));
         deliveryMonthSet(deliveryDateStart.format('MM'));
         deliveryDaySet(deliveryDateStart.format('DD'));
         deliveryYearSet(deliveryDateStart.format('YYYY'));
-        beginTimeSet(
-          deliveryDateStart.format('LT').toString().length === 7
-            ? `0${deliveryDateStart.format('LT')}`
-            : deliveryDateStart.format('LT')
-        );
+        beginTimeSet(deliveryDateStart.format('HH:mm A'));
 
         // delivery date end
         const deliveryDateEnd = moment(filteredEditOrder[0].DeliveryDateEnd);
         deliveryMonthEndSet(deliveryDateEnd.format('MM'));
         deliveryDayEndSet(deliveryDateEnd.format('DD'));
         deliveryYearEndSet(deliveryDateEnd.format('YYYY'));
-        endTimeSet(
-          deliveryDateEnd.format('LT').toString().length === 7
-            ? `0${deliveryDateEnd.format('LT')}`
-            : deliveryDateEnd.format('LT')
-        );
+        endTimeSet(deliveryDateEnd.format('HH:mm A'));
 
         trafficSourceSet(filteredEditOrder[0].TrafficSource);
         descriptionSet(filteredEditOrder[0].Description);
@@ -437,7 +433,7 @@ function CreateOrder(props: Props): JSX.Element {
     e.preventDefault();
 
     beginTimeSet(e.target.value);
-
+    console.log('onChange begin time', e.target.value, moment(e.target.value, 'hh'));
     const beginTime: string = e.target.value.toString();
     if (beginTime !== 'Select a Time') {
       setFilteredBeginTime(beginTime);
@@ -517,6 +513,15 @@ function CreateOrder(props: Props): JSX.Element {
   function insertOrder(e: React.MouseEvent<HTMLElement>): void {
     e.preventDefault();
 
+    // const testBeginTime = moment(beginTime, 'HH:mm A');
+    // console.log(
+    //   'new DATE Begin',
+    //   // new Date(        `${deliveryMonth}/${deliveryDay}/${deliveryYear} ${testBeginTime}
+    //   // }`,
+    //   testBeginTime,
+    //   beginTime
+    // );
+
     const orderContent: Order = {
       Id:
         props.routeComponentProps.location.state === undefined
@@ -534,15 +539,10 @@ function CreateOrder(props: Props): JSX.Element {
       Price: price === undefined ? '0' : price,
       Description: description === undefined ? ' ' : description.trim(),
       DeliveryDate: new Date(
-        `${deliveryMonth}/${deliveryDay}/${deliveryYear} ${moment(beginTime, 'hh').format(
-          'LT'
-        )}`
+        `${deliveryMonth}/${deliveryDay}/${deliveryYear} ${beginTime}`
       ),
       DeliveryDateEnd: new Date(
-        `${deliveryMonthEnd}/${deliveryDayEnd}/${deliveryYearEnd} ${moment(
-          endTime,
-          'hh'
-        ).format('LT')}`
+        `${deliveryMonthEnd}/${deliveryDayEnd}/${deliveryYearEnd} ${endTime}`
       ),
       OrderDate: new Date(),
       PrePaid: false,
