@@ -45,8 +45,6 @@ const logoutBtnStyles = {
   marginLeft: '5px',
 } as React.CSSProperties;
 
-
-
 function App(): JSX.Element {
   const [googleAccessToken, setGoogleAccessToken] = useState<string>('');
   const [loggedInUserEmail, setLoggedInUserEmail] = useState<string>('');
@@ -57,6 +55,7 @@ function App(): JSX.Element {
 
   useEffect(() => {
     OneSignal.push(() => {
+      console.log('appid', `${process.env.REACT_APP_ONESIGNAL}`);
       OneSignal.init(
         {
           appId: `${process.env.REACT_APP_ONESIGNAL}`, //STEP 9
