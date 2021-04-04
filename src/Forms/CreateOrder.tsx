@@ -513,13 +513,14 @@ function CreateOrder(props: Props): JSX.Element {
   function insertOrder(e: React.MouseEvent<HTMLElement>): void {
     e.preventDefault();
 
-    const testBeginTime = moment(beginTime, 'HH:mm A');
-    console.log(
-      'new DATE Begin',
-      // new Date(        `${deliveryMonth}/${deliveryDay}/${deliveryYear} ${testBeginTime}
-      // }`,
-      testBeginTime
-    );
+    // const testBeginTime = moment(beginTime, 'HH:mm A');
+    // console.log(
+    //   'new DATE Begin',
+    //   // new Date(        `${deliveryMonth}/${deliveryDay}/${deliveryYear} ${testBeginTime}
+    //   // }`,
+    //   testBeginTime,
+    //   beginTime
+    // );
 
     const orderContent: Order = {
       Id:
@@ -538,8 +539,7 @@ function CreateOrder(props: Props): JSX.Element {
       Price: price === undefined ? '0' : price,
       Description: description === undefined ? ' ' : description.trim(),
       DeliveryDate: new Date(
-        `${deliveryMonth}/${deliveryDay}/${deliveryYear} ${beginTime}
-        )}`
+        `${deliveryMonth}/${deliveryDay}/${deliveryYear} ${beginTime}`
       ),
       DeliveryDateEnd: new Date(
         `${deliveryMonthEnd}/${deliveryDayEnd}/${deliveryYearEnd} ${endTime}`
