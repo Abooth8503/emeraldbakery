@@ -152,11 +152,6 @@ function CreateOrder(props: Props): JSX.Element {
       const filteredEditOrder = orders.filter(
         (order) => order.Id === props.routeComponentProps.location.state
       );
-      console.log(
-        'edit order',
-        filteredEditOrder,
-        moment(filteredEditOrder[0].DeliveryDate).format('LT')
-      );
 
       if (filteredEditOrder.length > 0) {
         nameSet(filteredEditOrder[0].Name);

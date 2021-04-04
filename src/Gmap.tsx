@@ -35,7 +35,6 @@ function GMap(): JSX.Element {
               return day;
             }
           });
-          console.log('current day orders', currentDayOrders);
           setOrdersMap(currentDayOrders);
 
           if (googleMapScript !== null) {
