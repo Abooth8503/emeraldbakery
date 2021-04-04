@@ -57,38 +57,44 @@ function App(): JSX.Element {
   useEffect(() => {
     OneSignal.push(() => {
       console.log('appid', `${process.env.REACT_APP_ONESIGNAL}`);
-      OneSignal.init(
-        {
-          appId: `${process.env.REACT_APP_ONESIGNAL}`, //STEP 9
-          subdomainName: 'emeraldbakery',
-          allowLocalhostAsSecureOrigin: true,
-          promptOptions: {
-            slidedown: {
-              enabled: true,
-              actionMessage: "We'd like to show you notifications for the latest Orders.",
-              acceptButtonText: 'Sure!',
-              cancelButtonText: 'No Thanks',
-              categories: {
-                tags: [
-                  {
-                    tag: 'orders',
-                    label: 'BakeryOrders',
-                  },
-                ],
-              },
+      const initConfig = {
+        appId: `${process.env.REACT_APP_ONESIGNAL}`, //STEP 9
+        allowLocalhostAsSecureOrigin: true,
+        promptOptions: {
+          slidedown: {
+            enabled: true,
+            actionMessage: "We'd like to show you notifications for the latest Orders.",
+            acceptButtonText: 'Sure!',
+            cancelButtonText: 'No Thanks',
+            categories: {
+              tags: [
+                {
+                  tag: 'orders',
+                  label: 'BakeryOrders',
+                },
+              ],
             },
           },
-          welcomeNotification: {
-            title: 'At The Booth Bakery',
-            message: 'Thanks for subscribing!',
-          },
-        }
-        //Automatically subscribe to the new_app_version tag
-        // OneSignal.sendTag('new_app_version', 'new_app_version', (tagsSent) => {
-        //   // Callback called when tag has finished sending
-        //   console.log('new_app_version TAG SENT', tagsSent);
-        // })
-      );
+        },
+        welcomeNotification: {
+          title: 'At The Booth Bakery',
+          message: 'Thanks for subscribing!',
+        },
+      };
+
+      OneSignal.push(function () {
+        OneSignal.SERVICE_WORKER_PARAM = { scope: '/emeraldbakery/' };
+        OneSignal.SERVICE_WORKER_PATH = 'emeraldbakery/OneSignalSDKWorker.js';
+        OneSignal.SERVICE_WORKER_UPDATER_PATH =
+          'emeraldbakery/OneSignalSDKUpdaterWorker.js';
+        OneSignal.init(initConfig);
+      });
+      //Automatically subscribe to the new_app_version tag
+      // OneSignal.sendTag('new_app_version', 'new_app_version', (tagsSent) => {
+      //   // Callback called when tag has finished sending
+      //   console.log('new_app_version TAG SENT', tagsSent);
+      // })
+      // );
     });
   }, []);
 
