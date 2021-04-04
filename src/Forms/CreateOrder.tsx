@@ -605,6 +605,7 @@ function CreateOrder(props: Props): JSX.Element {
     trafficSourceSet('Select Traffic');
     setUploadFiles([]);
     descriptionSet(''); // Added clear description
+    setValue('');
   }
 
   function GetUploadImage(files: Array<File>): void {
