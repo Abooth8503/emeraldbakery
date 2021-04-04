@@ -47,12 +47,10 @@ function OrderTypeForm(props: Props) {
       selectedOrderType[0].ImageUrl === null ||
       selectedOrderType[0].ImageUrl.length === 0
     ) {
-      console.log('found no image, using default');
       setImageUrl(
         'https://emeraldorderfunctionstor.blob.core.windows.net/emeraldbakery/defaultOrderImage_min.png'
       );
     } else {
-      console.log('should be value for imageurl', selectedOrderType[0]);
       setImageUrl(selectedOrderType[0].ImageUrl);
     }
   }

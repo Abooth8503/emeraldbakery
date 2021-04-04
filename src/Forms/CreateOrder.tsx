@@ -14,7 +14,6 @@ import {
   useEmeraldContext,
   OrderType,
 } from '../Interfaces/EmeraldTypes';
-import { BiDownload } from 'react-icons/bi';
 
 type Props = {
   routeComponentProps: RouteComponentProps;
@@ -153,7 +152,6 @@ function CreateOrder(props: Props): JSX.Element {
       const filteredEditOrder = orders.filter(
         (order) => order.Id === props.routeComponentProps.location.state
       );
-      console.log('order selected', filteredEditOrder);
 
       if (filteredEditOrder.length > 0) {
         nameSet(filteredEditOrder[0].Name);
@@ -173,14 +171,22 @@ function CreateOrder(props: Props): JSX.Element {
         deliveryMonthSet(deliveryDateStart.format('MM'));
         deliveryDaySet(deliveryDateStart.format('DD'));
         deliveryYearSet(deliveryDateStart.format('YYYY'));
-        beginTimeSet(deliveryDateStart.format('LT'));
+        beginTimeSet(
+          deliveryDateStart.format('LT').toString().length === 7
+            ? `0${deliveryDateStart.format('LT')}`
+            : deliveryDateStart.format('LT')
+        );
 
         // delivery date end
         const deliveryDateEnd = moment(filteredEditOrder[0].DeliveryDateEnd);
         deliveryMonthEndSet(deliveryDateEnd.format('MM'));
         deliveryDayEndSet(deliveryDateEnd.format('DD'));
         deliveryYearEndSet(deliveryDateEnd.format('YYYY'));
-        endTimeSet(deliveryDateEnd.format('LT'));
+        endTimeSet(
+          deliveryDateEnd.format('LT').toString().length === 7
+            ? `0${deliveryDateEnd.format('LT')}`
+            : deliveryDateEnd.format('LT')
+        );
 
         trafficSourceSet(filteredEditOrder[0].TrafficSource);
         descriptionSet(filteredEditOrder[0].Description);
@@ -204,7 +210,7 @@ function CreateOrder(props: Props): JSX.Element {
     a.href = await toDataURL(path, fileName);
     a.download = fileName;
     document.body.appendChild(a);
-    a.click();
+    // a.click();
     document.body.removeChild(a);
   }
 
@@ -214,7 +220,6 @@ function CreateOrder(props: Props): JSX.Element {
         return response.blob();
       })
       .then((blob) => {
-        console.log('about to get the blob');
         blobToFile(blob, fileName);
         return URL.createObjectURL(blob);
       });
@@ -230,9 +235,7 @@ function CreateOrder(props: Props): JSX.Element {
 
     const f = new File([b], fileName);
     newFileArray.push(f);
-    console.log('object', f);
     setUploadFiles(newFileArray);
-    console.log('files', uploadFiles);
   }
 
   const ref = useOnclickOutside(() => {
@@ -610,6 +613,7 @@ function CreateOrder(props: Props): JSX.Element {
     trafficSourceSet('Select Traffic');
     setUploadFiles([]);
     descriptionSet(''); // Added clear description
+    setValue('');
   }
 
   function GetUploadImage(files: Array<File>): void {

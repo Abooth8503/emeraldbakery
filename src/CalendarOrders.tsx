@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as React from 'react';
+import { useEffect } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import Calendar from 'react-calendar';
 import moment from 'moment';
@@ -13,9 +14,13 @@ import { useEmeraldContext } from './Interfaces/EmeraldTypes';
 type Props = RouteComponentProps;
 
 function CalendarOrders(props: Props): JSX.Element {
-  const { orders } = useEmeraldContext();
+  const { orders, fetchEmeraldOrders } = useEmeraldContext();
   const [selectedDay, daySet] = React.useState<Date | undefined>(undefined);
   const [value, onChange] = React.useState<Date | Date[]>(new Date());
+
+  useEffect(() => {
+    fetchEmeraldOrders();
+  }, []);
 
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   function tileClassName({
