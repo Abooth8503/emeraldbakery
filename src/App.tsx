@@ -59,6 +59,7 @@ function App(): JSX.Element {
       OneSignal.init(
         {
           appId: `${process.env.REACT_APP_ONESIGNAL}`, //STEP 9
+          allowLocalhostAsSecureOrigin: true,
           promptOptions: {
             slidedown: {
               enabled: true,
