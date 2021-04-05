@@ -433,8 +433,14 @@ function CreateOrder(props: Props): JSX.Element {
     e.preventDefault();
 
     beginTimeSet(e.target.value);
-    console.log('onChange begin time', e.target.value, moment(e.target.value, 'hh'));
-    const beginTime: string = e.target.value.toString();
+    // console.log(
+    //   'onChange begin time',
+    //   e.target.value,
+    //   moment(e.target.value, 'HH:mm').format('hh:mm a').toString()
+    // );
+    const beginTime: string = moment(e.target.value, 'HH:mm')
+      .format('hh:mm a')
+      .toString();
     if (beginTime !== 'Select a Time') {
       setFilteredBeginTime(beginTime);
     } else {
@@ -513,15 +519,6 @@ function CreateOrder(props: Props): JSX.Element {
   function insertOrder(e: React.MouseEvent<HTMLElement>): void {
     e.preventDefault();
 
-    // const testBeginTime = moment(beginTime, 'HH:mm A');
-    // console.log(
-    //   'new DATE Begin',
-    //   // new Date(        `${deliveryMonth}/${deliveryDay}/${deliveryYear} ${testBeginTime}
-    //   // }`,
-    //   testBeginTime,
-    //   beginTime
-    // );
-
     const orderContent: Order = {
       Id:
         props.routeComponentProps.location.state === undefined
@@ -538,12 +535,8 @@ function CreateOrder(props: Props): JSX.Element {
       Quantity: quantity,
       Price: price === undefined ? '0' : price,
       Description: description === undefined ? ' ' : description.trim(),
-      DeliveryDate: new Date(
-        `${deliveryMonth}/${deliveryDay}/${deliveryYear} ${beginTime}`
-      ),
-      DeliveryDateEnd: new Date(
-        `${deliveryMonthEnd}/${deliveryDayEnd}/${deliveryYearEnd} ${endTime}`
-      ),
+      DeliveryDate: `${deliveryMonth}/${deliveryDay}/${deliveryYear} ${beginTime}`,
+      DeliveryDateEnd: `${deliveryMonthEnd}/${deliveryDayEnd}/${deliveryYearEnd} ${endTime}`,
       OrderDate: new Date(),
       PrePaid: false,
       TrafficSource: trafficSource === undefined ? ' ' : trafficSource.trim(),
