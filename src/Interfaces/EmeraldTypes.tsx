@@ -23,8 +23,8 @@ export interface Order {
   Quantity: number;
   Price: string | undefined;
   Description: string | undefined;
-  DeliveryDate: Date;
-  DeliveryDateEnd: Date;
+  DeliveryDate: string;
+  DeliveryDateEnd: string;
   OrderDate: Date;
   PrePaid: boolean;
   TrafficSource: string | undefined;
