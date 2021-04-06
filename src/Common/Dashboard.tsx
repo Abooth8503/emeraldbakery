@@ -114,20 +114,16 @@ function Dashboard(props: Props): JSX.Element {
           </figure>
         </Col>
       </Row>
-      {/* <Row>
-        <Col style={{ fontSize: 'larger' }}>
-          Total <Link to='/orders'>Orders</Link>: {orders.length}
-        </Col>
-      </Row>
-      <Row>
-        <Col style={{ fontSize: 'larger' }}>
-          Total Paid: <span>{formatter.format(sumCost)}</span>
-        </Col>
-      </Row> */}
       <Row style={{ marginTop: '5px' }}>
         <Col style={{ fontSize: 'larger' }}>
           <Jumbotron style={{ backgroundColor: 'white' }}>
-            <h5 style={{ fontWeight: 'bold', fontStyle: 'oblique' }}>
+            <h5
+              style={{
+                fontWeight: 'bold',
+                fontStyle: 'oblique',
+                textDecoration: 'underline',
+              }}
+            >
               At The Booth Bakery - Dashboard
             </h5>
             <span>
@@ -136,7 +132,7 @@ function Dashboard(props: Props): JSX.Element {
             <br />
             <span>
               Total Paid:
-              <span style={{ color: 'green', marginLeft: '5px' }}>
+              <span style={{ color: 'green', marginLeft: '5px', fontWeight: 'bold' }}>
                 💰{formatter.format(sumCost)}
               </span>
             </span>
