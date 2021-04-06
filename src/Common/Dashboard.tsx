@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-import { Container, Row, Col, Jumbotron } from 'react-bootstrap';
-import { useEmeraldContext } from '../Interfaces/EmeraldTypes';
+import { Container, Row, Col, Jumbotron, Badge } from 'react-bootstrap';
+import { Order, Orders, useEmeraldContext } from '../Interfaces/EmeraldTypes';
 
 const motivationalQuotes = [
   {
@@ -46,6 +46,15 @@ const motivationalQuotes = [
   },
 ];
 
+const formatter = new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'USD',
+
+  // These options are needed to round to whole numbers if that's what you want.
+  //minimumFractionDigits: 0, // (this suffices for whole numbers, but will print 2500.10 as $2,500.1)
+  //maximumFractionDigits: 0, // (causes 2500.99 to be printed as $2,501)
+});
+
 interface Props {
   userName: string;
 }
@@ -57,6 +66,21 @@ function Dashboard(props: Props): JSX.Element {
   if (orders.length < 1) {
     return <div>Loading...</div>;
   }
+
+  const deliveredOrders = orders.filter((order: Order) => {
+    return order.OrderStatus === 'Delivered';
+  });
+
+  const sumCost = deliveredOrders.reduce(
+    (cost: number, entry: any) => cost + (parseFloat(entry.Price) || 0),
+    0
+  );
+
+  const orderedButNotDeliveredandNotCancelled = orders.filter((order: Order) => {
+    return order.OrderStatus === 'Ordered';
+  });
+
+  console.log('Price of all Delivered is: ', formatter.format(sumCost));
 
   const userNameString = props.userName.split(' ')[0];
   return (
@@ -90,10 +114,43 @@ function Dashboard(props: Props): JSX.Element {
           </figure>
         </Col>
       </Row>
+      {/* <Row>
+        <Col style={{ fontSize: 'larger' }}>
+          Total <Link to='/orders'>Orders</Link>: {orders.length}
+        </Col>
+      </Row>
       <Row>
         <Col style={{ fontSize: 'larger' }}>
-          {' '}
-          Total <Link to='/orders'>Orders</Link>: {orders.length}
+          Total Paid: <span>{formatter.format(sumCost)}</span>
+        </Col>
+      </Row> */}
+      <Row style={{ marginTop: '5px' }}>
+        <Col style={{ fontSize: 'larger' }}>
+          <Jumbotron style={{ backgroundColor: 'white' }}>
+            <h5 style={{ fontWeight: 'bold', fontStyle: 'oblique' }}>
+              At The Booth Bakery - Dashboard
+            </h5>
+            <span>
+              Total <Link to='/orders'>Orders</Link>: 📝{orders.length}
+            </span>
+            <br />
+            <span>
+              Total Paid:
+              <span style={{ color: 'green', marginLeft: '5px' }}>
+                💰{formatter.format(sumCost)}
+              </span>
+            </span>
+            <br></br>
+            Total Deliveries: 🚚<span>{deliveredOrders.length}</span>
+            <br />
+            <hr />
+            <span>
+              Currently Ordered:
+              <span style={{ marginLeft: '5px' }}>
+                ✔️{orderedButNotDeliveredandNotCancelled.length}
+              </span>
+            </span>
+          </Jumbotron>
         </Col>
       </Row>
     </Container>

@@ -34,6 +34,8 @@ export interface Order {
   OrderImageUrl: string | undefined;
 }
 
+export type Orders = Array<Order>;
+
 export interface OrderType {
   Id: number;
   Name: string | undefined;
