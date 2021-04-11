@@ -77,7 +77,7 @@ function CreateOrder(props: Props): JSX.Element {
   const [quantity, quantitySet] = React.useState<number>(0);
   const [price, priceSet] = React.useState<string | undefined>(undefined);
   const [prepaid, prepaidSet] = React.useState<boolean>(false);
-  const [porcheDropoff, setPorchDropoff] = React.useState<boolean>(false);
+  const [porchDropoff, setPorchDropoff] = React.useState<boolean>(false);
   const [description, descriptionSet] = React.useState<string | undefined>(undefined);
   const [trafficSource, trafficSourceSet] = React.useState<string | undefined>(undefined);
   const [deliveryMonth, deliveryMonthSet] = React.useState<string | undefined>(undefined);
@@ -546,7 +546,7 @@ function CreateOrder(props: Props): JSX.Element {
       CreatedBy: props.user === undefined ? ' ' : props.user.trim(),
       ImageUrl: '',
       OrderImageUrl: imageUrl === undefined ? ' ' : imageUrl.trim(),
-      PorchDropoff: porcheDropoff,
+      PorchDropoff: porchDropoff,
     };
 
     console.log('payload', orderContent);
@@ -819,14 +819,15 @@ function CreateOrder(props: Props): JSX.Element {
           <Form.Check
             type='checkbox'
             label='PrePaid'
-            defaultChecked={prepaid}
+            name='prepaid'
+            checked={prepaid}
             onChange={() => prepaidSet(!prepaid)}
           />
           <Form.Check
             type='checkbox'
             label='Porch Dropoff?'
-            defaultChecked={porcheDropoff}
-            onChange={() => setPorchDropoff(!porcheDropoff)}
+            checked={porchDropoff}
+            onChange={() => setPorchDropoff(!porchDropoff)}
           />
         </Form.Group>
         <Form.Label>Delivery Begin Date</Form.Label>
