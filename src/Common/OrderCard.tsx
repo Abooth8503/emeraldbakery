@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import * as React from 'react';
 import { useEffect } from 'react';
+import { MdAttachMoney, MdMoneyOff } from 'react-icons/md';
 import { Card, Col, Row, Image, Button, Form } from 'react-bootstrap';
 import { RouteComponentProps } from 'react-router-dom';
 import { FaMapSigns } from 'react-icons/fa';
@@ -91,6 +92,7 @@ function OrderCard(props: Props): JSX.Element {
       CreatedBy: props.order.CreatedBy,
       ImageUrl: props.order.ImageUrl,
       OrderImageUrl: props.order.OrderImageUrl,
+      PorchDropoff: props.order.PorchDropoff,
     };
 
     console.log('payload', orderContent, uploadFiles);
@@ -109,11 +111,11 @@ function OrderCard(props: Props): JSX.Element {
     };
 
     try {
-      // const response = fetch('http://localhost:7071/api/Function1', myInit);
-      const response = fetch(
-        `https://emeraldorderfunction.azurewebsites.net/api/Function1?code=${process.env.REACT_APP_FUNC_KEY}`,
-        myInit
-      );
+      const response = fetch('http://localhost:7071/api/Function1', myInit);
+      // const response = fetch(
+      //   `https://emeraldorderfunction.azurewebsites.net/api/Function1?code=${process.env.REACT_APP_FUNC_KEY}`,
+      //   myInit
+      // );
 
       response.then((resp) => {
         if (resp.status === 200) {
@@ -152,6 +154,7 @@ function OrderCard(props: Props): JSX.Element {
   const beginDeliveryDate = new Date(props.order.DeliveryDate);
   const endDeliveryDate = new Date(props.order.DeliveryDateEnd);
 
+  console.log('prepaid: ', props.order);
   return (
     <Card
       key={props.order.Id}
@@ -178,6 +181,9 @@ function OrderCard(props: Props): JSX.Element {
             </span>
             <br />
             <span style={{ fontSize: 'small', verticalAlign: 'baseline' }}>
+              {props.order.PorchDropoff ? <span>🚪</span> : null}
+              {props.order.PrePaid ? <span>💵</span> : null}
+
               {`${beginDeliveryDate.toLocaleTimeString('en-US', {
                 timeStyle: 'short',
               } as Intl.DateTimeFormatOptions)}`}

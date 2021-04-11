@@ -32,6 +32,7 @@ export interface Order {
   CreatedBy: string | undefined;
   ImageUrl: string | undefined;
   OrderImageUrl: string | undefined;
+  PorchDropoff: boolean;
 }
 
 export type Orders = Array<Order>;

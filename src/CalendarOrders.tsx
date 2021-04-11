@@ -66,6 +66,7 @@ function CalendarOrders(props: Props): JSX.Element {
         tileClassName={tileClassName}
         onClickDay={onClickDayDate}
         className='centercalendar'
+        calendarType='US'
       />
       <Row>
         <Col>
