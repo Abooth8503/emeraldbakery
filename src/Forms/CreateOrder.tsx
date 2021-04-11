@@ -77,6 +77,7 @@ function CreateOrder(props: Props): JSX.Element {
   const [quantity, quantitySet] = React.useState<number>(0);
   const [price, priceSet] = React.useState<string | undefined>(undefined);
   const [prepaid, prepaidSet] = React.useState<boolean>(false);
+  const [porcheDropoff, setPorchDropoff] = React.useState<boolean>(false);
   const [description, descriptionSet] = React.useState<string | undefined>(undefined);
   const [trafficSource, trafficSourceSet] = React.useState<string | undefined>(undefined);
   const [deliveryMonth, deliveryMonthSet] = React.useState<string | undefined>(undefined);
@@ -168,6 +169,7 @@ function CreateOrder(props: Props): JSX.Element {
         quantitySet(filteredEditOrder[0].Quantity);
         priceSet(filteredEditOrder[0].Price);
         prepaidSet(filteredEditOrder[0].PrePaid);
+        setPorchDropoff(filteredEditOrder[0].PorchDropoff);
 
         // delivery date start
         const deliveryDateStart = moment(filteredEditOrder[0].DeliveryDate);
@@ -538,12 +540,13 @@ function CreateOrder(props: Props): JSX.Element {
       DeliveryDate: `${deliveryMonth}/${deliveryDay}/${deliveryYear} ${beginTime}`,
       DeliveryDateEnd: `${deliveryMonthEnd}/${deliveryDayEnd}/${deliveryYearEnd} ${endTime}`,
       OrderDate: new Date(),
-      PrePaid: false,
+      PrePaid: prepaid,
       TrafficSource: trafficSource === undefined ? ' ' : trafficSource.trim(),
       User: props.user === undefined ? ' ' : props.user.trim(),
       CreatedBy: props.user === undefined ? ' ' : props.user.trim(),
       ImageUrl: '',
       OrderImageUrl: imageUrl === undefined ? ' ' : imageUrl.trim(),
+      PorchDropoff: porcheDropoff,
     };
 
     console.log('payload', orderContent);
@@ -562,11 +565,11 @@ function CreateOrder(props: Props): JSX.Element {
     };
 
     try {
-      // const response = fetch('http://localhost:7071/api/Function1', myInit);
-      const response = fetch(
-        `https://emeraldorderfunction.azurewebsites.net/api/Function1?code=${process.env.REACT_APP_FUNC_KEY}`,
-        myInit
-      );
+      const response = fetch('http://localhost:7071/api/Function1', myInit);
+      // const response = fetch(
+      //   `https://emeraldorderfunction.azurewebsites.net/api/Function1?code=${process.env.REACT_APP_FUNC_KEY}`,
+      //   myInit
+      // );
       setOrderSubmitted(true);
 
       response.then((resp) => {
@@ -607,6 +610,8 @@ function CreateOrder(props: Props): JSX.Element {
     setUploadFiles([]);
     descriptionSet(''); // Added clear description
     setValue('');
+    setPorchDropoff(false);
+    prepaidSet(false);
   }
 
   function GetUploadImage(files: Array<File>): void {
@@ -816,6 +821,12 @@ function CreateOrder(props: Props): JSX.Element {
             label='PrePaid'
             defaultChecked={prepaid}
             onChange={() => prepaidSet(!prepaid)}
+          />
+          <Form.Check
+            type='checkbox'
+            label='Porch Dropoff?'
+            defaultChecked={porcheDropoff}
+            onChange={() => setPorchDropoff(!porcheDropoff)}
           />
         </Form.Group>
         <Form.Label>Delivery Begin Date</Form.Label>
