@@ -111,11 +111,11 @@ function OrderCard(props: Props): JSX.Element {
     };
 
     try {
-      const response = fetch('http://localhost:7071/api/Function1', myInit);
-      // const response = fetch(
-      //   `https://emeraldorderfunction.azurewebsites.net/api/Function1?code=${process.env.REACT_APP_FUNC_KEY}`,
-      //   myInit
-      // );
+      // const response = fetch('http://localhost:7071/api/Function1', myInit);
+      const response = fetch(
+        `https://emeraldorderfunction.azurewebsites.net/api/Function1?code=${process.env.REACT_APP_FUNC_KEY}`,
+        myInit
+      );
 
       response.then((resp) => {
         if (resp.status === 200) {
