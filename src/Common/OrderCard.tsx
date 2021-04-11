@@ -181,8 +181,16 @@ function OrderCard(props: Props): JSX.Element {
             </span>
             <br />
             <span style={{ fontSize: 'small', verticalAlign: 'baseline' }}>
-              {props.order.PorchDropoff ? <span>🚪</span> : null}
-              {props.order.PrePaid ? <span>💵</span> : null}
+              {props.order.PorchDropoff ? (
+                <span role='img' aria-label='door' style={{ fontSize: '26px' }}>
+                  🚪
+                </span>
+              ) : null}
+              {props.order.PrePaid ? (
+                <span role='img' aria-label='money' style={{ fontSize: '26px' }}>
+                  💵
+                </span>
+              ) : null}
 
               {`${beginDeliveryDate.toLocaleTimeString('en-US', {
                 timeStyle: 'short',
