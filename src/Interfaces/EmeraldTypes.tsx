@@ -10,6 +10,12 @@ declare global {
   }
 }
 
+export enum AtTheBoothBakery_Type {
+  Delivered = 'Delivered',
+  Ordered = 'ordered',
+  Today = 'Today',
+}
+
 export interface Order {
   Id: number;
   Name: string | undefined;
