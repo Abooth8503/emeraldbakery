@@ -12,7 +12,7 @@ import {
   DropdownButton,
 } from 'react-bootstrap';
 import moment from 'moment';
-import FlipMove from 'react-flip-move';
+// import FlipMove from 'react-flip-move';
 import { Order } from './Interfaces/EmeraldTypes';
 import { useEmeraldContext, AtTheBoothBakery_Type } from './Interfaces/EmeraldTypes';
 import OrderCard from './Common/OrderCard';
@@ -34,7 +34,7 @@ function Orders(props: Props): JSX.Element {
     setFilterType(e);
 
     let atbOrders = [];
-    console.log('current order type:', e);
+    // console.log('current order type:', e);
     switch (e) {
       case AtTheBoothBakery_Type.Delivered:
         atbOrders = orders.filter((order: Order) => {
@@ -124,7 +124,7 @@ function Orders(props: Props): JSX.Element {
         <Col>
           <input
             style={{ marginTop: '5px' }}
-            placeholder='Search'
+            placeholder='Search Name or Address'
             onChange={onSearchKey}
           ></input>
         </Col>
