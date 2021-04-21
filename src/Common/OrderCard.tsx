@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import * as React from 'react';
 import { useEffect } from 'react';
-import { MdAttachMoney, MdMoneyOff } from 'react-icons/md';
 import { Card, Col, Row, Image, Button, Form } from 'react-bootstrap';
 import { RouteComponentProps } from 'react-router-dom';
 import { FaMapSigns } from 'react-icons/fa';
@@ -154,7 +153,7 @@ function OrderCard(props: Props): JSX.Element {
   const beginDeliveryDate = new Date(props.order.DeliveryDate);
   const endDeliveryDate = new Date(props.order.DeliveryDateEnd);
 
-  console.log('prepaid: ', props.order);
+  // console.log('prepaid: ', props.order);
   return (
     <Card
       key={props.order.Id}
@@ -173,6 +172,23 @@ function OrderCard(props: Props): JSX.Element {
             <Card.Img as={Image} src={OrderImageUrl} fluid={true} />
           </Col>
         ) : null}
+
+        {/* <Col
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            height: '210px',
+          }}
+        >
+          <Card.Img
+            as={Image}
+            src={`https://emeraldorderfunctionstor.blob.core.windows.net/emeraldbakery/At%20The%20Booth%20Logo%20Transparent%20Image%20only.png`}
+            // fluid={true}
+            style={{ width: '50%', height: '50%' }}
+            // thumbnail
+          />
+        </Col> */}
 
         <Col>
           <Card.Title>

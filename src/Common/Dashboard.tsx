@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-import { Container, Row, Col, Jumbotron, Badge } from 'react-bootstrap';
-import { Order, Orders, useEmeraldContext } from '../Interfaces/EmeraldTypes';
+import { Container, Row, Col, Jumbotron } from 'react-bootstrap';
+import { Order, useEmeraldContext } from '../Interfaces/EmeraldTypes';
 
 const motivationalQuotes = [
   {
