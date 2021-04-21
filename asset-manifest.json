@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/emeraldbakery/static/css/main.fd02e7e7.chunk.css",
-    "main.js": "/emeraldbakery/static/js/main.6da0e6b1.chunk.js",
-    "main.js.map": "/emeraldbakery/static/js/main.6da0e6b1.chunk.js.map",
+    "main.js": "/emeraldbakery/static/js/main.dc792bd2.chunk.js",
+    "main.js.map": "/emeraldbakery/static/js/main.dc792bd2.chunk.js.map",
     "runtime-main.js": "/emeraldbakery/static/js/runtime-main.ce2686dc.js",
     "runtime-main.js.map": "/emeraldbakery/static/js/runtime-main.ce2686dc.js.map",
     "static/css/2.8cebfa1f.chunk.css": "/emeraldbakery/static/css/2.8cebfa1f.chunk.css",
@@ -22,6 +22,6 @@
     "static/css/2.8cebfa1f.chunk.css",
     "static/js/2.a3eaaba5.chunk.js",
     "static/css/main.fd02e7e7.chunk.css",
-    "static/js/main.6da0e6b1.chunk.js"
+    "static/js/main.dc792bd2.chunk.js"
   ]
 }
