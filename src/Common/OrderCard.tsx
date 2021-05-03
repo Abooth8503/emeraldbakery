@@ -92,6 +92,8 @@ function OrderCard(props: Props): JSX.Element {
       ImageUrl: props.order.ImageUrl,
       OrderImageUrl: props.order.OrderImageUrl,
       PorchDropoff: props.order.PorchDropoff,
+      Employee: props.order.Employee,
+      EmployeeName: props.order.EmployeeName,
     };
 
     console.log('payload', orderContent, uploadFiles);

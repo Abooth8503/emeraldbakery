@@ -80,6 +80,7 @@ function CreateOrder(props: Props): JSX.Element {
   const [porchDropoff, setPorchDropoff] = React.useState<boolean>(false);
   const [description, descriptionSet] = React.useState<string | undefined>(undefined);
   const [trafficSource, trafficSourceSet] = React.useState<string | undefined>(undefined);
+  const [employee, setEmployee] = React.useState<string | undefined>('Select Employee');
   const [deliveryMonth, deliveryMonthSet] = React.useState<string | undefined>(undefined);
   const [deliveryDay, deliveryDaySet] = React.useState<string | undefined>(undefined);
   const [deliveryYear, deliveryYearSet] = React.useState<string | undefined>(undefined);
@@ -170,6 +171,7 @@ function CreateOrder(props: Props): JSX.Element {
         priceSet(filteredEditOrder[0].Price);
         prepaidSet(filteredEditOrder[0].PrePaid);
         setPorchDropoff(filteredEditOrder[0].PorchDropoff);
+        setEmployee(filteredEditOrder[0].EmployeeName);
 
         // delivery date start
         const deliveryDateStart = moment(filteredEditOrder[0].DeliveryDate);
@@ -394,6 +396,11 @@ function CreateOrder(props: Props): JSX.Element {
     isFormValidated();
   }
 
+  function onChangeEmployee(e: React.ChangeEvent<HTMLSelectElement>): void {
+    e.preventDefault();
+    setEmployee(e.target.value);
+  }
+
   function onChangeDeliveryMonth(e: React.ChangeEvent<HTMLSelectElement>): void {
     e.preventDefault();
     const newDate = e.target.value;
@@ -547,6 +554,8 @@ function CreateOrder(props: Props): JSX.Element {
       ImageUrl: '',
       OrderImageUrl: imageUrl === undefined ? ' ' : imageUrl.trim(),
       PorchDropoff: porchDropoff,
+      Employee: 1,
+      EmployeeName: employee,
     };
 
     console.log('payload', orderContent);
@@ -612,6 +621,7 @@ function CreateOrder(props: Props): JSX.Element {
     setValue('');
     setPorchDropoff(false);
     prepaidSet(false);
+    setEmployee('Select Employee');
   }
 
   function GetUploadImage(files: Array<File>): void {
@@ -1075,6 +1085,16 @@ function CreateOrder(props: Props): JSX.Element {
             <option>Other</option>
           </Form.Control>
         </Form.Group>
+
+        <Form.Group>
+          <Form.Label>Employee</Form.Label>
+          <Form.Control as='select' onChange={onChangeEmployee} value={employee}>
+            <option>Select Employee</option>
+            <option>Ariel</option>
+            <option>Jordan</option>
+          </Form.Control>
+        </Form.Group>
+
         <Button variant='primary' onClick={insertOrder} disabled={isSubmitDisabled}>
           Submit
         </Button>

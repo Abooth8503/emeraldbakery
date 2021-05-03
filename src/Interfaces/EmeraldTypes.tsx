@@ -39,6 +39,8 @@ export interface Order {
   ImageUrl: string | undefined;
   OrderImageUrl: string | undefined;
   PorchDropoff: boolean;
+  Employee: number;
+  EmployeeName: string | undefined;
 }
 
 export type Orders = Array<Order>;
