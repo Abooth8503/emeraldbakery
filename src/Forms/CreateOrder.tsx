@@ -203,6 +203,12 @@ function CreateOrder(props: Props): JSX.Element {
         }
       }
     }
+
+    if (props.user === 'azrael7@gmail.com' || props.user === 'abooth8503@gmail.com') {
+      setEmployee('Ariel');
+    } else {
+      setEmployee('Jordan');
+    }
   }, []);
 
   async function Download(path: string, fileName: string): Promise<void> {
