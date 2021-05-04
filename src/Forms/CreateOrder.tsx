@@ -931,7 +931,7 @@ function CreateOrder(props: Props): JSX.Element {
               onChange={() => setPorchDropoff(!porchDropoff)}
             />
             <span>🚪</span>
-            <Form.Check.Label style={{ color: 'black' }}>PrePaid</Form.Check.Label>
+            <Form.Check.Label style={{ color: 'black' }}>Porch Dropoff</Form.Check.Label>
           </Form.Check>
 
           {/* <Form.Check
