@@ -33,7 +33,7 @@ function Orders(props: Props): JSX.Element {
     setFilterType(e);
 
     let atbOrders = [];
-    // console.log('current order type:', e);
+
     switch (e) {
       case AtTheBoothBakery_Type.Delivered:
         atbOrders = orders.filter((order: Order) => {

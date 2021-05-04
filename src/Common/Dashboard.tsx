@@ -117,8 +117,6 @@ function Dashboard(props: Props): JSX.Element {
     return order.OrderStatus === 'Ordered';
   });
 
-  console.log('Price of all Delivered is: ', formatter.format(sumCost));
-
   const userNameString = props.userName.split(' ')[0];
   return (
     <Container fluid>

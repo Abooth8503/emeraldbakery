@@ -56,7 +56,7 @@ function App(): JSX.Element {
 
   useEffect(() => {
     OneSignal.push(() => {
-      console.log('appid', `${process.env.REACT_APP_ONESIGNAL}`);
+      // console.log('appid', `${process.env.REACT_APP_ONESIGNAL}`);
       const initConfig = {
         appId: `${process.env.REACT_APP_ONESIGNAL}`, //STEP 9
         allowLocalhostAsSecureOrigin: true,
@@ -115,7 +115,6 @@ function App(): JSX.Element {
     setGoogleAccessToken('');
   };
 
-  console.log('public url', process.env.PUBLIC_URL, process.env.NODE_ENV);
   return (
     <React.Fragment>
       {googleAccessToken &&

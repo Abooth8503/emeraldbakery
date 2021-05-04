@@ -175,25 +175,11 @@ function OrderCard(props: Props): JSX.Element {
           </Col>
         ) : null}
 
-        {/* <Col
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            height: '210px',
-          }}
-        >
-          <Card.Img
-            as={Image}
-            src={`https://emeraldorderfunctionstor.blob.core.windows.net/emeraldbakery/At%20The%20Booth%20Logo%20Transparent%20Image%20only.png`}
-            // fluid={true}
-            style={{ width: '50%', height: '50%' }}
-            // thumbnail
-          />
-        </Col> */}
-
         <Col>
           <Card.Title>
+            <span style={{ marginRight: '5px' }}>
+              {props.order.Employee === 1 ? <>👱🏼‍♀️</> : <>👩</>}
+            </span>
             <span style={{ fontSize: 'large', fontWeight: 'bold' }}>
               {props.order.Name}
             </span>
