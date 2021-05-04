@@ -1,7 +1,8 @@
 import * as React from 'react';
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Container, Row, Col, Jumbotron } from 'react-bootstrap';
-import { Order, useEmeraldContext } from '../Interfaces/EmeraldTypes';
+import { Container, Row, Col, Jumbotron, Form } from 'react-bootstrap';
+import { Order, useEmeraldContext, Orders } from '../Interfaces/EmeraldTypes';
 
 const motivationalQuotes = [
   {
@@ -61,13 +62,49 @@ interface Props {
 
 function Dashboard(props: Props): JSX.Element {
   const { orders } = useEmeraldContext();
+  const [employee, setEmployee] = React.useState<string | undefined>('Select Employee');
+  const [dashboardOrders, setDashboardOrders] = React.useState<Orders>(orders);
+
+  useEffect(() => {
+    switch (props.userName) {
+      case 'Ariel Castillo':
+        setDashboardOrders(
+          orders.filter((empOrder) => empOrder.EmployeeName === 'Ariel')
+        );
+        break;
+      case 'Paul Castillo':
+        setDashboardOrders(
+          orders.filter((empOrder) => empOrder.EmployeeName === 'Jordan')
+        );
+        break;
+      case 'Jordan Hebert':
+        setDashboardOrders(
+          orders.filter((empOrder) => empOrder.EmployeeName === 'Jordan')
+        );
+        break;
+      default:
+        console.log('default');
+    }
+  }, []);
+
+  function onChangeEmployee(e: React.ChangeEvent<HTMLSelectElement>): void {
+    e.preventDefault();
+    setEmployee(e.target.value);
+    if (e.target.value === 'Ariel') {
+      setDashboardOrders(orders.filter((empOrder) => empOrder.EmployeeName === 'Ariel'));
+    } else if (e.target.value === 'Jordan') {
+      setDashboardOrders(orders.filter((empOrder) => empOrder.EmployeeName === 'Jordan'));
+    } else {
+      setDashboardOrders(orders);
+    }
+  }
 
   const randNumber = Math.floor(Math.random() * motivationalQuotes.length);
   if (orders.length < 1) {
     return <div>Loading...</div>;
   }
 
-  const deliveredOrders = orders.filter((order: Order) => {
+  const deliveredOrders = dashboardOrders.filter((order: Order) => {
     return order.OrderStatus === 'Delivered';
   });
 
@@ -76,7 +113,7 @@ function Dashboard(props: Props): JSX.Element {
     0
   );
 
-  const orderedButNotDeliveredandNotCancelled = orders.filter((order: Order) => {
+  const orderedButNotDeliveredandNotCancelled = dashboardOrders.filter((order: Order) => {
     return order.OrderStatus === 'Ordered';
   });
 
@@ -126,8 +163,19 @@ function Dashboard(props: Props): JSX.Element {
             >
               At The Booth Bakery - Dashboard
             </h5>
+            <Form.Control
+              as='select'
+              onChange={onChangeEmployee}
+              value={employee}
+              style={{ marginBottom: '10px' }}
+            >
+              <option>Select Employee</option>
+              <option>Ariel</option>
+              <option>Jordan</option>
+              <option>All</option>
+            </Form.Control>
             <span>
-              Total <Link to='/orders'>Orders</Link>: 📝{orders.length}
+              Total <Link to='/orders'>Orders</Link>: 📝{dashboardOrders.length}
             </span>
             <br />
             <span>
