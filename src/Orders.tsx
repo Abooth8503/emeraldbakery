@@ -28,7 +28,6 @@ function Orders(props: Props): JSX.Element {
   const { orders } = useEmeraldContext();
   const [displayOrders, setDisplayOrders] = useState(orders);
   const [filterType, setFilterType] = useState<string>('Delivered');
-  const [orderSearch, setOrderSearch] = useState<string>('');
 
   const handleSelect = (e: any) => {
     setFilterType(e);
@@ -72,12 +71,9 @@ function Orders(props: Props): JSX.Element {
     }
 
     setDisplayOrders(atbOrders);
-    setOrderSearch('');
   };
 
-  const onSearchKey = (e: any) => {
-    // console.log('onsearch', e.target.value, orders);
-    setOrderSearch(e.target.value);
+  const onSearchKey = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const regExOrder = new RegExp(`${e.target.value.toString()}`, 'i');
     const searchedOrders = orders.filter((order: Order) => {
       return (
@@ -85,7 +81,7 @@ function Orders(props: Props): JSX.Element {
         (order.Address && order.Address.match(regExOrder))
       );
     });
-    // console.log('filtered orders key', searchedOrders, regExOrder);
+
     setDisplayOrders(searchedOrders);
   };
 

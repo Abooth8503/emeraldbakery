@@ -30,9 +30,7 @@ function CalendarOrders(props: Props): JSX.Element {
         setCalenderOrders(orders.filter((empOrder) => empOrder.EmployeeName === 'Ariel'));
         break;
       case 'Paul Castillo':
-        setCalenderOrders(
-          orders.filter((empOrder) => empOrder.EmployeeName === 'Jordan')
-        );
+        setCalenderOrders(orders.filter((empOrder) => empOrder.EmployeeName === 'Ariel'));
         break;
       case 'Jordan Hebert':
         setCalenderOrders(
@@ -81,7 +79,10 @@ function CalendarOrders(props: Props): JSX.Element {
     <Container className='text-center' style={{ marginTop: '5px' }}>
       <Jumbotron style={{ backgroundColor: 'white' }}>
         <h2 style={{ fontFamily: 'AmaticSC-Bold', fontSize: 'xxx-large' }}>
-          {props.userName === 'Ariel' ? `Ariel's` : `Jordan's`} Calender
+          {props.userName === 'Ariel Castillo' || props.userName === 'Paul Castillo'
+            ? `Ariel's`
+            : `Jordan's`}{' '}
+          Calender
         </h2>
       </Jumbotron>
       <Calendar
