@@ -175,7 +175,7 @@ function CreateOrder(props: Props): JSX.Element {
 
         // delivery date start
         const deliveryDateStart = moment(filteredEditOrder[0].DeliveryDate);
-        console.log('start time', deliveryDateStart.format('HH:mm A'));
+        // console.log('start time', deliveryDateStart.format('HH:mm A'));
         deliveryMonthSet(deliveryDateStart.format('MM'));
         deliveryDaySet(deliveryDateStart.format('DD'));
         deliveryYearSet(deliveryDateStart.format('YYYY'));
@@ -360,7 +360,6 @@ function CreateOrder(props: Props): JSX.Element {
 
   function onClickPickup(e: React.MouseEvent): void {
     e.preventDefault();
-    console.log('clicked pickup button', props);
 
     if (props.user === 'azrael7@gmail.com' || props.user === 'abooth8503@gmail.com') {
       addressSet('13819 Wood Breeze');

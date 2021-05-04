@@ -45,7 +45,6 @@ function OrderDetail(props: RouteComponentProps<number>): JSX.Element {
       orderImageUrl = filteredOrderProp[0].OrderImageUrl;
     }
   }
-  console.log(orderImageUrl);
 
   return (
     <React.Fragment>

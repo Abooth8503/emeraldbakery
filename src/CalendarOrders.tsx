@@ -42,7 +42,8 @@ function CalendarOrders(props: Props): JSX.Element {
         setEmployee('Jordan');
         break;
       default:
-        console.log('default');
+        setCalenderOrders(orders);
+        setEmployee('All');
     }
   }, []);
 
