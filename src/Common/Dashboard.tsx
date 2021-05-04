@@ -66,24 +66,27 @@ function Dashboard(props: Props): JSX.Element {
   const [dashboardOrders, setDashboardOrders] = React.useState<Orders>(orders);
 
   useEffect(() => {
-    switch (props.userName) {
-      case 'Ariel Castillo':
-        setDashboardOrders(
-          orders.filter((empOrder) => empOrder.EmployeeName === 'Ariel')
-        );
-        break;
-      case 'Paul Castillo':
-        setDashboardOrders(
-          orders.filter((empOrder) => empOrder.EmployeeName === 'Jordan')
-        );
-        break;
-      case 'Jordan Hebert':
-        setDashboardOrders(
-          orders.filter((empOrder) => empOrder.EmployeeName === 'Jordan')
-        );
-        break;
-      default:
-        console.log('default');
+    console.log('render happened.');
+    if (orders && orders.length > 0) {
+      switch (props.userName) {
+        case 'Ariel Castillo':
+          setDashboardOrders(
+            orders.filter((empOrder) => empOrder.EmployeeName === 'Ariel')
+          );
+          break;
+        case 'Paul Castillo':
+          setDashboardOrders(
+            orders.filter((empOrder) => empOrder.EmployeeName === 'Ariel')
+          );
+          break;
+        case 'Jordan Hebert':
+          setDashboardOrders(
+            orders.filter((empOrder) => empOrder.EmployeeName === 'Jordan')
+          );
+          break;
+        default:
+          console.log('default');
+      }
     }
   }, []);
 
@@ -94,8 +97,10 @@ function Dashboard(props: Props): JSX.Element {
       setDashboardOrders(orders.filter((empOrder) => empOrder.EmployeeName === 'Ariel'));
     } else if (e.target.value === 'Jordan') {
       setDashboardOrders(orders.filter((empOrder) => empOrder.EmployeeName === 'Jordan'));
-    } else {
+    } else if (e.target.value === 'All') {
       setDashboardOrders(orders);
+    } else {
+      setDashboardOrders([]);
     }
   }
 
@@ -108,10 +113,10 @@ function Dashboard(props: Props): JSX.Element {
     return order.OrderStatus === 'Delivered';
   });
 
-  const sumCost = deliveredOrders.reduce(
-    (cost: number, entry: any) => cost + (parseFloat(entry.Price) || 0),
-    0
-  );
+  // console.log('delivered orders', deliveredOrders);
+  const sumCost = dashboardOrders.reduce((cost: number, entry: Order) => {
+    return cost + (parseFloat(entry.Price !== undefined ? entry.Price : '0') || 0);
+  }, 0 as number);
 
   const orderedButNotDeliveredandNotCancelled = dashboardOrders.filter((order: Order) => {
     return order.OrderStatus === 'Ordered';
