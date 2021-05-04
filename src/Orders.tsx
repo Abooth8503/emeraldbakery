@@ -12,7 +12,7 @@ import {
   DropdownButton,
 } from 'react-bootstrap';
 import moment from 'moment';
-import FlipMove from 'react-flip-move';
+// import FlipMove from 'react-flip-move';
 import { Order } from './Interfaces/EmeraldTypes';
 import { useEmeraldContext, AtTheBoothBakery_Type } from './Interfaces/EmeraldTypes';
 import OrderCard from './Common/OrderCard';

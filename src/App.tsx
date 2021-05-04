@@ -153,7 +153,12 @@ function App(): JSX.Element {
                     <Route
                       exact
                       path='/calendar'
-                      render={(props) => <CalendarOrders {...props} />}
+                      render={(props) => (
+                        <CalendarOrders
+                          routeComponentProps={props}
+                          userName={loggedInUserName}
+                        />
+                      )}
                     />
                     <Route exact path='/map' render={() => <GMap />} />
                     <Route

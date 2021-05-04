@@ -8,18 +8,40 @@ import 'react-calendar/dist/Calendar.css';
 import './css/reactCalendar.css';
 import { Jumbotron, Container, Row, Col, Badge } from 'react-bootstrap';
 import OrderCard from './Common/OrderCard';
-import { Order } from './Interfaces/EmeraldTypes';
+import { Order, Orders } from './Interfaces/EmeraldTypes';
 import { useEmeraldContext } from './Interfaces/EmeraldTypes';
 
-type Props = RouteComponentProps;
+interface Props {
+  routeComponentProps: RouteComponentProps;
+  userName: string;
+}
 
 function CalendarOrders(props: Props): JSX.Element {
   const { orders, fetchEmeraldOrders } = useEmeraldContext();
   const [selectedDay, daySet] = React.useState<Date | undefined>(undefined);
+  const [calenderOrders, setCalenderOrders] = React.useState<Orders>(orders);
   const [value, onChange] = React.useState<Date | Date[]>(new Date());
 
   useEffect(() => {
     fetchEmeraldOrders();
+
+    switch (props.userName) {
+      case 'Ariel Castillo':
+        setCalenderOrders(orders.filter((empOrder) => empOrder.EmployeeName === 'Ariel'));
+        break;
+      case 'Paul Castillo':
+        setCalenderOrders(
+          orders.filter((empOrder) => empOrder.EmployeeName === 'Jordan')
+        );
+        break;
+      case 'Jordan Hebert':
+        setCalenderOrders(
+          orders.filter((empOrder) => empOrder.EmployeeName === 'Jordan')
+        );
+        break;
+      default:
+        console.log('default');
+    }
   }, []);
 
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
@@ -33,7 +55,7 @@ function CalendarOrders(props: Props): JSX.Element {
     // Add class to tiles in month view only
     if (view === 'month') {
       if (
-        orders.find(
+        calenderOrders.find(
           (x) =>
             moment(x.DeliveryDate).format('MM-DD-YYYY') ===
             moment(date).format('MM-DD-YYYY')
@@ -58,7 +80,9 @@ function CalendarOrders(props: Props): JSX.Element {
   return (
     <Container className='text-center' style={{ marginTop: '5px' }}>
       <Jumbotron style={{ backgroundColor: 'white' }}>
-        <h2 style={{ fontFamily: 'AmaticSC-Bold', fontSize: 'xxx-large' }}>Calendar</h2>
+        <h2 style={{ fontFamily: 'AmaticSC-Bold', fontSize: 'xxx-large' }}>
+          {props.userName === 'Ariel' ? `Ariel's` : `Jordan's`} Calender
+        </h2>
       </Jumbotron>
       <Calendar
         onChange={(val) => onChange(val)}
@@ -82,7 +106,7 @@ function CalendarOrders(props: Props): JSX.Element {
                 }}
               >
                 {
-                  orders
+                  calenderOrders
                     .filter((day) => {
                       if (selectedDay) {
                         if (
@@ -105,7 +129,7 @@ function CalendarOrders(props: Props): JSX.Element {
         </Col>
       </Row>
       {selectedDay === undefined
-        ? orders
+        ? calenderOrders
             .filter((upcomingOrder) => {
               const deliveryDate = moment(upcomingOrder.DeliveryDate);
               const currentDate = moment();
@@ -121,14 +145,14 @@ function CalendarOrders(props: Props): JSX.Element {
               return (
                 <OrderCard
                   key={order.Id}
-                  routeComponentProps={props}
+                  routeComponentProps={props.routeComponentProps}
                   order={order}
                   address={addressToUse}
                   parent='calender'
                 />
               );
             })
-        : orders
+        : calenderOrders
             .filter((day) => {
               if (selectedDay) {
                 if (
@@ -158,7 +182,7 @@ function CalendarOrders(props: Props): JSX.Element {
               return (
                 <OrderCard
                   key={order.Id}
-                  routeComponentProps={props}
+                  routeComponentProps={props.routeComponentProps}
                   order={order}
                   address={addressToUse}
                   parent='calender'
