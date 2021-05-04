@@ -6,7 +6,7 @@ import Calendar from 'react-calendar';
 import moment from 'moment';
 import 'react-calendar/dist/Calendar.css';
 import './css/reactCalendar.css';
-import { Jumbotron, Container, Row, Col, Badge } from 'react-bootstrap';
+import { Jumbotron, Container, Row, Col, Badge, Form } from 'react-bootstrap';
 import OrderCard from './Common/OrderCard';
 import { Order, Orders } from './Interfaces/EmeraldTypes';
 import { useEmeraldContext } from './Interfaces/EmeraldTypes';
@@ -21,6 +21,7 @@ function CalendarOrders(props: Props): JSX.Element {
   const [selectedDay, daySet] = React.useState<Date | undefined>(undefined);
   const [calenderOrders, setCalenderOrders] = React.useState<Orders>(orders);
   const [value, onChange] = React.useState<Date | Date[]>(new Date());
+  const [employee, setEmployee] = React.useState<string | undefined>('Select Employee');
 
   useEffect(() => {
     fetchEmeraldOrders();
@@ -28,14 +29,17 @@ function CalendarOrders(props: Props): JSX.Element {
     switch (props.userName) {
       case 'Ariel Castillo':
         setCalenderOrders(orders.filter((empOrder) => empOrder.EmployeeName === 'Ariel'));
+        setEmployee('Ariel');
         break;
       case 'Paul Castillo':
         setCalenderOrders(orders.filter((empOrder) => empOrder.EmployeeName === 'Ariel'));
+        setEmployee('Ariel');
         break;
       case 'Jordan Hebert':
         setCalenderOrders(
           orders.filter((empOrder) => empOrder.EmployeeName === 'Jordan')
         );
+        setEmployee('Jordan');
         break;
       default:
         console.log('default');
@@ -71,6 +75,24 @@ function CalendarOrders(props: Props): JSX.Element {
     return;
   }
 
+  function onChangeEmployee(e: React.ChangeEvent<HTMLSelectElement>): void {
+    e.preventDefault();
+    setEmployee(e.target.value);
+
+    switch (e.target.value) {
+      case 'Ariel':
+        setCalenderOrders(orders.filter((empOrder) => empOrder.EmployeeName === 'Ariel'));
+        break;
+      case 'Jordan':
+        setCalenderOrders(
+          orders.filter((empOrder) => empOrder.EmployeeName === 'Jordan')
+        );
+        break;
+      default:
+        setCalenderOrders(orders);
+    }
+  }
+
   if (orders.length < 1) {
     return <div>Loading...</div>;
   }
@@ -78,13 +100,21 @@ function CalendarOrders(props: Props): JSX.Element {
   return (
     <Container className='text-center' style={{ marginTop: '5px' }}>
       <Jumbotron style={{ backgroundColor: 'white' }}>
-        <h2 style={{ fontFamily: 'AmaticSC-Bold', fontSize: 'xxx-large' }}>
-          {props.userName === 'Ariel Castillo' || props.userName === 'Paul Castillo'
-            ? `Ariel's`
-            : `Jordan's`}{' '}
-          Calender
-        </h2>
+        <h2 style={{ fontFamily: 'AmaticSC-Bold', fontSize: 'xxx-large' }}>Calender</h2>
       </Jumbotron>
+      <Form.Group>
+        <Form.Control
+          as='select'
+          onChange={onChangeEmployee}
+          value={employee}
+          title='Select Employee view.'
+        >
+          <option>Select Employee</option>
+          <option>Ariel</option>
+          <option>Jordan</option>
+          <option>All</option>
+        </Form.Control>
+      </Form.Group>
       <Calendar
         onChange={(val) => onChange(val)}
         value={value}
