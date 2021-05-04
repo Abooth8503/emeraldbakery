@@ -136,6 +136,7 @@ function CreateOrder(props: Props): JSX.Element {
   const [filteredBeginTime, setFilteredBeginTime] = React.useState<string>('');
   const [uploadFiles, setUploadFiles] = React.useState<Array<File>>([]);
   const [imageUrl, setImageUrl] = React.useState<string | undefined>(undefined);
+  const [isPickupClicked, setIsPickupClicked] = React.useState<boolean>(false);
 
   const {
     ready,
@@ -389,6 +390,25 @@ function CreateOrder(props: Props): JSX.Element {
     isFormValidated();
   }
 
+  function onClickPickup(e: React.MouseEvent): void {
+    e.preventDefault();
+    console.log('clicked pickup button', props);
+
+    if (props.user === 'azrael7@gmail.com' || props.user === 'abooth8503@gmail.com') {
+      addressSet('13819 Wood Breeze');
+      citySet('San Antonio');
+      stateSet('Texas');
+      zipCodeSet('78217');
+    } else if (props.user === 'jbooth6985@gmail.com') {
+      addressSet('2633 Gallant Fox Drive');
+      citySet('Schertz');
+      stateSet('Texas');
+      zipCodeSet('78108');
+    }
+
+    setIsPickupClicked(!isPickupClicked);
+  }
+
   function onClickPlus(e: React.MouseEvent): void {
     e.preventDefault();
     quantitySet(quantity + 1);
@@ -407,6 +427,11 @@ function CreateOrder(props: Props): JSX.Element {
       setQuantityValidated(true);
     }
     isFormValidated();
+  }
+
+  function onChangeQuantity(e: React.ChangeEvent<HTMLInputElement>): void {
+    e.preventDefault();
+    quantitySet(Number(e.target.value));
   }
 
   function onChangePrice(e: React.ChangeEvent<HTMLSelectElement>): void {
@@ -479,6 +504,7 @@ function CreateOrder(props: Props): JSX.Element {
     e.preventDefault();
 
     beginTimeSet(e.target.value);
+    endTimeSet(e.target.value);
     // console.log(
     //   'onChange begin time',
     //   e.target.value,
@@ -729,7 +755,7 @@ function CreateOrder(props: Props): JSX.Element {
           ) : null}
         </Form.Group>
 
-        <Form.Group>
+        {/* <Form.Group>
           <Form.Label>Area</Form.Label>
           <Form.Control
             type='text'
@@ -737,14 +763,23 @@ function CreateOrder(props: Props): JSX.Element {
             onChange={onChangeArea}
             value={area}
           />
-        </Form.Group>
+        </Form.Group> */}
+
         <div style={{ marginBottom: '10px' }} ref={ref}>
           <Form.Label>Search Address</Form.Label>
+          <Button
+            variant={isPickupClicked ? `primary` : 'secondary'}
+            size='sm'
+            style={{ marginLeft: '5px' }}
+            onClick={onClickPickup}
+          >
+            {isPickupClicked ? `Enter Address` : 'Pickup'}
+          </Button>
           <Form.Control
             type='text'
             value={value}
             onChange={handleInput}
-            disabled={!ready}
+            disabled={isPickupClicked}
             placeholder='Where are you going?'
             style={{ width: '100%' }}
           />
@@ -825,6 +860,7 @@ function CreateOrder(props: Props): JSX.Element {
             <Form.Control
               type='text'
               value={quantity}
+              onChange={onChangeQuantity}
               placeholder='1'
               style={{ width: '50px', display: 'inline' }}
             />
@@ -855,7 +891,16 @@ function CreateOrder(props: Props): JSX.Element {
         <Form.Group>
           <Form.Label>Price</Form.Label>
           <div className='input-group'>
-            <span className='input-group-addon'>$</span>
+            <span
+              className='input-group-addon'
+              style={{
+                display: 'inline-flex',
+                verticalAlign: 'middle',
+                alignItems: 'center',
+              }}
+            >
+              💲
+            </span>
             <Form.Control
               type='number'
               placeholder='10.00'
@@ -867,19 +912,34 @@ function CreateOrder(props: Props): JSX.Element {
           </div>
         </Form.Group>
         <Form.Group controlId='formBasicCheckbox'>
-          <Form.Check
-            type='checkbox'
-            label='PrePaid'
-            name='prepaid'
-            checked={prepaid}
-            onChange={() => prepaidSet(!prepaid)}
-          />
-          <Form.Check
+          <Form.Check type='checkbox' id='prepaidCheckbox'>
+            <Form.Check.Input
+              type='checkbox'
+              isValid
+              checked={prepaid}
+              onChange={() => prepaidSet(!prepaid)}
+            />
+            <span>💵</span>
+            <Form.Check.Label style={{ color: 'black' }}>PrePaid</Form.Check.Label>
+          </Form.Check>
+
+          <Form.Check type='checkbox' id='porchDropOff'>
+            <Form.Check.Input
+              type='checkbox'
+              isValid
+              checked={porchDropoff}
+              onChange={() => setPorchDropoff(!porchDropoff)}
+            />
+            <span>🚪</span>
+            <Form.Check.Label style={{ color: 'black' }}>PrePaid</Form.Check.Label>
+          </Form.Check>
+
+          {/* <Form.Check
             type='checkbox'
             label='Porch Dropoff?'
             checked={porchDropoff}
             onChange={() => setPorchDropoff(!porchDropoff)}
-          />
+          /> */}
         </Form.Group>
         <Form.Label>Delivery Begin Date</Form.Label>
         <Form.Group>
@@ -983,7 +1043,7 @@ function CreateOrder(props: Props): JSX.Element {
             })}
           </Form.Control>
         </Form.Group>
-        <hr></hr>
+        {/* <hr></hr>
         <Form.Label>Delivery End Date</Form.Label>
         <Form.Group>
           <Form.Control
@@ -1065,8 +1125,8 @@ function CreateOrder(props: Props): JSX.Element {
                 </option>
               );
             })}
-          </Form.Control>
-          <br></br>
+          </Form.Control> */}
+        {/* <br></br>
           <Form.Label style={{ marginTop: '10px' }}>End Time</Form.Label>
           <Form.Control
             as='select'
@@ -1098,7 +1158,7 @@ function CreateOrder(props: Props): JSX.Element {
               );
             })}
           </Form.Control>
-        </Form.Group>
+        </Form.Group> */}
         <Form.Group style={{ marginTop: '5px' }}>
           <Form.Label>Description</Form.Label>
           <Form.Control
