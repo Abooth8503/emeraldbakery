@@ -117,6 +117,13 @@ function OrderDetail(props: RouteComponentProps<number>): JSX.Element {
                 return (
                   <React.Fragment key={order.Id}>
                     <ListGroup.Item className='d-flex align-items-center'>
+                      <b>Employee:</b>{' '}
+                      <span style={{ marginLeft: '5px' }}>
+                        {order.Employee === 1 ? <>👱🏼‍♀️</> : <>👩</>}
+                      </span>
+                      <span style={{ marginLeft: '6px' }}>{order.EmployeeName}</span>
+                    </ListGroup.Item>
+                    <ListGroup.Item className='d-flex align-items-center'>
                       <b>Date Created:</b>{' '}
                       <span style={{ marginLeft: '6px' }}>
                         {formatDate(order.OrderDate, true, true)}
