@@ -22,29 +22,67 @@ function CalendarOrders(props: Props): JSX.Element {
   const [calenderOrders, setCalenderOrders] = React.useState<Orders>(orders);
   const [value, onChange] = React.useState<Date | Date[]>(new Date());
   const [employee, setEmployee] = React.useState<string | undefined>('Select Employee');
+  const [showAllOrders, setShowAllOrders] = React.useState<boolean>(false);
 
   useEffect(() => {
     fetchEmeraldOrders();
+    // console.log('emerald orders', orders);
 
-    switch (props.userName) {
-      case 'Ariel Castillo':
-        setCalenderOrders(orders.filter((empOrder) => empOrder.EmployeeName === 'Ariel'));
-        setEmployee('Ariel');
-        break;
-      case 'Paul Castillo':
-        setCalenderOrders(orders.filter((empOrder) => empOrder.EmployeeName === 'Ariel'));
-        setEmployee('Ariel');
-        break;
-      case 'Jordan Hebert':
-        setCalenderOrders(
-          orders.filter((empOrder) => empOrder.EmployeeName === 'Jordan')
-        );
-        setEmployee('Jordan');
-        break;
-      default:
-        setCalenderOrders(orders);
-        setEmployee('All');
+    if (orders && orders.length > 0) {
+      switch (props.userName) {
+        case 'Ariel Castillo':
+          setCalenderOrders(
+            orders
+              .filter((empOrder) => empOrder.EmployeeName === 'Ariel')
+              .filter(
+                (statusOrder) =>
+                  statusOrder.OrderStatus !== 'Delivered' &&
+                  statusOrder.OrderStatus !== 'Cancelled'
+              )
+          );
+          setEmployee('Ariel');
+          break;
+        case 'Paul Castillo':
+          // console.log(
+          //   'found Paul',
+          //   orders.filter((empOrder) => empOrder.EmployeeName === 'Ariel')
+          // );
+          setCalenderOrders(
+            orders
+              .filter((empOrder) => empOrder.EmployeeName === 'Ariel')
+              .filter(
+                (statusOrder) =>
+                  statusOrder.OrderStatus !== 'Delivered' &&
+                  statusOrder.OrderStatus !== 'Cancelled'
+              )
+          );
+          setEmployee('Ariel');
+          break;
+        case 'Jordan Hebert':
+          setCalenderOrders(
+            orders
+              .filter((empOrder) => empOrder.EmployeeName === 'Jordan')
+              .filter(
+                (statusOrder) =>
+                  statusOrder.OrderStatus !== 'Delivered' &&
+                  statusOrder.OrderStatus !== 'Cancelled'
+              )
+          );
+          setEmployee('Jordan');
+          break;
+        default:
+          setCalenderOrders(
+            orders.filter(
+              (statusOrder) =>
+                statusOrder.OrderStatus !== 'Delivered' &&
+                statusOrder.OrderStatus !== 'Cancelled'
+            )
+          );
+          setEmployee('All');
+      }
     }
+
+    // console.log('cal orders', calenderOrders);
   }, []);
 
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
@@ -80,21 +118,75 @@ function CalendarOrders(props: Props): JSX.Element {
     e.preventDefault();
     setEmployee(e.target.value);
 
-    switch (e.target.value) {
-      case 'Ariel':
-        setCalenderOrders(orders.filter((empOrder) => empOrder.EmployeeName === 'Ariel'));
-        break;
-      case 'Jordan':
-        setCalenderOrders(
-          orders.filter((empOrder) => empOrder.EmployeeName === 'Jordan')
-        );
-        break;
-      default:
+    if (e.target.value === 'All') {
+      if (showAllOrders) {
         setCalenderOrders(orders);
+      } else {
+        setCalenderOrders(
+          orders.filter(
+            (statusOrder) =>
+              statusOrder.OrderStatus !== 'Delivered' &&
+              statusOrder.OrderStatus !== 'Cancelled'
+          )
+        );
+      }
+    } else {
+      if (showAllOrders) {
+        setCalenderOrders(
+          orders.filter((empOrder) => empOrder.EmployeeName === e.target.value)
+        );
+      } else {
+        setCalenderOrders(
+          orders
+            .filter((empOrder) => empOrder.EmployeeName === e.target.value)
+            .filter(
+              (statusOrder) =>
+                statusOrder.OrderStatus !== 'Delivered' &&
+                statusOrder.OrderStatus !== 'Cancelled'
+            )
+        );
+      }
     }
   }
 
-  if (orders.length < 1) {
+  async function onChangeShowAllOrders(
+    e: React.ChangeEvent<HTMLInputElement>
+  ): Promise<void> {
+    await setShowAllOrders(!showAllOrders);
+    // console.log('checkbox', e.target.value, employee, showAllOrders);
+
+    if (employee === 'All') {
+      if (showAllOrders) {
+        setCalenderOrders(orders);
+      } else {
+        setCalenderOrders(
+          orders.filter(
+            (statusOrder) =>
+              statusOrder.OrderStatus !== 'Delivered' &&
+              statusOrder.OrderStatus !== 'Cancelled'
+          )
+        );
+      }
+    } else {
+      if (showAllOrders) {
+        setCalenderOrders(
+          orders.filter((empOrder) => empOrder.EmployeeName === employee)
+        );
+      } else {
+        setCalenderOrders(
+          orders
+            .filter((empOrder) => empOrder.EmployeeName === employee)
+            .filter(
+              (statusOrder) =>
+                statusOrder.OrderStatus !== 'Delivered' &&
+                statusOrder.OrderStatus !== 'Cancelled'
+            )
+        );
+      }
+    }
+  }
+
+  if (orders && orders.length < 1) {
     return <div>Loading...</div>;
   }
 
@@ -138,25 +230,32 @@ function CalendarOrders(props: Props): JSX.Element {
                 }}
               >
                 {
-                  calenderOrders
-                    .filter((day) => {
-                      if (selectedDay) {
-                        if (
-                          moment(day.DeliveryDate).format('MM-DD-YYYY') ==
-                          moment(selectedDay).format('MM-DD-YYYY')
-                        ) {
-                          return day;
-                        }
+                  calenderOrders.filter((day) => {
+                    if (selectedDay) {
+                      if (
+                        moment(day.DeliveryDate).format('MM-DD-YYYY') ==
+                        moment(selectedDay).format('MM-DD-YYYY')
+                      ) {
+                        return day;
                       }
-                    })
-                    .filter(
-                      (statusOrder) =>
-                        statusOrder.OrderStatus !== 'Delivered' &&
-                        statusOrder.OrderStatus !== 'Cancelled'
-                    ).length
+                    }
+                  }).length
                 }
               </Badge>
             </h5>
+            <Form.Group controlId='formBasicCheckbox'>
+              <Form.Check type='checkbox' id='prepaidCheckbox'>
+                <Form.Check.Input
+                  type='checkbox'
+                  isValid
+                  checked={showAllOrders}
+                  onChange={onChangeShowAllOrders}
+                />
+                <Form.Check.Label style={{ color: 'black' }}>
+                  Show all Orders
+                </Form.Check.Label>
+              </Form.Check>
+            </Form.Group>
           </span>
         </Col>
       </Row>
@@ -195,11 +294,6 @@ function CalendarOrders(props: Props): JSX.Element {
                 }
               }
             })
-            .filter(
-              (statusOrder) =>
-                statusOrder.OrderStatus !== 'Delivered' &&
-                statusOrder.OrderStatus !== 'Cancelled'
-            )
             .sort((a: Order, b: Order) => {
               if (a.DeliveryDate > b.DeliveryDate) {
                 return 1;
