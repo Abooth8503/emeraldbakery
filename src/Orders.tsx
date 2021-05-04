@@ -33,6 +33,7 @@ function Orders(props: Props): JSX.Element {
     setFilterType(e);
 
     let atbOrders = [];
+
     switch (e) {
       case AtTheBoothBakery_Type.Delivered:
         atbOrders = orders.filter((order: Order) => {
@@ -119,7 +120,7 @@ function Orders(props: Props): JSX.Element {
         <Col>
           <input
             style={{ marginTop: '5px' }}
-            placeholder='Search'
+            placeholder='Search Name or Address'
             onChange={onSearchKey}
           ></input>
         </Col>

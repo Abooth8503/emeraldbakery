@@ -13,7 +13,9 @@ import {
   Order,
   useEmeraldContext,
   OrderType,
+  Orders,
 } from '../Interfaces/EmeraldTypes';
+import { JsxElement } from 'typescript';
 
 type Props = {
   routeComponentProps: RouteComponentProps;
@@ -66,6 +68,7 @@ const times = [
 ];
 
 function CreateOrder(props: Props): JSX.Element {
+  const [nameOrders, setNameOrders] = React.useState<Orders>([]);
   const [name, nameSet] = React.useState<string | undefined>(undefined);
   const [area, areaSet] = React.useState<string | undefined>(undefined);
   const [address, addressSet] = React.useState<string | undefined>(undefined);
@@ -298,9 +301,37 @@ function CreateOrder(props: Props): JSX.Element {
       );
     });
 
+  const renderNameSuggestions = (): JSX.Element[] =>
+    nameOrders.map((suggestion) => {
+      return (
+        <li key={suggestion.Id} onClick={(e) => handleNameSelect(e, suggestion)}>
+          🍪<strong>{suggestion.Name}</strong> - <small>{suggestion.Address}</small>
+        </li>
+      );
+    });
+
+  const handleNameSelect = (e: React.MouseEvent, order: Order): void => {
+    e.preventDefault();
+    nameSet(order.Name);
+    addressSet(order.Address);
+    citySet(order.City);
+    stateSet(order.State);
+    zipCodeSet(order.ZipCode);
+
+    setValue(`${order.Address} ${order.City},${order.State} ${order.ZipCode}`);
+    setNameOrders([]);
+  };
+
   function onChangeName(e: React.ChangeEvent<HTMLInputElement>): void {
     e.preventDefault();
     nameSet(e.target.value);
+
+    const regExName = new RegExp(`${e.target.value.toString()}`, 'i');
+    const searchedOrders = orders.filter((order: Order) => {
+      return order.Name && order.Name.match(regExName);
+    });
+
+    setNameOrders(searchedOrders);
     if (name !== undefined) {
       if (name?.length > 0) {
         setNameValidated(true);
@@ -692,6 +723,10 @@ function CreateOrder(props: Props): JSX.Element {
             onChange={onChangeName}
             value={name}
           />
+          {/* We can use the "status" to decide whether we should display the dropdown or not */}
+          {name && name.length > 0 && (
+            <ul style={{ listStyleType: 'none' }}>{renderNameSuggestions()}</ul>
+          )}
         </Form.Group>
 
         <Form.Group>
