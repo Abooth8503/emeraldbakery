@@ -1,7 +1,16 @@
 import * as React from 'react';
 import { useEffect } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
-import { Container, Jumbotron, Form, Button, Accordion, Card } from 'react-bootstrap';
+import {
+  Container,
+  Jumbotron,
+  Form,
+  Button,
+  Accordion,
+  Card,
+  Col,
+  Row,
+} from 'react-bootstrap';
 import moment from 'moment';
 import usePlacesAutocomplete, { getGeocode, getZipCode } from 'use-places-autocomplete';
 import useOnclickOutside from 'react-cool-onclickoutside';
@@ -14,8 +23,8 @@ import {
   useEmeraldContext,
   OrderType,
   Orders,
+  useMediaQuery,
 } from '../Interfaces/EmeraldTypes';
-import { JsxElement } from 'typescript';
 
 type Props = {
   routeComponentProps: RouteComponentProps;
@@ -137,6 +146,7 @@ function CreateOrder(props: Props): JSX.Element {
   const [uploadFiles, setUploadFiles] = React.useState<Array<File>>([]);
   const [imageUrl, setImageUrl] = React.useState<string | undefined>(undefined);
   const [isPickupClicked, setIsPickupClicked] = React.useState<boolean>(false);
+  const [width] = useMediaQuery();
 
   const {
     value,
@@ -503,19 +513,7 @@ function CreateOrder(props: Props): JSX.Element {
 
     beginTimeSet(e.target.value);
     endTimeSet(e.target.value);
-    // console.log(
-    //   'onChange begin time',
-    //   e.target.value,
-    //   moment(e.target.value, 'HH:mm').format('hh:mm a').toString()
-    // );
-    // const beginTime: string = moment(e.target.value, 'HH:mm')
-    //   .format('hh:mm a')
-    //   .toString();
-    // if (beginTime !== 'Select a Time') {
-    //   setFilteredBeginTime(beginTime);
-    // } else {
-    //   setFilteredBeginTime('');
-    // }
+
     if (e.target.value !== 'Select Time') {
       setBeginTimeValidated(true);
     }
@@ -701,7 +699,7 @@ function CreateOrder(props: Props): JSX.Element {
     return -1;
   });
 
-  return (
+  return width < 769 ? (
     <Container>
       <Jumbotron style={{ backgroundColor: 'white', marginTop: '3px' }}>
         <h2
@@ -752,16 +750,6 @@ function CreateOrder(props: Props): JSX.Element {
             </ul>
           ) : null}
         </Form.Group>
-
-        {/* <Form.Group>
-          <Form.Label>Area</Form.Label>
-          <Form.Control
-            type='text'
-            placeholder='Enter name of Area'
-            onChange={onChangeArea}
-            value={area}
-          />
-        </Form.Group> */}
 
         <div style={{ marginBottom: '10px' }} ref={ref}>
           <Form.Label>Search Address</Form.Label>
@@ -931,15 +919,8 @@ function CreateOrder(props: Props): JSX.Element {
             <span>🚪</span>
             <Form.Check.Label style={{ color: 'black' }}>Porch Dropoff</Form.Check.Label>
           </Form.Check>
-
-          {/* <Form.Check
-            type='checkbox'
-            label='Porch Dropoff?'
-            checked={porchDropoff}
-            onChange={() => setPorchDropoff(!porchDropoff)}
-          /> */}
         </Form.Group>
-        <Form.Label>Delivery Begin Date</Form.Label>
+        <Form.Label>Delivery Date</Form.Label>
         <Form.Group>
           <Form.Control
             as='select'
@@ -1022,7 +1003,7 @@ function CreateOrder(props: Props): JSX.Element {
             })}
           </Form.Control>
           <br></br>
-          <Form.Label style={{ marginTop: '10px' }}>Begin Time</Form.Label>
+          <Form.Label style={{ marginTop: '10px' }}>Time</Form.Label>
           <Form.Control
             as='select'
             id='beginTimeCtl'
@@ -1041,122 +1022,6 @@ function CreateOrder(props: Props): JSX.Element {
             })}
           </Form.Control>
         </Form.Group>
-        {/* <hr></hr>
-        <Form.Label>Delivery End Date</Form.Label>
-        <Form.Group>
-          <Form.Control
-            as='select'
-            value={deliveryMonthEnd}
-            onChange={onChangeDeliveryMonthEnd}
-            style={{ width: '78px', display: 'inline' }}
-          >
-            <option value='MM'>MM</option>
-            {['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'].map(
-              (day) => {
-                return <option value={`${day}`} key={Number(day)}>{`${day}`}</option>;
-              }
-            )}
-          </Form.Control>
-          <Form.Control
-            as='select'
-            id='addDay'
-            value={deliveryDayEnd}
-            onChange={onChangeDeliveryDayEnd}
-            style={{ width: '78px', display: 'inline', marginLeft: '5px' }}
-          >
-            <option value='DD'>DD</option>
-            {[
-              '01',
-              '02',
-              '03',
-              '04',
-              '05',
-              '06',
-              '07',
-              '08',
-              '09',
-              '10',
-              '11',
-              '12',
-              '13',
-              '14',
-              '15',
-              '16',
-              '17',
-              '18',
-              '19',
-              '20',
-              '21',
-              '22',
-              '23',
-              '24',
-              '25',
-              '26',
-              '27',
-              '28',
-              '29',
-              '30',
-              '31',
-            ]
-              .filter((numberOfDays) => {
-                return Number(numberOfDays) <= daysLengthEnd;
-              })
-              .map((day) => {
-                return (
-                  <option value={`${day}`} key={`day-${Number(day)}`}>{`${day}`}</option>
-                );
-              })}
-          </Form.Control>
-          <Form.Control
-            as='select'
-            id='addYear'
-            value={deliveryYearEnd}
-            onChange={onChangeDeliveryYearEnd}
-            style={{ display: 'inline', width: '100px', marginLeft: '5px' }}
-          >
-            <option value='YYYY'>YYYY</option>
-            {years.map((everyYear, index) => {
-              const keyIndex = index;
-              return (
-                <option key={`everyYear-${keyIndex}`} value={everyYear}>
-                  {everyYear}
-                </option>
-              );
-            })}
-          </Form.Control> */}
-        {/* <br></br>
-          <Form.Label style={{ marginTop: '10px' }}>End Time</Form.Label>
-          <Form.Control
-            as='select'
-            id='endTimeCtl'
-            value={endTime}
-            onChange={onChangeEndTime}
-            style={{ width: '40%' }}
-          >
-            <option>Select Time</option>
-            {filteredBeginTime.length > 0
-              ? times
-                  .filter((time) => time > filteredBeginTime)
-                  .map((time, index) => {
-                    const keyIndex = index;
-                    return (
-                      <option key={`time-${keyIndex}`} value={time}>
-                        {time}
-                      </option>
-                    );
-                  })
-              : null}
-
-            {times.map((time, index) => {
-              const keyIndex = index;
-              return (
-                <option key={`time-${keyIndex}`} value={time}>
-                  {time}
-                </option>
-              );
-            })}
-          </Form.Control>
-        </Form.Group> */}
         <Form.Group style={{ marginTop: '5px' }}>
           <Form.Label>Description</Form.Label>
           <Form.Control
@@ -1204,6 +1069,405 @@ function CreateOrder(props: Props): JSX.Element {
           <Form.Label style={{ marginLeft: '5px' }}>Order is submitted!</Form.Label>
         ) : null}
         <br></br>
+      </Form>
+    </Container>
+  ) : (
+    <Container>
+      <Jumbotron style={{ backgroundColor: 'white', marginTop: '3px' }}>
+        <h2
+          className='text-center'
+          style={{ fontFamily: 'AmaticSC-Bold', fontSize: 'xxx-large' }}
+        >
+          {props.routeComponentProps.location.state === undefined
+            ? 'Create Order'
+            : 'Edit Order'}
+        </h2>
+      </Jumbotron>
+
+      <Form>
+        <Row>
+          <Col>
+            <Form.Group>
+              <Form.Label>Name</Form.Label>
+              <Form.Control
+                type='text'
+                placeholder='Enter name of order'
+                onChange={onChangeName}
+                value={name}
+              />
+              {name && name.length > 0 && (
+                <ul style={{ listStyleType: 'none' }}>{renderNameSuggestions()}</ul>
+              )}
+            </Form.Group>
+
+            <Form.Group>
+              <Form.Label>Upload Image</Form.Label>
+              <EmeraldDropzone uploadDoc={GetUploadImage} />
+              {uploadFiles !== undefined ? (
+                <ul
+                  style={{ listStyleType: 'none', paddingLeft: '0px', marginTop: '0px' }}
+                >
+                  {uploadFiles.map((file: File) => (
+                    <li key={file.name}>
+                      <FaCheck color='green' size={22} style={{ marginTop: '10px' }} />
+                      <span
+                        style={{
+                          color: '#005ea2',
+                          marginTop: '10px',
+                          verticalAlign: 'bottom',
+                        }}
+                        data-testid='uploadfilename'
+                      >
+                        {file.name}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              ) : null}
+            </Form.Group>
+
+            <div style={{ marginBottom: '10px' }} ref={ref}>
+              <Form.Label>Search Address</Form.Label>
+              <Button
+                variant={isPickupClicked ? `primary` : 'secondary'}
+                size='sm'
+                style={{ marginLeft: '5px' }}
+                onClick={onClickPickup}
+              >
+                {isPickupClicked ? `Enter Address` : 'Pickup'}
+              </Button>
+              <Form.Control
+                type='text'
+                value={value}
+                onChange={handleInput}
+                disabled={isPickupClicked}
+                placeholder='Where are you going?'
+                style={{ width: '100%' }}
+              />
+              {/* We can use the "status" to decide whether we should display the dropdown or not */}
+              {status === 'OK' && (
+                <ul style={{ listStyleType: 'none' }}>{renderSuggestions()}</ul>
+              )}
+            </div>
+            <Accordion>
+              <Card>
+                <Accordion.Toggle as={Card.Header} eventKey='0'>
+                  Address Info
+                </Accordion.Toggle>
+                <Accordion.Collapse eventKey='0'>
+                  <Card.Body>
+                    <Form.Group>
+                      <Form.Label>Address</Form.Label>
+                      <Form.Control
+                        type='text'
+                        placeholder='123 Street'
+                        value={address}
+                        onChange={onChangeAddress}
+                      />
+                    </Form.Group>
+                    <Form.Group>
+                      <Form.Label>City</Form.Label>
+                      <Form.Control
+                        type='text'
+                        placeholder='City'
+                        value={city}
+                        onChange={onChangeCity}
+                      />
+                    </Form.Group>
+                    <Form.Group>
+                      <Form.Label>State</Form.Label>
+                      <Form.Control
+                        type='text'
+                        placeholder='State'
+                        value={state}
+                        onChange={onChangeState}
+                      />
+                    </Form.Group>
+                    <Form.Group>
+                      <Form.Label>ZipCode</Form.Label>
+                      <Form.Control
+                        type='text'
+                        placeholder='12345'
+                        value={zipCode}
+                        onChange={onChangeZipCode}
+                      />
+                    </Form.Group>
+                  </Card.Body>
+                </Accordion.Collapse>
+              </Card>
+            </Accordion>
+            <Form.Group>
+              <Form.Label>Order Type</Form.Label>
+              <Form.Control as='select' onChange={onChangeOrderType} value={orderType}>
+                <option>Select Order Type</option>
+                {orderTypes.map((orderType) => {
+                  return <option key={orderType.Id}>{orderType.Name}</option>;
+                })}
+              </Form.Control>
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Order Status</Form.Label>
+              <Form.Control
+                as='select'
+                onChange={onChangeOrderStatus}
+                value={orderStatus}
+              >
+                <option>Select Order Status</option>
+                <option>Pending</option>
+                <option>Ordered</option>
+                <option>Delivered</option>
+                <option>Cancelled</option>
+              </Form.Control>
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Quantity</Form.Label>
+              <div>
+                <Form.Control
+                  type='text'
+                  value={quantity}
+                  onChange={onChangeQuantity}
+                  placeholder='1'
+                  style={{ width: '50px', display: 'inline' }}
+                />
+                <Button
+                  style={{
+                    display: 'inline',
+                    marginLeft: '5px',
+                    verticalAlign: 'top',
+                    fontWeight: 'bold',
+                  }}
+                  onClick={onClickPlus}
+                >
+                  +
+                </Button>
+                <Button
+                  style={{
+                    display: 'inline',
+                    marginLeft: '5px',
+                    verticalAlign: 'top',
+                    fontWeight: 'bold',
+                  }}
+                  onClick={onClickMinus}
+                >
+                  -
+                </Button>
+              </div>
+            </Form.Group>
+          </Col>
+          <Col>
+            <Form.Group>
+              <Form.Label>Price</Form.Label>
+              <div className='input-group'>
+                <span
+                  className='input-group-addon'
+                  style={{
+                    display: 'inline-flex',
+                    verticalAlign: 'middle',
+                    alignItems: 'center',
+                  }}
+                >
+                  💲
+                </span>
+                <Form.Control
+                  type='number'
+                  placeholder='10.00'
+                  min='1'
+                  step='0.01'
+                  value={price}
+                  onChange={onChangePrice}
+                />
+              </div>
+            </Form.Group>
+            <Form.Group controlId='formBasicCheckbox'>
+              <Form.Check type='checkbox' id='prepaidCheckbox'>
+                <Form.Check.Input
+                  type='checkbox'
+                  isValid
+                  checked={prepaid}
+                  onChange={() => prepaidSet(!prepaid)}
+                />
+                <span>💵</span>
+                <Form.Check.Label style={{ color: 'black' }}>PrePaid</Form.Check.Label>
+              </Form.Check>
+
+              <Form.Check type='checkbox' id='porchDropOff'>
+                <Form.Check.Input
+                  type='checkbox'
+                  isValid
+                  checked={porchDropoff}
+                  onChange={() => setPorchDropoff(!porchDropoff)}
+                />
+                <span>🚪</span>
+                <Form.Check.Label style={{ color: 'black' }}>
+                  Porch Dropoff
+                </Form.Check.Label>
+              </Form.Check>
+            </Form.Group>
+            <Form.Label>Delivery Date</Form.Label>
+            <Form.Group>
+              <Form.Control
+                as='select'
+                value={deliveryMonth}
+                onChange={onChangeDeliveryMonth}
+                style={{ width: '78px', display: 'inline' }}
+              >
+                <option value='MM'>MM</option>
+                {[
+                  '01',
+                  '02',
+                  '03',
+                  '04',
+                  '05',
+                  '06',
+                  '07',
+                  '08',
+                  '09',
+                  '10',
+                  '11',
+                  '12',
+                ].map((day) => {
+                  return <option value={`${day}`} key={Number(day)}>{`${day}`}</option>;
+                })}
+              </Form.Control>
+              <Form.Control
+                as='select'
+                id='addDay'
+                value={deliveryDay}
+                onChange={onChangeDeliveryDay}
+                style={{ width: '78px', display: 'inline', marginLeft: '5px' }}
+              >
+                <option value='DD'>DD</option>
+                {[
+                  '01',
+                  '02',
+                  '03',
+                  '04',
+                  '05',
+                  '06',
+                  '07',
+                  '08',
+                  '09',
+                  '10',
+                  '11',
+                  '12',
+                  '13',
+                  '14',
+                  '15',
+                  '16',
+                  '17',
+                  '18',
+                  '19',
+                  '20',
+                  '21',
+                  '22',
+                  '23',
+                  '24',
+                  '25',
+                  '26',
+                  '27',
+                  '28',
+                  '29',
+                  '30',
+                  '31',
+                ]
+                  .filter((numberOfDays) => {
+                    return Number(numberOfDays) <= daysLength;
+                  })
+                  .map((day) => {
+                    return (
+                      <option
+                        value={`${day}`}
+                        key={`day-${Number(day)}`}
+                      >{`${day}`}</option>
+                    );
+                  })}
+              </Form.Control>
+              <Form.Control
+                as='select'
+                id='addYear'
+                value={deliveryYear}
+                onChange={onChangeDeliveryYear}
+                style={{ display: 'inline', width: '100px', marginLeft: '5px' }}
+              >
+                <option value='YYYY'>YYYY</option>
+                {years.map((everyYear, index) => {
+                  const keyIndex = index;
+                  return (
+                    <option key={`everyYear-${keyIndex}`} value={everyYear}>
+                      {everyYear}
+                    </option>
+                  );
+                })}
+              </Form.Control>
+              <br></br>
+              <Form.Label style={{ marginTop: '10px' }}>Time</Form.Label>
+              <Form.Control
+                as='select'
+                id='beginTimeCtl'
+                value={beginTime}
+                onChange={onChangeBeginTime}
+                style={{ width: '40%' }}
+              >
+                <option>Select Time</option>
+                {times.map((time, index) => {
+                  const keyIndex = index;
+                  return (
+                    <option key={`time-${keyIndex}`} value={time}>
+                      {time}
+                    </option>
+                  );
+                })}
+              </Form.Control>
+            </Form.Group>
+            <Form.Group style={{ marginTop: '5px' }}>
+              <Form.Label>Description</Form.Label>
+              <Form.Control
+                as='textarea'
+                rows={4}
+                value={description}
+                placeholder='Description here'
+                onChange={onChangeDescription}
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Source of Traffic</Form.Label>
+              <Form.Control
+                as='select'
+                onChange={onChangeTrafficSource}
+                value={trafficSource}
+              >
+                <option>Select Traffic</option>
+                <option>3009 Moms group</option>
+                <option>San Antonio Moms group</option>
+                <option>Grocery Facebook Group</option>
+                <option>Facebook</option>
+                <option>Instagram</option>
+                <option>Friend-Relatives</option>
+                <option>Other</option>
+              </Form.Control>
+            </Form.Group>
+
+            <Form.Group>
+              <Form.Label>Employee</Form.Label>
+              <Form.Control as='select' onChange={onChangeEmployee} value={employee}>
+                <option>Select Employee</option>
+                <option>Ariel</option>
+                <option>Jordan</option>
+              </Form.Control>
+            </Form.Group>
+
+            <Button variant='primary' onClick={insertOrder} disabled={isSubmitDisabled}>
+              Submit
+            </Button>
+            <Button onClick={clearFields} style={{ marginLeft: '5px' }}>
+              Clear
+            </Button>
+            {isOrderSubmitted ? (
+              <Form.Label style={{ marginLeft: '5px' }}>Order is submitted!</Form.Label>
+            ) : null}
+            <br></br>
+          </Col>
+        </Row>
       </Form>
     </Container>
   );

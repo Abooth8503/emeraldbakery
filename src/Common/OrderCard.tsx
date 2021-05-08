@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { Card, Col, Row, Image, Button, Form } from 'react-bootstrap';
 import { RouteComponentProps } from 'react-router-dom';
 import { FaMapSigns } from 'react-icons/fa';
-import { Order, useEmeraldContext } from '../Interfaces/EmeraldTypes';
+import { Order, useEmeraldContext, useMediaQuery } from '../Interfaces/EmeraldTypes';
 
 type Props = {
   routeComponentProps: RouteComponentProps;
@@ -17,6 +17,7 @@ function OrderCard(props: Props): JSX.Element {
   const [uploadFiles, setUploadFiles] = React.useState<Array<File>>([]);
   const [message, setMessage] = React.useState<string>('');
   const { fetchEmeraldOrders } = useEmeraldContext();
+  const [width] = useMediaQuery();
 
   useEffect(() => {
     const path = props.order.OrderImageUrl;
@@ -156,7 +157,7 @@ function OrderCard(props: Props): JSX.Element {
   const endDeliveryDate = new Date(props.order.DeliveryDateEnd);
 
   // console.log('prepaid: ', props.order);
-  return (
+  return width < 769 ? (
     <Card
       key={props.order.Id}
       style={{
@@ -167,6 +168,115 @@ function OrderCard(props: Props): JSX.Element {
         borderStyle: 'solid',
         fontFamily: 'Andika-R',
       }}
+    >
+      <Row>
+        {props.parent === 'other' ? (
+          <Col>
+            <Card.Img as={Image} src={OrderImageUrl} fluid={true} />
+          </Col>
+        ) : null}
+
+        <Col>
+          <Card.Title>
+            <span style={{ marginRight: '5px' }}>
+              {props.order.Employee === 1 ? <>👱🏼‍♀️</> : <>👩</>}
+            </span>
+            <span style={{ fontSize: 'large', fontWeight: 'bold' }}>
+              {props.order.Name}
+            </span>
+            <br />
+            <span style={{ fontSize: 'small', verticalAlign: 'baseline' }}>
+              {props.order.PorchDropoff ? (
+                <span role='img' aria-label='door' style={{ fontSize: '26px' }}>
+                  🚪
+                </span>
+              ) : null}
+              {props.order.PrePaid ? (
+                <span role='img' aria-label='money' style={{ fontSize: '26px' }}>
+                  💵
+                </span>
+              ) : null}
+
+              {`${beginDeliveryDate.toLocaleTimeString('en-US', {
+                timeStyle: 'short',
+              } as Intl.DateTimeFormatOptions)}`}
+            </span>
+            <span style={{ fontSize: 'initial' }}> to </span>
+            <span style={{ fontSize: 'small', verticalAlign: 'baseline' }}>
+              {`${endDeliveryDate.toLocaleTimeString('en-US', {
+                timeStyle: 'short',
+              } as Intl.DateTimeFormatOptions)}`}
+            </span>
+          </Card.Title>
+          <Card.Text>
+            <span style={{ fontWeight: 'bold' }}>Quantity:</span>
+            <span style={{ marginLeft: '5px' }}>{props.order.Quantity}</span>
+            {props.parent === 'other' ? (
+              <>
+                <br />
+                {props.order.Description !== undefined &&
+                props.order.Description.length > 0 ? (
+                  <>
+                    <span style={{ fontWeight: 'bold' }}>Description: </span>
+                    <span>{props.order.Description}</span>
+                  </>
+                ) : null}
+              </>
+            ) : null}
+            <br />
+            <Button size='sm' onClick={() => selectOrder(props.order.Id)}>
+              Edit
+            </Button>
+            <Button
+              size='sm'
+              variant='success'
+              style={{ marginLeft: '5px' }}
+              onClick={(e) => updateBakeryOrder(e, 'Delivered')}
+            >
+              Delivered
+            </Button>
+            <Button
+              variant='danger'
+              size='sm'
+              style={{ marginLeft: '5px' }}
+              onClick={(e) => updateBakeryOrder(e, 'Cancelled')}
+            >
+              Cancel
+            </Button>
+            {message.length > 0 ? (
+              <Form.Label
+                style={{ marginLeft: '5px', color: '#28a745', fontSize: 'x-large' }}
+              >
+                {message}
+              </Form.Label>
+            ) : null}
+          </Card.Text>
+          <Card.Text style={{ fontSize: 'medium' }}>
+            <FaMapSigns />
+            <a href={props.address} style={{ marginLeft: '5px' }}>
+              {mapAddress}
+            </a>
+          </Card.Text>
+        </Col>
+      </Row>
+    </Card>
+  ) : (
+    <Card
+      key={props.order.Id}
+      style={{
+        marginBottom: '3px',
+        padding: '5px',
+        border: 'black',
+        borderWidth: '1px',
+        borderStyle: 'solid',
+        fontFamily: 'Andika-R',
+        height: props.parent === 'calender' ? '186px' : '253px',
+        width: props.parent === 'calender' ? '430px' : '790px',
+        marginTop: 'auto',
+        marginRight: 'auto',
+        marginLeft: 'auto',
+      }}
+      className='text-center'
     >
       <Row>
         {props.parent === 'other' ? (
