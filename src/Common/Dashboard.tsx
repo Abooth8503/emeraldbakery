@@ -103,7 +103,6 @@ function Dashboard(props: Props): JSX.Element {
   const [width] = useMediaQuery();
 
   useEffect(() => {
-    console.log('render happened.');
     if (orders && orders.length > 0) {
       switch (props.userName) {
         case 'Ariel Castillo':
@@ -122,7 +121,7 @@ function Dashboard(props: Props): JSX.Element {
           );
           break;
         default:
-          console.log('default');
+          setDashboardOrders(orders);
       }
     }
   }, []);
