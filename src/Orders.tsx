@@ -14,7 +14,11 @@ import {
 import moment from 'moment';
 // import FlipMove from 'react-flip-move';
 import { Order } from './Interfaces/EmeraldTypes';
-import { useEmeraldContext, AtTheBoothBakery_Type } from './Interfaces/EmeraldTypes';
+import {
+  useEmeraldContext,
+  AtTheBoothBakery_Type,
+  useMediaQuery,
+} from './Interfaces/EmeraldTypes';
 import OrderCard from './Common/OrderCard';
 
 const sectionStyle = {
@@ -28,6 +32,7 @@ function Orders(props: Props): JSX.Element {
   const { orders } = useEmeraldContext();
   const [displayOrders, setDisplayOrders] = useState(orders);
   const [filterType, setFilterType] = useState<string>('Delivered');
+  const [width] = useMediaQuery();
 
   const handleSelect = (e: any) => {
     setFilterType(e);
@@ -89,7 +94,7 @@ function Orders(props: Props): JSX.Element {
     return <div>Orders not ready.</div>;
   }
 
-  return (
+  return width < 769 ? (
     <Container fluid style={sectionStyle}>
       <Row>
         <Col className='text-center'>
@@ -120,6 +125,64 @@ function Orders(props: Props): JSX.Element {
         <Col>
           <input
             style={{ marginTop: '5px' }}
+            placeholder='Search Name or Address'
+            onChange={onSearchKey}
+          ></input>
+        </Col>
+      </Row>
+
+      <div style={{ textAlign: 'left', fontFamily: 'AmaticSC-Regular' }}>
+        {displayOrders.map((order: Order) => {
+          const mapAddress = `${order.Address} ${order.City},${order.State}`;
+          const encodedAddress = encodeURI(mapAddress);
+          const addressToUse = `https://www.google.com/maps/search/?api=1&query=${encodedAddress}`;
+          return (
+            <OrderCard
+              key={order.Id}
+              routeComponentProps={props}
+              order={order}
+              address={addressToUse}
+              parent='other'
+            />
+          );
+        })}
+      </div>
+    </Container>
+  ) : (
+    <Container fluid style={sectionStyle}>
+      <Row>
+        <Col className='text-center'>
+          <Jumbotron>
+            <h1 style={{ fontFamily: 'AmaticSC-Bold', fontSize: 'xxx-large' }}>
+              Orders
+              <Badge variant='success' style={{ marginLeft: '3px' }}>
+                {displayOrders.length}
+              </Badge>
+            </h1>
+            <label>
+              {filterType === 'Delivered' ? <span>🚚{filterType}</span> : filterType}
+            </label>
+          </Jumbotron>
+        </Col>
+      </Row>
+
+      <Row>
+        <Col>
+          <Dropdown
+            className='text-right'
+            style={{ marginBottom: '5px', marginRight: '250px' }}
+          >
+            <DropdownButton title='Orders filter' onSelect={handleSelect}>
+              <Dropdown.Item eventKey='Today'>Today</Dropdown.Item>
+              <Dropdown.Item eventKey='Delivered'>Delivered</Dropdown.Item>
+              <Dropdown.Item eventKey='ordered'>Ordered</Dropdown.Item>
+            </DropdownButton>
+          </Dropdown>
+        </Col>
+        <Col>
+          <input
+            className='float-left'
+            style={{ marginTop: '5px', marginLeft: '173px' }}
             placeholder='Search Name or Address'
             onChange={onSearchKey}
           ></input>

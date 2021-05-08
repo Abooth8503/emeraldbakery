@@ -1,8 +1,17 @@
 import * as React from 'react';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Container, Row, Col, Jumbotron, Form } from 'react-bootstrap';
-import { Order, useEmeraldContext, Orders } from '../Interfaces/EmeraldTypes';
+import { Container, Row, Col, Jumbotron, Form, ListGroup } from 'react-bootstrap';
+import {
+  Order,
+  useEmeraldContext,
+  Orders,
+  useMediaQuery,
+} from '../Interfaces/EmeraldTypes';
+import { BiCookie } from 'react-icons/bi';
+import { AiOutlineForm } from 'react-icons/ai';
+import { FcCalendar } from 'react-icons/fc';
+import { FaMap } from 'react-icons/fa';
 
 const motivationalQuotes = [
   {
@@ -64,6 +73,7 @@ function Dashboard(props: Props): JSX.Element {
   const { orders } = useEmeraldContext();
   const [employee, setEmployee] = React.useState<string | undefined>('Select Employee');
   const [dashboardOrders, setDashboardOrders] = React.useState<Orders>(orders);
+  const [width] = useMediaQuery();
 
   useEffect(() => {
     console.log('render happened.');
@@ -123,7 +133,9 @@ function Dashboard(props: Props): JSX.Element {
   });
 
   const userNameString = props.userName.split(' ')[0];
-  return (
+  console.log('width: ', width);
+
+  return width < 769 ? (
     <Container fluid>
       <Row className='justify-content-center h-100' style={{ marginTop: '5px' }}>
         <Col>
@@ -199,6 +211,114 @@ function Dashboard(props: Props): JSX.Element {
             </span>
           </Jumbotron>
         </Col>
+      </Row>
+    </Container>
+  ) : (
+    <Container>
+      <Row className='justify-content-center h-100' style={{ marginTop: '5px' }}>
+        <Col>
+          <Jumbotron style={{ backgroundColor: 'white' }}>
+            <h2
+              className='text-center'
+              style={{ fontFamily: 'AmaticSC-Bold', fontSize: 'xxx-large' }}
+            >
+              Welcome {userNameString}!
+            </h2>
+          </Jumbotron>
+        </Col>
+      </Row>
+      <Row className='justify-content-center'>
+        <Col>
+          <h3>Motivational Quote!</h3>
+          <figure className='quote'>
+            <blockquote
+              style={{ fontSize: 'large' }}
+            >{`"${motivationalQuotes[randNumber].quote}"`}</blockquote>
+            <figcaption
+              style={{
+                textAlign: 'right',
+                fontSize: 'larger',
+              }}
+            >
+              <cite>{`- ${motivationalQuotes[randNumber].name} `}</cite>
+            </figcaption>
+          </figure>
+          <br></br>
+          <h3>Links</h3>
+          <ListGroup>
+            <ListGroup.Item>
+              <Link to='/Calendar'>
+                <FcCalendar size={32} style={{ marginRight: '5px' }} />
+                Calender
+              </Link>
+            </ListGroup.Item>
+            <ListGroup.Item>
+              <Link to='/Orders'>
+                <BiCookie size={32} color='Pink' style={{ marginRight: '5px' }} />
+                Orders
+              </Link>
+            </ListGroup.Item>
+            <ListGroup.Item>
+              <Link to='/Create'>
+                <AiOutlineForm size={32} color='Black' style={{ marginRight: '5px' }} />
+                Create Order
+              </Link>
+            </ListGroup.Item>
+            <ListGroup.Item>
+              <Link to='/Gmap'>
+                <FaMap size={32} style={{ marginRight: '5px' }} />
+                Map
+              </Link>
+            </ListGroup.Item>
+          </ListGroup>
+        </Col>
+        <Col>
+          <Jumbotron style={{ backgroundColor: 'white', width: '400px', margin: 'auto' }}>
+            <h5
+              style={{
+                fontWeight: 'bold',
+                fontStyle: 'oblique',
+                textDecoration: 'underline',
+              }}
+            >
+              At The Booth Bakery - Dashboard
+            </h5>
+            <Form.Control
+              as='select'
+              onChange={onChangeEmployee}
+              value={employee}
+              style={{ marginBottom: '10px' }}
+            >
+              <option>Select Employee</option>
+              <option>Ariel</option>
+              <option>Jordan</option>
+              <option>All</option>
+            </Form.Control>
+            <span>
+              Total <Link to='/orders'>Orders</Link>: 📝{dashboardOrders.length}
+            </span>
+            <br />
+            <span>
+              Total Paid:
+              <span style={{ color: 'green', marginLeft: '5px', fontWeight: 'bold' }}>
+                💰{formatter.format(sumCost)}
+              </span>
+            </span>
+            <br></br>
+            Total Deliveries: 🚚<span>{deliveredOrders.length}</span>
+            <br />
+            <hr />
+            <span>
+              Currently Ordered:
+              <span style={{ marginLeft: '5px' }}>
+                ✔️{orderedButNotDeliveredandNotCancelled.length}
+              </span>
+            </span>
+          </Jumbotron>
+        </Col>
+      </Row>
+      <Row style={{ marginTop: '5px' }}>
+        <Col style={{ fontSize: 'larger' }}></Col>
       </Row>
     </Container>
   );

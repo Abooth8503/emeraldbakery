@@ -9,7 +9,7 @@ import './css/reactCalendar.css';
 import { Jumbotron, Container, Row, Col, Badge, Form } from 'react-bootstrap';
 import OrderCard from './Common/OrderCard';
 import { Order, Orders } from './Interfaces/EmeraldTypes';
-import { useEmeraldContext } from './Interfaces/EmeraldTypes';
+import { useEmeraldContext, useMediaQuery } from './Interfaces/EmeraldTypes';
 
 interface Props {
   routeComponentProps: RouteComponentProps;
@@ -23,6 +23,7 @@ function CalendarOrders(props: Props): JSX.Element {
   const [value, onChange] = React.useState<Date | Date[]>(new Date());
   const [employee, setEmployee] = React.useState<string | undefined>('Select Employee');
   const [showAllOrders, setShowAllOrders] = React.useState<boolean>(false);
+  const [width] = useMediaQuery();
 
   useEffect(() => {
     fetchEmeraldOrders();
@@ -190,7 +191,7 @@ function CalendarOrders(props: Props): JSX.Element {
     return <div>Loading...</div>;
   }
 
-  return (
+  return width < 769 ? (
     <Container className='text-center' style={{ marginTop: '5px' }}>
       <Jumbotron style={{ backgroundColor: 'white' }}>
         <h2 style={{ fontFamily: 'AmaticSC-Bold', fontSize: 'xxx-large' }}>Calender</h2>
@@ -315,6 +316,138 @@ function CalendarOrders(props: Props): JSX.Element {
                 />
               );
             })}
+    </Container>
+  ) : (
+    <Container style={{ marginTop: '5px' }}>
+      <Jumbotron className='text-center' style={{ backgroundColor: 'white' }}>
+        <h2 style={{ fontFamily: 'AmaticSC-Bold', fontSize: 'xxx-large' }}>Calender</h2>
+      </Jumbotron>
+
+      <Row>
+        <Col>
+          <Form.Group>
+            <Form.Control
+              as='select'
+              onChange={onChangeEmployee}
+              value={employee}
+              title='Select Employee view.'
+              style={{ width: '193px', margin: 'auto' }}
+            >
+              <option>Select Employee</option>
+              <option>Ariel</option>
+              <option>Jordan</option>
+              <option>All</option>
+            </Form.Control>
+          </Form.Group>
+          <Calendar
+            onChange={(val) => onChange(val)}
+            value={value}
+            tileClassName={tileClassName}
+            onClickDay={onClickDayDate}
+            calendarType='US'
+            className='centercalendar'
+          />
+        </Col>
+
+        <Col>
+          <span className='text-center'>
+            <h5>
+              <span style={{ fontWeight: 'bold' }}>Count:</span>
+              <Badge
+                style={{
+                  fontSize: 'large',
+                  color: '#007bff',
+                  marginLeft: '5px',
+                  background: 'white',
+                }}
+              >
+                {
+                  calenderOrders.filter((day) => {
+                    if (selectedDay) {
+                      if (
+                        moment(day.DeliveryDate).format('MM-DD-YYYY') ==
+                        moment(selectedDay).format('MM-DD-YYYY')
+                      ) {
+                        return day;
+                      }
+                    }
+                  }).length
+                }
+              </Badge>
+            </h5>
+
+            <Form.Group controlId='formBasicCheckbox'>
+              <Form.Check type='checkbox' id='prepaidCheckbox'>
+                <Form.Check.Input
+                  type='checkbox'
+                  isValid
+                  checked={showAllOrders}
+                  onChange={onChangeShowAllOrders}
+                />
+                <Form.Check.Label style={{ color: 'black' }}>
+                  Show all Orders
+                </Form.Check.Label>
+              </Form.Check>
+            </Form.Group>
+          </span>
+          {selectedDay === undefined
+            ? calenderOrders
+                .filter((upcomingOrder) => {
+                  const deliveryDate = moment(upcomingOrder.DeliveryDate);
+                  const currentDate = moment();
+
+                  if (deliveryDate > currentDate) {
+                    return upcomingOrder;
+                  }
+                })
+                .map((order: Order) => {
+                  const mapAddress = `${order.Address} ${order.City},${order.State}`;
+                  const encodedAddress = encodeURI(mapAddress);
+                  const addressToUse = `https://www.google.com/maps/search/?api=1&query=${encodedAddress}`;
+                  return (
+                    <OrderCard
+                      key={order.Id}
+                      routeComponentProps={props.routeComponentProps}
+                      order={order}
+                      address={addressToUse}
+                      parent='calender'
+                    />
+                  );
+                })
+            : calenderOrders
+                .filter((day) => {
+                  if (selectedDay) {
+                    if (
+                      moment(day.DeliveryDate).format('MM-DD-YYYY') ==
+                      moment(selectedDay).format('MM-DD-YYYY')
+                    ) {
+                      return day;
+                    }
+                  }
+                })
+                .sort((a: Order, b: Order) => {
+                  if (a.DeliveryDate > b.DeliveryDate) {
+                    return 1;
+                  }
+
+                  return -1;
+                })
+                .map((order: Order) => {
+                  const mapAddress = `${order.Address} ${order.City},${order.State}`;
+                  const encodedAddress = encodeURI(mapAddress);
+                  const addressToUse = `https://www.google.com/maps/search/?api=1&query=${encodedAddress}`;
+                  return (
+                    <OrderCard
+                      key={order.Id}
+                      routeComponentProps={props.routeComponentProps}
+                      order={order}
+                      address={addressToUse}
+                      parent='calender'
+                    />
+                  );
+                })}
+        </Col>
+      </Row>
     </Container>
   );
 }

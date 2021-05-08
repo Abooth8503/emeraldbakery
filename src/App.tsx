@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useLayoutEffect } from 'react';
 import { Switch, Route, Link, BrowserRouter } from 'react-router-dom';
 import { Image } from 'react-bootstrap';
 import { GoogleLoginResponse, GoogleLoginResponseOffline } from 'react-google-login';

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import * as React from 'react';
 import * as H from 'history';
-import { useEffect } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 
 //https://stackoverflow.com/questions/56457935/typescript-error-property-x-does-not-exist-on-type-window
 declare global {
@@ -209,6 +209,7 @@ export function isLeapYear(yearSelected: number): boolean {
   const isItEvenLeapYear = (isLeapYearMade && AndEvenDivisible) || OrEvenDiv100;
   return isItEvenLeapYear;
 }
+
 export function calculateDays(month: string, yearSelected: string): number {
   let daysArrayLength = 31;
   if (month === '' || yearSelected === '') {
@@ -234,8 +235,24 @@ export function calculateDays(month: string, yearSelected: string): number {
   }
   return daysArrayLength;
 }
+
 export function isValidDate(day: any, month: any, year: any): boolean {
   return day <= calculateDays(month, year);
+}
+
+export function useMediaQuery(): number[] {
+  const [screenSize, setScreenSize] = useState([0, 0]);
+
+  useLayoutEffect(() => {
+    function updateScreenSize(): void {
+      setScreenSize([window.innerWidth, window.innerHeight]);
+    }
+    window.addEventListener('resize', updateScreenSize);
+    updateScreenSize();
+    return () => window.removeEventListener('resize', updateScreenSize);
+  }, []);
+
+  return screenSize;
 }
 
 const MonthDays = { FullMonth: 31, Thirty: 30, NonLeapYear: 28, LeapYear: 29 };
