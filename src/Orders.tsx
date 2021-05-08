@@ -20,6 +20,7 @@ import {
   useMediaQuery,
 } from './Interfaces/EmeraldTypes';
 import OrderCard from './Common/OrderCard';
+import BoothNavbar from './Common/BoothNavbar';
 
 const sectionStyle = {
   marginTop: '5px',
@@ -149,10 +150,11 @@ function Orders(props: Props): JSX.Element {
       </div>
     </Container>
   ) : (
-    <Container fluid style={sectionStyle}>
+    <Container style={sectionStyle}>
       <Row>
         <Col className='text-center'>
-          <Jumbotron>
+          <BoothNavbar />
+          <Jumbotron style={{ marginTop: '5px' }}>
             <h1 style={{ fontFamily: 'AmaticSC-Bold', fontSize: 'xxx-large' }}>
               Orders
               <Badge variant='success' style={{ marginLeft: '3px' }}>

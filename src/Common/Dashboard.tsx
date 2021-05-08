@@ -12,6 +12,7 @@ import { BiCookie } from 'react-icons/bi';
 import { AiOutlineForm } from 'react-icons/ai';
 import { FcCalendar } from 'react-icons/fc';
 import { FaMap } from 'react-icons/fa';
+import BoothNavbar from '../Common/BoothNavbar';
 
 const motivationalQuotes = [
   {
@@ -133,7 +134,6 @@ function Dashboard(props: Props): JSX.Element {
   });
 
   const userNameString = props.userName.split(' ')[0];
-  console.log('width: ', width);
 
   return width < 769 ? (
     <Container fluid>
@@ -215,6 +215,7 @@ function Dashboard(props: Props): JSX.Element {
     </Container>
   ) : (
     <Container>
+      <BoothNavbar />
       <Row className='justify-content-center h-100' style={{ marginTop: '5px' }}>
         <Col>
           <Jumbotron style={{ backgroundColor: 'white' }}>
@@ -245,7 +246,7 @@ function Dashboard(props: Props): JSX.Element {
           </figure>
           <br></br>
           <h3>Links</h3>
-          <ListGroup>
+          <ListGroup style={{ fontFamily: 'AmaticSC-Bold', fontSize: 'xx-large' }}>
             <ListGroup.Item>
               <Link to='/Calendar'>
                 <FcCalendar size={32} style={{ marginRight: '5px' }} />
@@ -254,7 +255,7 @@ function Dashboard(props: Props): JSX.Element {
             </ListGroup.Item>
             <ListGroup.Item>
               <Link to='/Orders'>
-                <BiCookie size={32} color='Pink' style={{ marginRight: '5px' }} />
+                <BiCookie size={32} color='#ef89bb' style={{ marginRight: '5px' }} />
                 Orders
               </Link>
             </ListGroup.Item>
@@ -273,7 +274,14 @@ function Dashboard(props: Props): JSX.Element {
           </ListGroup>
         </Col>
         <Col>
-          <Jumbotron style={{ backgroundColor: 'white', width: '400px', margin: 'auto' }}>
+          <Jumbotron
+            style={{
+              backgroundColor: 'white',
+              width: '400px',
+              margin: 'auto',
+              marginTop: '40px',
+            }}
+          >
             <h5
               style={{
                 fontWeight: 'bold',
