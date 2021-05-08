@@ -12,6 +12,7 @@ import { BiCookie } from 'react-icons/bi';
 import { AiOutlineForm } from 'react-icons/ai';
 import { FcCalendar } from 'react-icons/fc';
 import { FaMap } from 'react-icons/fa';
+import { Line } from 'react-chartjs-2';
 import BoothNavbar from '../Common/BoothNavbar';
 
 const motivationalQuotes = [
@@ -65,6 +66,31 @@ const formatter = new Intl.NumberFormat('en-US', {
   //minimumFractionDigits: 0, // (this suffices for whole numbers, but will print 2500.10 as $2,500.1)
   //maximumFractionDigits: 0, // (causes 2500.99 to be printed as $2,501)
 });
+
+const data = {
+  labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June'],
+  datasets: [
+    {
+      label: '# of Orders',
+      data: [0, 1, 16, 31, 19, 4],
+      fill: false,
+      backgroundColor: 'rgb(0, 123, 255)',
+      borderColor: 'rgba(0, 123, 255, 0.2)',
+    },
+  ],
+};
+
+const options = {
+  scales: {
+    yAxes: [
+      {
+        ticks: {
+          beginAtZero: true,
+        },
+      },
+    ],
+  },
+};
 
 interface Props {
   userName: string;
@@ -326,7 +352,10 @@ function Dashboard(props: Props): JSX.Element {
         </Col>
       </Row>
       <Row style={{ marginTop: '5px' }}>
-        <Col style={{ fontSize: 'larger' }}></Col>
+        <Col style={{ fontSize: 'larger' }}>
+          <h3>At The Booth - Orders</h3>
+          <Line data={data} options={options} type='line' className='orderslinechart' />
+        </Col>
       </Row>
     </Container>
   );
