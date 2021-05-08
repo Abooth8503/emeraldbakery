@@ -25,6 +25,7 @@ import {
   Orders,
   useMediaQuery,
 } from '../Interfaces/EmeraldTypes';
+import BoothNavbar from '../Common/BoothNavbar';
 
 type Props = {
   routeComponentProps: RouteComponentProps;
@@ -1073,6 +1074,7 @@ function CreateOrder(props: Props): JSX.Element {
     </Container>
   ) : (
     <Container>
+      <BoothNavbar />
       <Jumbotron style={{ backgroundColor: 'white', marginTop: '3px' }}>
         <h2
           className='text-center'

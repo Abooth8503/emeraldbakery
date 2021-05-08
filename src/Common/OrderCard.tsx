@@ -156,7 +156,6 @@ function OrderCard(props: Props): JSX.Element {
   const beginDeliveryDate = new Date(props.order.DeliveryDate);
   const endDeliveryDate = new Date(props.order.DeliveryDateEnd);
 
-  // console.log('prepaid: ', props.order);
   return width < 769 ? (
     <Card
       key={props.order.Id}

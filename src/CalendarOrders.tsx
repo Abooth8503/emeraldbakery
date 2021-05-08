@@ -10,6 +10,7 @@ import { Jumbotron, Container, Row, Col, Badge, Form } from 'react-bootstrap';
 import OrderCard from './Common/OrderCard';
 import { Order, Orders } from './Interfaces/EmeraldTypes';
 import { useEmeraldContext, useMediaQuery } from './Interfaces/EmeraldTypes';
+import BoothNavbar from './Common/BoothNavbar';
 
 interface Props {
   routeComponentProps: RouteComponentProps;
@@ -319,7 +320,11 @@ function CalendarOrders(props: Props): JSX.Element {
     </Container>
   ) : (
     <Container style={{ marginTop: '5px' }}>
-      <Jumbotron className='text-center' style={{ backgroundColor: 'white' }}>
+      <BoothNavbar />
+      <Jumbotron
+        className='text-center'
+        style={{ backgroundColor: 'white', marginTop: '5px' }}
+      >
         <h2 style={{ fontFamily: 'AmaticSC-Bold', fontSize: 'xxx-large' }}>Calender</h2>
       </Jumbotron>
 
