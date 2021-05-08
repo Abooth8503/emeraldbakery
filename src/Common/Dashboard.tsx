@@ -192,13 +192,14 @@ function Dashboard(props: Props): JSX.Element {
         </Col>
       </Row>
       <Row style={{ marginTop: '5px' }}>
-        <Col style={{ fontSize: 'larger' }}>
-          <Jumbotron style={{ backgroundColor: 'white' }}>
+        <Col style={{ fontSize: 'larger', marginBottom: '0px' }}>
+          <Jumbotron style={{ backgroundColor: 'white', marginBottom: '10px' }}>
             <h5
               style={{
                 fontWeight: 'bold',
                 fontStyle: 'oblique',
                 textDecoration: 'underline',
+                paddingBottom: '10px',
               }}
             >
               At The Booth Bakery - Dashboard
@@ -235,6 +236,12 @@ function Dashboard(props: Props): JSX.Element {
               </span>
             </span>
           </Jumbotron>
+        </Col>
+      </Row>
+      <Row style={{ marginTop: '5px' }}>
+        <Col style={{ fontSize: 'larger' }}>
+          <h5>At The Booth - Orders</h5>
+          <Line data={data} options={options} type='line' className='orderslinechart' />
         </Col>
       </Row>
     </Container>
