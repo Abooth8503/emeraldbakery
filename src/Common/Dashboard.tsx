@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Container, Row, Col, Jumbotron, Form, ListGroup } from 'react-bootstrap';
+import { Container, Row, Col, Jumbotron, Form, ListGroup, Button } from 'react-bootstrap';
 import {
   Order,
   useEmeraldContext,
@@ -138,6 +138,22 @@ function Dashboard(props: Props): JSX.Element {
     } else {
       setDashboardOrders([]);
     }
+  }
+
+  function sendEmail(e: React.MouseEvent): void {
+    e.preventDefault();
+    console.log('clicked button');
+
+    const sgMail = require('@sendgrid/mail');
+    sgMail.setApiKey(process.env.REACT_APP_ONESIGNAL);
+    const msg = {
+      to: 'azrael7@gmail.com',
+      from: 'no-reply@example.com',
+      subject: 'Sending with SendGrid is Fun',
+      text: 'and easy to do anywhere, even with Node.js',
+      html: '<strong>and easy to do anywhere, even with Node.js</strong>',
+    };
+    sgMail.send(msg);
   }
 
   const randNumber = Math.floor(Math.random() * motivationalQuotes.length);
@@ -354,6 +370,8 @@ function Dashboard(props: Props): JSX.Element {
                 ✔️{orderedButNotDeliveredandNotCancelled.length}
               </span>
             </span>
+            <br></br>
+            <Button onClick={sendEmail}>Send Email Test</Button>
           </Jumbotron>
         </Col>
       </Row>
