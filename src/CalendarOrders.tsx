@@ -325,7 +325,7 @@ function CalendarOrders(props: Props): JSX.Element {
         className='text-center'
         style={{ backgroundColor: 'white', marginTop: '5px' }}
       >
-        <h2 style={{ fontFamily: 'AmaticSC-Bold', fontSize: 'xxx-large' }}>Calender</h2>
+        <h2 style={{ fontFamily: 'AmaticSC-Bold', fontSize: 'xxx-large' }}>Calendar</h2>
       </Jumbotron>
 
       <Row>
