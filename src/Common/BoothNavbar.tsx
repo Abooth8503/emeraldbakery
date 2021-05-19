@@ -20,7 +20,7 @@ const BoothNavbar = (): JSX.Element => (
       <Link to='/Calendar'>
         <Nav.Link href='#features'>
           <FcCalendar size={28} style={{ marginBottom: '3px', marginRight: '4px' }} />
-          Calender
+          Calendar
         </Nav.Link>
       </Link>
       <Link to='/Create'>
