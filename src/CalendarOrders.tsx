@@ -195,7 +195,7 @@ function CalendarOrders(props: Props): JSX.Element {
   return width < 769 ? (
     <Container className='text-center' style={{ marginTop: '5px' }}>
       <Jumbotron style={{ backgroundColor: 'white' }}>
-        <h2 style={{ fontFamily: 'AmaticSC-Bold', fontSize: 'xxx-large' }}>Calender</h2>
+        <h2 style={{ fontFamily: 'AmaticSC-Bold', fontSize: 'xxx-large' }}>Calendar</h2>
       </Jumbotron>
       <Form.Group>
         <Form.Control
