@@ -35,7 +35,7 @@ function Orders(props: Props): JSX.Element {
   const [filterType, setFilterType] = useState<string>('Delivered');
   const [width] = useMediaQuery();
 
-  const handleSelect = (e: any) => {
+  const handleSelect = (e: any) : void => {
     setFilterType(e);
 
     let atbOrders = [];
@@ -95,6 +95,7 @@ function Orders(props: Props): JSX.Element {
     return <div>Orders not ready.</div>;
   }
 
+  // Top is Mobile view. Bottom view is Desktop.
   return width < 769 ? (
     <Container fluid style={sectionStyle}>
       <Row>
