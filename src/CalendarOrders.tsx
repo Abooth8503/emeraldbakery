@@ -27,7 +27,7 @@ function CalendarOrders(props: Props): JSX.Element {
   const [width] = useMediaQuery();
 
   useEffect(() => {
-    fetchEmeraldOrders();
+    // fetchEmeraldOrders();
 
     if (orders && orders.length > 0) {
       switch (props.userName) {

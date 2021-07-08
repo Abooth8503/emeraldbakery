@@ -12,7 +12,6 @@ import {
   DropdownButton,
 } from 'react-bootstrap';
 import moment from 'moment';
-// import FlipMove from 'react-flip-move';
 import { Order } from './Interfaces/EmeraldTypes';
 import {
   useEmeraldContext,
@@ -38,7 +37,7 @@ function Orders(props: Props): JSX.Element {
   const handleSelect = (e: any) : void => {
     setFilterType(e);
 
-    let atbOrders = [];
+    let atbOrders: Array<Order> = [];
 
     switch (e) {
       case AtTheBoothBakery_Type.Delivered:

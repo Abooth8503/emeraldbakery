@@ -236,8 +236,8 @@ export function calculateDays(month: string, yearSelected: string): number {
   return daysArrayLength;
 }
 
-export function isValidDate(day: any, month: any, year: any): boolean {
-  return day <= calculateDays(month, year);
+export function isValidDate(day: number, month: number, year: number): boolean {
+  return day <= calculateDays(month.toString(), year.toString());
 }
 
 export function useMediaQuery(): number[] {
