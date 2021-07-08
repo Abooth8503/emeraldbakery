@@ -6,19 +6,27 @@ import loadable from '@loadable/component'
 import { GoogleLoginResponse, GoogleLoginResponseOffline } from 'react-google-login';
 import { EmeraldProvider } from './Interfaces/EmeraldTypes';
 // import Dashboard from './Common/Dashboard';
-import Orders from './Orders';
-import CreateOrder from './Forms/CreateOrder';
-import CalendarOrders from './CalendarOrders';
+// import Orders from './Orders';
+// import CreateOrder from './Forms/CreateOrder';
+// import CalendarOrders from './CalendarOrders';
 import './css/burgerMenu.css';
 import { FcGoogle } from 'react-icons/fc';
-import GMap from './Gmap';
-import OrderDetail from './OrderDetail';
+// import GMap from './Gmap';
+// import OrderDetail from './OrderDetail';
 import { GoogleSignInComponent } from './GoogleSignInComponent';
 import { GoogleLogout } from 'react-google-login';
-import OrderTypeForm from './Admin/OrderTypeForm';
-import Nav from './Nav';
+// import OrderTypeForm from './Admin/OrderTypeForm';
+// import Nav from './Nav';
 
 const Dashboard = loadable(() => import('./Common/Dashboard'))
+const Orders = loadable(() => import('./Orders'))
+const CreateOrder = loadable(() => import('./Forms/CreateOrder'))
+const CalendarOrders = loadable(() => import('./CalendarOrders'))
+const GMap = loadable(() => import('./Gmap'))
+const OrderDetail = loadable(() => import('./OrderDetail'))
+const OrderTypeForm = loadable(() => import('./Admin/OrderTypeForm'))
+const Nav = loadable(() => import('./Nav'))
+
 
 // Used when a user hits a route not defined below
 const FourOhFour = (): JSX.Element => (
