@@ -4,6 +4,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@loadable/component": "^5.15.0",
     "@sendgrid/mail": "^7.4.5",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^12.0.0",
@@ -55,6 +56,7 @@
   "devDependencies": {
     "@types/google.maps": "^3.45.6",
     "@types/googlemaps": "^3.43.3",
+    "@types/loadable__component": "^5.13.4",
     "@types/react": "^17.0.14",
     "@types/react-burger-menu": "^2.8.0",
     "@types/react-calendar": "^3.4.1",
