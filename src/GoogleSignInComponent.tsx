@@ -36,7 +36,7 @@ export const GoogleSignInComponent: FunctionComponent<GoogleSignInComponentProps
       <GoogleLogin
         clientId={`${process.env.REACT_APP_GOOGLE_AUTH_CLIENT_ID}`}
         buttonText='Google'
-        onSuccess={loginSuccess}
+        onSuccess={loginSuccess}// eslint-disable-next-line
         onFailure={(response: any) => {
           setLoginFailed(true);
         }}

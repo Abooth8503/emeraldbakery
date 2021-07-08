@@ -10,6 +10,7 @@ let labelIndex = 0;
 function GMap(): JSX.Element {
   const mapRef: HTMLDivElement | null = null;
   const googleMapRef = React.useRef<HTMLDivElement | null>(mapRef);
+  // eslint-disable-next-line
   const [ordersMap, setOrdersMap] = useState<Order[]>();
   let googleMap: google.maps.Map | undefined = undefined;
 

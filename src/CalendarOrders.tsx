@@ -18,7 +18,7 @@ interface Props {
 }
 
 function CalendarOrders(props: Props): JSX.Element {
-  const { orders, fetchEmeraldOrders } = useEmeraldContext();
+  const { orders } = useEmeraldContext();
   const [selectedDay, daySet] = React.useState<Date | undefined>(undefined);
   const [calenderOrders, setCalenderOrders] = React.useState<Orders>(orders);
   const [value, onChange] = React.useState<Date | Date[]>(new Date());
