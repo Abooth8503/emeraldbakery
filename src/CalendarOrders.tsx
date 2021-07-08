@@ -27,8 +27,7 @@ function CalendarOrders(props: Props): JSX.Element {
   const [width] = useMediaQuery();
 
   useEffect(() => {
-    fetchEmeraldOrders();
-    // console.log('emerald orders', orders);
+    // fetchEmeraldOrders();
 
     if (orders && orders.length > 0) {
       switch (props.userName) {
@@ -83,8 +82,6 @@ function CalendarOrders(props: Props): JSX.Element {
           setEmployee('All');
       }
     }
-
-    // console.log('cal orders', calenderOrders);
   }, []);
 
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
@@ -151,11 +148,9 @@ function CalendarOrders(props: Props): JSX.Element {
     }
   }
 
-  async function onChangeShowAllOrders(
-    e: React.ChangeEvent<HTMLInputElement>
-  ): Promise<void> {
+  async function onChangeShowAllOrders(): Promise<void> {
+
     await setShowAllOrders(!showAllOrders);
-    // console.log('checkbox', e.target.value, employee, showAllOrders);
 
     if (employee === 'All') {
       if (showAllOrders) {

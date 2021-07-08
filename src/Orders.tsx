@@ -12,7 +12,6 @@ import {
   DropdownButton,
 } from 'react-bootstrap';
 import moment from 'moment';
-// import FlipMove from 'react-flip-move';
 import { Order } from './Interfaces/EmeraldTypes';
 import {
   useEmeraldContext,
@@ -35,10 +34,10 @@ function Orders(props: Props): JSX.Element {
   const [filterType, setFilterType] = useState<string>('Delivered');
   const [width] = useMediaQuery();
 
-  const handleSelect = (e: any) => {
+  const handleSelect = (e: any) : void => {
     setFilterType(e);
 
-    let atbOrders = [];
+    let atbOrders: Array<Order> = [];
 
     switch (e) {
       case AtTheBoothBakery_Type.Delivered:
@@ -95,6 +94,7 @@ function Orders(props: Props): JSX.Element {
     return <div>Orders not ready.</div>;
   }
 
+  // Top is Mobile view. Bottom view is Desktop.
   return width < 769 ? (
     <Container fluid style={sectionStyle}>
       <Row>

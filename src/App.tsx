@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState, useEffect, useLayoutEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Switch, Route, Link, BrowserRouter } from 'react-router-dom';
 import { Image } from 'react-bootstrap';
 import { GoogleLoginResponse, GoogleLoginResponseOffline } from 'react-google-login';
@@ -56,7 +56,6 @@ function App(): JSX.Element {
 
   useEffect(() => {
     OneSignal.push(() => {
-      // console.log('appid', `${process.env.REACT_APP_ONESIGNAL}`);
       const initConfig = {
         appId: `${process.env.REACT_APP_ONESIGNAL}`, //STEP 9
         allowLocalhostAsSecureOrigin: true,
@@ -89,12 +88,6 @@ function App(): JSX.Element {
           'emeraldbakery/OneSignalSDKUpdaterWorker.js';
         OneSignal.init(initConfig);
       });
-      //Automatically subscribe to the new_app_version tag
-      // OneSignal.sendTag('new_app_version', 'new_app_version', (tagsSent) => {
-      //   // Callback called when tag has finished sending
-      //   console.log('new_app_version TAG SENT', tagsSent);
-      // })
-      // );
     });
   }, []);
 
