@@ -1,8 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import loadable from '@loadable/component'
 import './index.css';
-import App from './App';
+// import App from './App';
 import reportWebVitals from './reportWebVitals';
+
+const App = loadable(() => import('./App'))
 
 ReactDOM.render(
   <React.StrictMode>

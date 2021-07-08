@@ -2,9 +2,10 @@ import * as React from 'react';
 import { useState, useEffect } from 'react';
 import { Switch, Route, Link, BrowserRouter } from 'react-router-dom';
 import { Image } from 'react-bootstrap';
+import loadable from '@loadable/component'
 import { GoogleLoginResponse, GoogleLoginResponseOffline } from 'react-google-login';
 import { EmeraldProvider } from './Interfaces/EmeraldTypes';
-import Dashboard from './Common/Dashboard';
+// import Dashboard from './Common/Dashboard';
 import Orders from './Orders';
 import CreateOrder from './Forms/CreateOrder';
 import CalendarOrders from './CalendarOrders';
@@ -16,6 +17,8 @@ import { GoogleSignInComponent } from './GoogleSignInComponent';
 import { GoogleLogout } from 'react-google-login';
 import OrderTypeForm from './Admin/OrderTypeForm';
 import Nav from './Nav';
+
+const Dashboard = loadable(() => import('./Common/Dashboard'))
 
 // Used when a user hits a route not defined below
 const FourOhFour = (): JSX.Element => (
