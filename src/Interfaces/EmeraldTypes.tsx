@@ -6,6 +6,7 @@ import { useEffect, useLayoutEffect, useState } from 'react';
 //https://stackoverflow.com/questions/56457935/typescript-error-property-x-does-not-exist-on-type-window
 declare global {
   interface Window {
+    // eslint-disable-next-line
     OneSignal: any;
   }
 }
@@ -57,6 +58,7 @@ export interface RouteComponentProps<P> {
   match: match<P>;
   location: H.Location;
   history: H.History;
+  // eslint-disable-next-line
   staticContext?: any;
 }
 
@@ -140,7 +142,7 @@ const useOrders = (initial: Order[] = [], emeraldOrderTypes: OrderType[] = []) =
 };
 
 const EmeraldContext = React.createContext<ReturnType<typeof useOrders> | null>(null);
-
+// eslint-disable-next-line
 export const useEmeraldContext = () => React.useContext(EmeraldContext)!;
 
 export function EmeraldProvider({

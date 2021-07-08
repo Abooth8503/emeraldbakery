@@ -34,6 +34,7 @@ function Orders(props: Props): JSX.Element {
   const [filterType, setFilterType] = useState<string>('Delivered');
   const [width] = useMediaQuery();
 
+  // eslint-disable-next-line
   const handleSelect = (e: any) : void => {
     setFilterType(e);
 

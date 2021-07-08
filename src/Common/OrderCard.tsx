@@ -53,6 +53,7 @@ function OrderCard(props: Props): JSX.Element {
 
   //https://stackoverflow.com/questions/27159179/how-to-convert-blob-to-file-in-javascript
   function blobToFile(theBlob: Blob, fileName: string): void {
+    // eslint-disable-next-line
     const b: any = theBlob;
     //A Blob() is almost a File() - it's just missing the two properties below which we will add
     b.lastModifiedDate = new Date();
