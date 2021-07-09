@@ -108,7 +108,6 @@ function CreateOrder(props: Props): JSX.Element {
   const [deliveryYearEnd, deliveryYearEndSet] = React.useState<string | undefined>(
     undefined
   );
-  // const [daysLengthEnd, daysLengthEndSet] = React.useState<number>(31);
   const [endTime, endTimeSet] = React.useState<string | undefined>(undefined);
   // validation state
   const [nameValidated, setNameValidated] = React.useState<boolean>(false);
@@ -127,23 +126,9 @@ function CreateOrder(props: Props): JSX.Element {
     false
   );
   const [beginTimeValidated, setBeginTimeValidated] = React.useState<boolean>(false);
-  // const [
-  //   deliveryDateMonthEndValidated,
-  //   setDeliveryDateMonthEndValidated,
-  // ] = React.useState<boolean>(false);
-  // const [
-  //   deliveryDateDayEndValidated,
-  //   setDeliveryDateDayEndValidated,
-  // ] = React.useState<boolean>(false);
-  // const [
-  //   deliveryDateYearEndValidated,
-  //   setdeliveryDateYearEndValidated,
-  // ] = React.useState<boolean>(false);
-  // const [endTimeValidated, setEndTimeValidated] = React.useState<boolean>(false);
   const [isSubmitDisabled, setIsSubmitDisabled] = React.useState<boolean>(true);
   // other
   const [isOrderSubmitted, setOrderSubmitted] = React.useState<boolean>(false);
-  // const [filteredBeginTime, setFilteredBeginTime] = React.useState<string>('');
   const [uploadFiles, setUploadFiles] = React.useState<Array<File>>([]);
   const [imageUrl, setImageUrl] = React.useState<string | undefined>(undefined);
   const [isPickupClicked, setIsPickupClicked] = React.useState<boolean>(false);
@@ -352,11 +337,6 @@ function CreateOrder(props: Props): JSX.Element {
     isFormValidated();
   }
 
-  // function onChangeArea(e: React.ChangeEvent<HTMLInputElement>): void {
-  //   e.preventDefault();
-  //   areaSet(e.target.value);
-  // }
-
   function onChangeAddress(e: React.ChangeEvent<HTMLInputElement>): void {
     e.preventDefault();
     addressSet(e.target.value);
@@ -520,47 +500,6 @@ function CreateOrder(props: Props): JSX.Element {
       setBeginTimeValidated(true);
     }
   }
-
-  // function onChangeDeliveryMonthEnd(e: React.ChangeEvent<HTMLSelectElement>): void {
-  //   e.preventDefault();
-  //   deliveryMonthEndSet(e.target.value);
-  //   if (deliveryYearEnd !== undefined) {
-  //     daysLengthEndSet(calculateDays(e.target.value, deliveryYearEnd));
-  //   }
-  //   if (e.target.value !== 'MM' && e.target.value !== undefined) {
-  //     setDeliveryDateMonthEndValidated(true);
-  //   }
-  //   isFormValidated();
-  // }
-
-  // function onChangeDeliveryDayEnd(e: React.ChangeEvent<HTMLSelectElement>): void {
-  //   e.preventDefault();
-  //   deliveryDayEndSet(e.target.value);
-  //   if (e.target.value !== 'DD' && e.target.value !== undefined) {
-  //     setDeliveryDateDayEndValidated(true);
-  //   }
-  //   isFormValidated();
-  // }
-
-  // function onChangeEndTime(e: React.ChangeEvent<HTMLSelectElement>): void {
-  //   e.preventDefault();
-  //   endTimeSet(e.target.value);
-  //   if (e.target.value !== 'Select Time') {
-  //     setEndTimeValidated(true);
-  //   }
-  // }
-
-  // function onChangeDeliveryYearEnd(e: React.ChangeEvent<HTMLSelectElement>): void {
-  //   e.preventDefault();
-  //   deliveryYearEndSet(e.target.value);
-  //   if (deliveryMonthEnd !== undefined) {
-  //     daysLengthEndSet(calculateDays(deliveryMonthEnd, e.target.value));
-  //   }
-  //   if (e.target.value !== 'YYYY' && e.target.value !== undefined) {
-  //     setdeliveryDateYearEndValidated(true);
-  //   }
-  //   isFormValidated();
-  // }
 
   function isFormValidated(): void {
     if (
