@@ -1,0 +1,2 @@
+(this.webpackJsonpemeraldbakery=this.webpackJsonpemeraldbakery||[]).push([[5],{10:function(e,n,t){"use strict";t.r(n);var r=t(0),c=t.n(r),a=t(7),i=t.n(a),o=t(9),s=(t(16),t(3)),b=Object(o.a)((function(){return Promise.all([t.e(9),t.e(16)]).then(t.bind(null,18))}));i.a.render(Object(s.jsx)(c.a.StrictMode,{children:Object(s.jsx)(b,{})}),document.getElementById("root"))},16:function(e,n,t){}},[[10,6,13]]]);
+//# sourceMappingURL=main.fe8fb009.chunk.js.map
