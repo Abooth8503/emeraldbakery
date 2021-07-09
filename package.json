@@ -6,8 +6,6 @@
   "dependencies": {
     "@loadable/component": "^5.15.0",
     "@sendgrid/mail": "^7.4.5",
-    "@testing-library/jest-dom": "^5.14.1",
-    "@testing-library/react": "^12.0.0",
     "chart.js": "^3.4.1",
     "moment": "^2.29.1",
     "react": "^17.0.2",
@@ -24,8 +22,7 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "^4.0.3",
     "styled-components": "^5.3.0",
-    "use-places-autocomplete": "^1.9.3",
-    "web-vitals": "^2.1.0"
+    "use-places-autocomplete": "^1.9.3"
   },
   "scripts": {
     "start": "react-scripts start",
