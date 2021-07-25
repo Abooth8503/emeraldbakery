@@ -68,11 +68,11 @@ const formatter = new Intl.NumberFormat('en-US', {
 });
 
 const data = {
-  labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June'],
+  labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'August'],
   datasets: [
     {
       label: '# of Orders',
-      data: [0, 1, 16, 31, 19, 4],
+      data: [0, 1, 16, 31, 19, 12, 14, 5],
       fill: false,
       backgroundColor: 'rgb(0, 123, 255)',
       borderColor: 'rgba(0, 123, 255, 0.2)',
@@ -377,7 +377,7 @@ function Dashboard(props: Props): JSX.Element {
       </Row>
       <Row style={{ marginTop: '5px' }}>
         <Col style={{ fontSize: 'larger' }}>
-          <h3>At The Booth - Orders</h3>
+          <h3>At The Booth - Orders (as of July 25)</h3>
           <Line data={data} options={options} type='line' className='orderslinechart' />
         </Col>
       </Row>
